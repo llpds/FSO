@@ -4,12 +4,18 @@ const Header = (props) => (
   </div>
 )
 
+const Part = (props) => (
+  <div>
+    <p>{props.datPart.pt} {props.datPart.ex}</p>
+  </div>
+)
+
 const Content = (props) => (
-    <div>
-      <p>{props.data[0].pt} {props.data[0].ex}</p>
-      <p>{props.data[1].pt} {props.data[1].ex}</p>
-      <p>{props.data[2].pt} {props.data[2].ex}</p>
-    </div>
+  <div>
+    <Part datPart = {props.data[0]} />
+    <Part datPart = {props.data[1]} />
+    <Part datPart = {props.data[2]} />
+  </div>
 )
 
 const Total = (props) => (
