@@ -14,14 +14,27 @@ const Feedback = ({commands}) => (
     </div>
 )
 
-const Statistics = ({stat}) => (
+const Statistics = ({stat}) => {
+  const all = Object.values(stat).reduce((a, b) => a + b)
+  
+  if(all === 0 ) return (<p>'no data yet'</p>)
+  
+  const average = (stat.good - stat.bad)/all
+  const positive = stat.good/all*100
+
+  return (
     <div>
       <h2>statistics</h2>      
       <div>good {stat.good}</div>
       <div>neutral {stat.neutral}</div>
       <div>bad {stat.bad}</div>
+      <div>all {all}</div>
+      <div>average {average}</div>
+      <div>positive {positive} %</div>
+
     </div>
   )
+}
 
 
 const App = () => {
