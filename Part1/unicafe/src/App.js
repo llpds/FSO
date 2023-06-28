@@ -14,24 +14,27 @@ const Feedback = ({commands}) => (
     </div>
 )
 
+const StatisticLine = ({text, value}) => (
+  <div>{text} {value}</div>
+)
+
 const Statistics = ({stat}) => {
   const all = Object.values(stat).reduce((a, b) => a + b)
   
-  if(all === 0 ) return (<p>'no data yet'</p>)
+  if(all === 0 ) return (<p>'No feedback given'</p>)
   
   const average = (stat.good - stat.bad)/all
   const positive = stat.good/all*100
 
   return (
     <div>
-      <h2>statistics</h2>      
-      <div>good {stat.good}</div>
-      <div>neutral {stat.neutral}</div>
-      <div>bad {stat.bad}</div>
-      <div>all {all}</div>
-      <div>average {average}</div>
-      <div>positive {positive} %</div>
-
+      <h2>statistics</h2> 
+      <StatisticLine text = 'good' value = {stat.good} />     
+      <StatisticLine text = 'neutral' value = {stat.neutral} />     
+      <StatisticLine text = 'bad' value = {stat.bad} />     
+      <StatisticLine text = 'all' value = {all} />     
+      <StatisticLine text = 'average' value = {average} />     
+      <StatisticLine text = 'positive' value = {positive} />
     </div>
   )
 }
