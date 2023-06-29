@@ -15,7 +15,10 @@ const Feedback = ({commands}) => (
 )
 
 const StatisticLine = ({text, value}) => (
-  <div>{text} {value}</div>
+  <tr>
+    <td> {text} </td>
+    <td> {value} </td>
+  </tr>
 )
 
 const Statistics = ({stat}) => {
@@ -27,15 +30,19 @@ const Statistics = ({stat}) => {
   const positive = stat.good/all*100
 
   return (
-    <div>
-      <h2>statistics</h2> 
-      <StatisticLine text = 'good' value = {stat.good} />     
-      <StatisticLine text = 'neutral' value = {stat.neutral} />     
-      <StatisticLine text = 'bad' value = {stat.bad} />     
-      <StatisticLine text = 'all' value = {all} />     
-      <StatisticLine text = 'average' value = {average} />     
-      <StatisticLine text = 'positive' value = {positive} />
-    </div>
+    <table> 
+      <caption>
+        <h2>statistics</h2>
+      </caption>
+      <tbody>       
+        <StatisticLine text = 'good' value = {stat.good} />     
+        <StatisticLine text = 'neutral' value = {stat.neutral} />     
+        <StatisticLine text = 'bad' value = {stat.bad} />     
+        <StatisticLine text = 'all' value = {all} />     
+        <StatisticLine text = 'average' value = {average} />     
+        <StatisticLine text = 'positive' value = {positive} />
+      </tbody>
+    </table>
   )
 }
 
