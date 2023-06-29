@@ -22,7 +22,6 @@ const StatisticLine = ({text, value}) => (
 )
 
 const Statistics = ({stat}) => {
-  //const all = Object.values(stat).reduce((a, b) => a + b)
   
   if(stat.all === 0 ) return (<p>'No feedback given'</p>)
   
