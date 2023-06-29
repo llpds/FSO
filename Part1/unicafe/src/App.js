@@ -22,12 +22,12 @@ const StatisticLine = ({text, value}) => (
 )
 
 const Statistics = ({stat}) => {
-  const all = Object.values(stat).reduce((a, b) => a + b)
+  //const all = Object.values(stat).reduce((a, b) => a + b)
   
-  if(all === 0 ) return (<p>'No feedback given'</p>)
+  if(stat.all === 0 ) return (<p>'No feedback given'</p>)
   
-  const average = (stat.good - stat.bad)/all
-  const positive = stat.good/all*100
+  const average = (stat.good - stat.bad)/stat.all
+  const positive = stat.good/stat.all*100
 
   return (
     <table> 
@@ -38,7 +38,7 @@ const Statistics = ({stat}) => {
         <StatisticLine text = 'good' value = {stat.good} />     
         <StatisticLine text = 'neutral' value = {stat.neutral} />     
         <StatisticLine text = 'bad' value = {stat.bad} />     
-        <StatisticLine text = 'all' value = {all} />     
+        <StatisticLine text = 'all' value = {stat.all} />     
         <StatisticLine text = 'average' value = {average} />     
         <StatisticLine text = 'positive' value = {positive} />
       </tbody>
@@ -52,15 +52,28 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [all, setAll] = useState(0)
 
-  const incrGood = () => setGood(good + 1)
-  const incrNeutral = () => setNeutral(neutral + 1)
-  const incrBad = () => setBad(bad + 1)
+  const incrGood = () => {
+    const updGood = good + 1
+    setGood(updGood)
+    setAll (updGood + neutral + bad)
+  }
+  const incrNeutral = () => {
+    const updNeutral = neutral + 1
+    setNeutral(updNeutral)
+    setAll (good + updNeutral + bad)
+  }
+  const incrBad = () => {
+    const updBad = bad + 1
+    setBad(updBad)
+    setAll (good + neutral + updBad)
+  }
 
   return (
     <div>
       <Feedback commands = {{incrGood, incrNeutral, incrBad}} />
-      <Statistics stat = {{good,neutral,bad}} />
+      <Statistics stat = {{good,neutral,bad, all}} />
     </div>
   )
 }
