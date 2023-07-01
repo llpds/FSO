@@ -46,12 +46,9 @@ const App = () => {
     const updVotes = [...votes]
     updVotes[selected] += 1
     setVotes(updVotes)
-//    setTopRated(updVotes.indexOf(Math.max(...updVotes)))  //calculates max index as the topRated anecdote position only when VOTE button pressed
     if(votes[topRated] < updVotes[selected]) setTopRated(selected) // checks if topRated anecdote is still top rated only when VOTE button pressed
     console.log(updVotes)
   }
-
-//  const topR = votes.indexOf(Math.max(...votes)) /calculates max index as the topRated anecdote position on each render
 
   return (
     <div>

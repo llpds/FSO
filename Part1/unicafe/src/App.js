@@ -26,7 +26,7 @@ const Statistics = ({stat}) => {
   if(stat.all === 0 ) return (<p>'No feedback given'</p>)
   
   const average = (stat.good - stat.bad)/stat.all
-  const positive = stat.good/stat.all*100
+  const positive = stat.good/stat.all*100 + ' %'
 
   return (
     <table> 
