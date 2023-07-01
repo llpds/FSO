@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
-const Show = ({anecdote, votes}) => (
+const Show = ({anecdote, votes, title}) => (
   <div>
+    <h2>{title}</h2>
     <p>{anecdote}</p>
     <p>has {votes} votes </p>
   </div>
@@ -32,7 +33,8 @@ const App = () => {
   */
 
   const [votes, setVotes] = useState(arrBlank)
-  const [selected, setSelected] = useState(0)  
+  const [selected, setSelected] = useState(0)
+  const [topRated, setTopRated] = useState(0)  
 
   const randAnecdote = () => {
       let rand = Math.floor (Math.random() * anecdotes.length)
@@ -44,13 +46,19 @@ const App = () => {
     const updVotes = [...votes]
     updVotes[selected] += 1
     setVotes(updVotes)
+//    setTopRated(updVotes.indexOf(Math.max(...updVotes)))  //calculates max index as the topRated anecdote position only when VOTE button pressed
+    if(votes[topRated] < updVotes[selected]) setTopRated(selected) // checks if topRated anecdote is still top rated only when VOTE button pressed
+    console.log(updVotes)
   }
+
+//  const topR = votes.indexOf(Math.max(...votes)) /calculates max index as the topRated anecdote position on each render
 
   return (
     <div>
-      <Show anecdote = {anecdotes[selected]} votes = {votes[selected]}/>
+      <Show anecdote = {anecdotes[selected]} votes = {votes[selected]} title = 'Anecdote of the day'/>
       <Button handleClick={incrVote} text="vote" />
       <Button handleClick={randAnecdote} text="next anecdote" />
+      <Show anecdote = {anecdotes[topRated]} votes = {votes[topRated]} title = 'Anecdote with most votes'/>
     </div>
   )
 }
