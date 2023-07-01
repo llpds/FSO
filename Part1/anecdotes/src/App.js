@@ -1,14 +1,15 @@
 import { useState } from 'react'
 
-const Show = ({anecdote}) => (
+const Show = ({anecdote, votes}) => (
   <div>
-    {anecdote}
+    <p>{anecdote}</p>
+    <p>has {votes} votes </p>
   </div>
 )
 
- const Button = ({handleClick, text}) => (
+const Button = ({handleClick, text}) => (
     <button onClick = {handleClick}> {text} </button>
-  )
+)
 
 
 const App = () => {
@@ -22,8 +23,16 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
-  const [selected, setSelected] = useState(0)
+
+  const arrBlank = new Uint8Array(anecdotes.length)
+  /*  
+      Creates an array of 8-bit unsigned integers, according with anecdotes array length.
+      The contents are initialized to 0. 
+      Alternative: Array(n).fill(0)
+  */
+
+  const [votes, setVotes] = useState(arrBlank)
+  const [selected, setSelected] = useState(0)  
 
   const randAnecdote = () => {
       let rand = Math.floor (Math.random() * anecdotes.length)
@@ -31,9 +40,16 @@ const App = () => {
       setSelected(rand)
   }
 
+  const incrVote = () => {
+    const updVotes = [...votes]
+    updVotes[selected] += 1
+    setVotes(updVotes)
+  }
+
   return (
     <div>
-      <Show anecdote = {anecdotes[selected]} />
+      <Show anecdote = {anecdotes[selected]} votes = {votes[selected]}/>
+      <Button handleClick={incrVote} text="vote" />
       <Button handleClick={randAnecdote} text="next anecdote" />
     </div>
   )
