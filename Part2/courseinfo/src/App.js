@@ -1,23 +1,4 @@
-const Header = ({ name }) => <h2> {name} </h2>
-
-const Part = ({ part }) => <p> {part.name} {part.exercises} </p>
-
-const Content = ({ parts }) => 
-  <>
-    {parts.map( part =>
-      <Part part = {part} key = {part.id} />
-    )}   
-  </>
-
-const Total = ({ total }) => <h4>total of {total} exercises</h4>
-
-const Course = ({ course }) => (
-  <div>
-      <Header name = {course.name} />
-      <Content parts = {course.parts} />
-      <Total total = {course.parts.reduce((sum, val) => sum + val.exercises, 0)} />
-  </div>
-)
+import Course from './components/Course'
 
 const App = () => {
   const courses = [
