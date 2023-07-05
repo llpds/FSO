@@ -1,7 +1,7 @@
 import { useState } from 'react'    
 import Person from './components/Person'
 
-import './components/App.css'
+import './App.css'
 
 const App = () => {
 
