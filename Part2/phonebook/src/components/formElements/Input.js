@@ -1,6 +1,6 @@
 const Input = ({text, newValue, handleAction}) => (
     <div>
-      {text}: <input id = "newName" value = {newValue} onChange = {handleAction}/>
+      {text}: <input id = {text} value = {newValue} onChange = {handleAction} />
     </div>
   )
 
