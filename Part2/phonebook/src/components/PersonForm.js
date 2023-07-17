@@ -1,6 +1,7 @@
 import { useState } from 'react'  
 import Button from './elements/Button'
 import Input from './elements/Input'
+import personService from './../services/person'
 
 
 const PersonForm = ({persons, setPersons}) => {
@@ -18,9 +19,13 @@ const PersonForm = ({persons, setPersons}) => {
       number: newNumber,
     }
     if(formError (newObject) === 'no errors'){
-      setPersons(persons.concat(newObject))
-      setNewName('')
-      setNewNumber('')      
+      personService
+        .create(newObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')  
+        })      
     } else {
       alert (formError (newObject) )
     }   

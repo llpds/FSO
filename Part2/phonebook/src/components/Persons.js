@@ -9,9 +9,11 @@ const Persons = ({persons, filter}) => {
 
 
     return(
-      <ul>
-        {filtered.map(person => <ShowPerson key = {person.id} name = {person.name} number = {person.number} />)}
-      </ul>
+      <table>
+        <tbody>
+          {filtered.map(person => <ShowPerson key = {person.id} name = {person.name} number = {person.number} />)}
+        </tbody>
+      </table>
     )
   }
 
