@@ -14,7 +14,7 @@ const PersonForm = ({persons, setPersons}) => {
   const addName = (event) => {
     event.preventDefault()
     const newObject = {
-      id: persons.length + 1,
+      id: new Date().getTime(),
       name: newName,
       number: newNumber,
     }

@@ -12,6 +12,11 @@ const create = (newObject) => {
     return request.then(response => response.data)
 }
 
-const exportedObj = {getAll, create} //prevent warning  eslint: Assign object to a variable before exporting as module default
+const  destroy = (id) => {
+    const request = axios.delete(`${baseUrl}/${id}`)
+    return request.then(response => response.data)
+}
+
+const exportedObj = {getAll, create, destroy } //prevent warning  eslint: Assign object to a variable before exporting as module default
 
 export default exportedObj
