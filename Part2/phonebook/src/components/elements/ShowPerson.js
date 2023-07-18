@@ -1,5 +1,5 @@
 import Button from './Button'
-import personService from './../../services/person'
+import personService from '../../services/personAxios'
 
 const Person = ({id, name, number, setPersons, persons}) =>  {
     const dltBtn = () => {
