@@ -7,8 +7,8 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
-const create = (newObject) => {
-    const request = axios.post(baseUrl, newObject)
+const create = (newPerson) => {
+    const request = axios.post(baseUrl, newPerson)
     return request.then(response => response.data)
 }
 
@@ -17,6 +17,11 @@ const  destroy = (id) => {
     return request.then(response => response.data)
 }
 
-const exportedObj = {getAll, create, destroy } //prevent warning  eslint: Assign object to a variable before exporting as module default
+const update = (id, name, number) => {
+    const request = axios.put(`${baseUrl}/${id}`, {name: name, number: number})
+    return request.then(response => response.data)
+}
+
+const exportedObj = {getAll, create, destroy, update } //prevent warning  eslint: Assign object to a variable before exporting as module default
 
 export default exportedObj

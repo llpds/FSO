@@ -4,7 +4,6 @@ import personService from './../../services/person'
 const Person = ({id, name, number, setPersons, persons}) =>  {
     const dltBtn = () => {
         if(window.confirm(`Delete ${name}`)) {
-            console.log('delete clicked', id)
             personService
                 .destroy(id)
                 .then(
@@ -16,7 +15,6 @@ const Person = ({id, name, number, setPersons, persons}) =>  {
 
     return(
         <tr>
-                <td>{id}</td>
                 <td>{name}</td>
                 <td>{number}</td>
                 <td><Button handleClick = {dltBtn} text = 'delete' /></td>

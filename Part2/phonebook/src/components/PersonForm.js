@@ -13,34 +13,82 @@ const PersonForm = ({persons, setPersons}) => {
   // --------------------------  actions  --------------------------
   const addName = (event) => {
     event.preventDefault()
-    const newObject = {
-      id: new Date().getTime(),
-      name: newName,
-      number: newNumber,
-    }
-    if(formError (newObject) === 'no errors'){
-      personService
-        .create(newObject)
-        .then(returnedPerson => {
-          setPersons(persons.concat(returnedPerson))
-          setNewName('')
-          setNewNumber('')  
-        })      
-    } else {
-      alert (formError (newObject) )
-    }   
+
+    const newObject = preparePerson({name: newName, number: newNumber})
+
+    switch(newObject.status) {
+      case 'err':
+        alert(newObject.msg)
+        break;
+      case 'addPerson':
+        addPerson(newObject.data)
+        break;
+      case 'changeNumber':
+        if(window.confirm(`${newObject.data.name} is already added to phonebook, replace the old number with a new one?`)){
+          changeNumber(newObject.data)
+        }
+        break;
+      default:
+        alert ('default')
+    } 
   }
 
-  const formError = (newObject) => {
-    if(newObject.name === '' || newObject.number === ''){
-      return `both fields (name and number) must be filled`
-    } else if(persons.find(person => person.name === newObject.name)){
-      return`Name ${newObject.name} is already added to phonebook`
-    } else if (persons.find(person => person.number === newObject.number)){
-      return`Phone number ${newObject.number} is already added to phonebook and belongs to ${persons.find(person => person.number === newObject.number).name}`
-    } else {
-      return 'no errors'
-    }  
+  const preparePerson = ({name, number}) => {
+      const numberCorrespondence  = persons.find(person => person.number === number)
+      const nameCorrespondence = persons.find(person => person.name.toLowerCase() === name.toLowerCase())
+
+      if(name === '' || number === '') return {
+          status: 'err',
+          msg: `both fields (name and number) must be filled`,
+          data: undefined
+        }
+    
+      if (numberCorrespondence) 
+      return {
+        status: 'err',
+        msg: `Phone number ${number} is already added to phonebook and belongs to ${numberCorrespondence.name}`,
+        data: undefined
+      }  
+
+      if(nameCorrespondence) 
+        return {
+          status: 'changeNumber',
+          msg: `${nameCorrespondence.name} was changeda to ${number}`,
+          data: {
+            id: nameCorrespondence.id,
+            name: nameCorrespondence.name,
+            number: number
+          }
+        }
+
+      return  { status: 'addPerson',
+                msg: `${name} is added`,
+                data: {
+                  id: new Date().getTime(),
+                  name: name,
+                  number: number
+                }
+              }
+  }
+
+  const addPerson = (newObject) => {
+    personService
+      .create(newObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')  
+      }) 
+  }
+
+  const changeNumber = ({id,name, number}) => {
+    personService
+      .update(id,name , number)
+      .then(returnedPerson => {
+        setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
+        setNewName('')
+        setNewNumber('')  
+      }) 
   }
 
   // --------------------------  handlers  --------------------------
