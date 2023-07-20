@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
-import personService from './services/personAxios'
+import personService from './services/person'
 import Notification from './components/Notification'
 
 import './App.css'
 
 
 const App = () => {
+
 
   // --------------------------  states --------------------------
   const [persons, setPersons] = useState([])
@@ -25,7 +26,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>  
       
-      <Notification message = {message} />
+      <Notification message = {message}/>
 
       <Filter filter = {filter} setFilter = {setFilter}/>
       
@@ -35,7 +36,7 @@ const App = () => {
       
       <h2>Numbers</h2>
       
-      <Persons persons = {persons} filter = {filter} setPersons = {setPersons} />
+      <Persons persons = {persons} filter = {filter} setPersons = {setPersons}  setMessage = {setMessage}/>
 
     </div>
   )

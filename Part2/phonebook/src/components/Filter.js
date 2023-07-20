@@ -7,7 +7,7 @@ const Filter = ({filter, setFilter}) => {
 
     return (
       <div>
-        <Input text = 'Filter shown with' value = {filter} handleAction = {handleFilterChange} />
+        <Input text = 'Filter shown with' value = {filter} onChange = {handleFilterChange} />
       </div>
     )
   }

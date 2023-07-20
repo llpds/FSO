@@ -1,22 +1,39 @@
 import Button from './Button'
-import personService from '../../services/personAxios'
+import personService from '../../services/person'
 
-const Person = ({id, name, number, setPersons, persons}) =>  {
+const Person = ({person, setPersons, persons, setMessage, index}) =>  {
+    
     const dltBtn = () => {
-        if(window.confirm(`Delete ${name}`)) {
+        if(window.confirm(`Delete ${person.name}`)) {
             personService
-                .destroy(id)
+                .destroy(person.id)
                 .then(
-                    setPersons(persons.filter(p => p.id !== id))
+                    setPersons(persons.filter(p => p.id !== person.id)) 
                 )
-                .catch(err => console.log('err', err))
+                .catch(err => showError(`Information of ${person.name} has already been removed from server`))
+            showMessage(`${person.name} was deleted`)
         }
     }
 
+    const showMessage = (msg) => {
+        setMessage([msg, 'msg'])
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+      }
+      
+      const showError = (msg) => {
+        setMessage([msg, 'err'])
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+      }
+
     return(
         <tr>
-                <td>{name}</td>
-                <td>{number}</td>
+                <td>{index}.</td>
+                <td>{person.name}</td>
+                <td>{person.number}</td>
                 <td><Button handleClick = {dltBtn} text = 'delete' /></td>
         </tr>    
     )

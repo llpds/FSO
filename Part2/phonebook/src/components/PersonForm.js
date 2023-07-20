@@ -1,8 +1,7 @@
 import { useState } from 'react'  
 import Button from './elements/Button'
 import Input from './elements/Input'
-import personService from '../services/personAxios'
-import preparePerson from '../services/preparePerson'
+import personService from '../services/person'
 
 
 const PersonForm = ({persons, setPersons, setMessage}) => {
@@ -11,29 +10,43 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
-  // --------------------------  actions  --------------------------
-  const addName = (event) => {
+  // --------------------------  submit  --------------------------
+  const submitPerson = (event) => {
     event.preventDefault()
+    
+    const numberCorrespondence  = persons.find(person => person.number === newNumber)
+    const nameCorrespondence = persons.find(person => person.name.toLowerCase() === newName.toLowerCase())
 
-    const newObject = preparePerson.validate({persons: persons, name: newName, number: newNumber})
+    if(newName === '' || newNumber === '') {
+      alert("both fields (name and number) must be filled")
+      return
+    }
+    
+    if (numberCorrespondence){ 
+      alert(`Phone number ${newNumber} is already added to phonebook and belongs to ${numberCorrespondence.name}`)
+      setNewNumber('')
+      return
+    }  
 
-    switch(newObject.status) {
-      case 'err':
-        alert(newObject.msg)
-        break;
-      case 'addPerson':
-        addPerson(newObject.data)
-        break;
-      case 'changeNumber':
-        if(window.confirm(`${newObject.data.name} is already added to phonebook, replace the old number with a new one?`)){
-          changeNumber(newObject.data)
-        }
-        break;
-      default:
-        alert ('default')
-    } 
+    if(nameCorrespondence) {
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        changeNumber({
+          id: nameCorrespondence.id,
+          name: nameCorrespondence.name,
+          number: newNumber
+        })
+      }
+      return
+    }
+
+    addPerson({
+      id: new Date().getTime(),
+      name: newName,
+      number: newNumber
+    })
   }
 
+  // --------------------------  actions  --------------------------
   const addPerson = (newObject) => {
     personService
       .create(newObject)
@@ -45,33 +58,40 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
       }) 
   }
 
-  const changeNumber = ({id,name, number}) => {
+  const changeNumber = ({id, name, number}) => {
     personService
-      .update(id,name , number)
+      .update(id, name, number)
       .then(returnedPerson => {
         setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
         setNewName('')
         setNewNumber('')
-        showMessage(`${returnedPerson.name} number has changed to ${returnedPerson.number}`)
+        showMessage(`${returnedPerson.name} number has been changed to ${returnedPerson.number}`)
       }) 
+      .catch(err => {
+        showError(`Information of ${name} has already been removed from server`)
+        setPersons(persons.filter(p=> p.id !== id))
+      })
   }
 
   const showMessage = (msg) => {
-    setMessage(msg)
+    setMessage([msg, 'msg'])
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+  }
+  
+  const showError = (msg) => {
+    setMessage([msg, 'err'])
     setTimeout(() => {
       setMessage(null)
     }, 5000)
   }
 
-  // --------------------------  handlers  --------------------------
-  const handleNameChange = (event) => setNewName(event.target.value)
-  const handleNumberChange = (event) => setNewNumber(event.target.value)
-
   return(
     <div>      
-      <form onSubmit = {addName}>
-        <Input text = 'name' newValue = {newName} handleAction = {handleNameChange} />
-        <Input text = 'number' newValue = {newNumber} handleAction = {handleNumberChange} />
+      <form onSubmit = {submitPerson}>
+        <Input text = 'name' value = {newName} onChange = {(event) => setNewName(event.target.value)} />
+        <Input text = 'number' value = {newNumber} onChange = {(event) => setNewNumber(event.target.value)} />
         <Button text = "add" />
       </form>
     </div>
