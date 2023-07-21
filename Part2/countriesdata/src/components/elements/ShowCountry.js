@@ -10,7 +10,7 @@ const ShowCountry = ({country, filter, setFilter, index}) =>  {
         <tr>
                 <td>{index}.</td>
                 <td>{country.name.common}</td>
-                {(filter.toLowerCase() === country.name.common.toLowerCase()) ? <td><Button text = "Complete match" handleClick ={nameMatch}/></td> : <td></td> }
+                <td><Button text = "Show" handleClick ={nameMatch}/></td>
         </tr>    
     )
 }
