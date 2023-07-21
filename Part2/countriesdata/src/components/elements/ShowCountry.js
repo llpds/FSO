@@ -1,6 +1,6 @@
 import Button from './Button'
 
-const ShowCountry = ({country, filter, setFilter, index}) =>  {
+const ShowCountry = ({country, setFilter, index}) =>  {
 
     const nameMatch = () => {
         setFilter(['matched', country.name.common])
@@ -8,9 +8,9 @@ const ShowCountry = ({country, filter, setFilter, index}) =>  {
 
     return(
         <tr>
-                <td>{index}.</td>
-                <td>{country.name.common}</td>
-                <td><Button text = "Show" handleClick ={nameMatch}/></td>
+            <td>{index}.</td>
+            <td>{country.name.common}</td>
+            <td><Button text = "Show" handleClick ={nameMatch}/></td>
         </tr>    
     )
 }
