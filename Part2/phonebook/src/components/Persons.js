@@ -7,7 +7,6 @@ const Persons = ({persons, filter, setPersons, setMessage}) => {
       return person.name.toLowerCase().includes(filter.toLowerCase())
     })
 
-
     return(
       <table>
         <tbody>
