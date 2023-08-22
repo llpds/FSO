@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 const dummy = (blogs) => {
   if (blogs) return 1
 }
@@ -14,12 +16,12 @@ const favoriteBlog = (blogs) => {
 
 const mostBlog = (blogs) => {
   let authors = {}
-  blogs.forEach(blog => {
+  _.each(blogs, (blog) => {
     const name = blog.author
     authors[name] = authors[name] ? authors[name] + 1 : 1
   })
 
-  const mostBlogArr = Object.entries(authors).reduce((acc,val) => acc = acc[1] < val[1] ? val : acc)
+  const mostBlogArr = _.maxBy(Object.entries(authors), (a) => a[1])
 
   return {
     author: mostBlogArr[0],
@@ -29,12 +31,12 @@ const mostBlog = (blogs) => {
 
 const mostLikes = (blogs) => {
   let authors = {}
-  blogs.forEach(blog => {
+  _.each(blogs, (blog) => {
     const name = blog.author
     authors[name] = authors[name] ? authors[name] + blog.likes : blog.likes
   })
 
-  const mostLikesArr = Object.entries(authors).reduce((acc,val) => acc = acc[1] < val[1] ? val : acc)
+  const mostLikesArr = _.maxBy(Object.entries(authors), (a) => a[1])
 
   return {
     author: mostLikesArr[0],
