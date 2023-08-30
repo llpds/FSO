@@ -2,7 +2,7 @@ const listHelper = require ('../utils/list_helper')
 const listWithBlogs = require ('../data/for_tests').listWithBlogs
 
 describe('most likes', () => {
-  test('amount of blogs', () => {
+  test('favorite author by likes', () => {
     const result = listHelper.mostLikes(listWithBlogs)
     expect(result).toEqual({
       author: 'Edsger W. Dijkstra',
