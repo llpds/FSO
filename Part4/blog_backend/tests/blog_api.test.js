@@ -19,29 +19,33 @@ afterAll(async () => {
   await mongoose.connection.close()
 })
 
-test('notes are returned as json', async () => {
+
+test('notes are returned JSON', async () => {
   await api
     .get('/api/blogs')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
-test('all notes are returned', async () => {
+
+
+test('ALL NOTES are returned', async () => {
   const response = await api.get('/api/blogs')
   expect(response.body).toHaveLength(helper.initialBlogs.length)
 })
 
-test('unique identifier is named id', async () => {
+
+test('unique identifier is named ID', async () => {
   const response = await api.get('/api/blogs')
   expect(response.body[0].id).toBeDefined()
 })
 
 
-test('new blog can be added', async () => {
+test('NEW BLOG can be added', async () => {
   const newBlog =   {
     title:'new test t1',
     author:'new test a1',
     url:'new test u1',
-    likes: 0,
+    likes:'42'
   }
 
   await api
@@ -52,4 +56,27 @@ test('new blog can be added', async () => {
 
   const updatedBlogs = await helper.blogsInDb()
   expect(updatedBlogs).toHaveLength(helper.initialBlogs.length + 1)
+
+  const urls = updatedBlogs.map(blog => blog.url)
+  expect(urls).toContain('new test u1')
+})
+
+test('MISSING LIKES property in request, will be equal 0 by default', async () => {
+  const newBlog =   {
+    title:'new test t2',
+    author:'new test a2',
+    url:'new test u2'
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  expect(newBlog.likes).not.toBeDefined()
+
+  const updatedBlogs = await helper.blogsInDb()
+  const newBlogInDb = updatedBlogs.find(blog => blog.title === 'new test t2')
+  expect(newBlogInDb.likes).toEqual(0)
 })
