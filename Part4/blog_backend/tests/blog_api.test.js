@@ -80,3 +80,38 @@ test('MISSING LIKES property in request, will be equal 0 by default', async () =
   const newBlogInDb = updatedBlogs.find(blog => blog.title === 'new test t2')
   expect(newBlogInDb.likes).toEqual(0)
 })
+
+test('MISSING TITLE OR URL property in request, will cause of response 400', async () => {
+  const blogWithOutTitle =   {
+    author:'new test a3',
+    url:'new test u3',
+    likes:'42'
+  }
+
+  const blogWithOutUrl =   {
+    title:'new test t4',
+    author:'new test a4',
+    likes:'42'
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(blogWithOutTitle)
+    .expect(400)
+
+  await api
+    .post('/api/blogs')
+    .send(blogWithOutUrl)
+    .expect(400)
+
+  let updatedBlogs = await helper.blogsInDb()
+
+  expect(blogWithOutTitle.title).not.toBeDefined()
+  const urls = updatedBlogs.map(blog => blog.url)
+  expect(urls).not.toContain(blogWithOutTitle.url)
+
+
+  expect(blogWithOutUrl.url).not.toBeDefined()
+  const titles = updatedBlogs.map(blog => blog.title)
+  expect(titles).not.toContain(blogWithOutUrl.title)
+})
