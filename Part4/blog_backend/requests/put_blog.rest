@@ -1,0 +1,9 @@
+PUT http://localhost:3003/api/blogs/64f48d1e55a4832c5004cef2
+Content-Type: application/json
+
+{
+    "title":"rest t06 upd",
+    "author":"rest a06 upd",
+    "url":"rest u06"
+}
+
