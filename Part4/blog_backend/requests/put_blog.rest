@@ -4,6 +4,7 @@ Content-Type: application/json
 {
     "title":"rest t06 upd",
     "author":"rest a06 upd",
-    "url":"rest u06"
+    "url":"rest u06",
+    "likes": 123
 }
 
