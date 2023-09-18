@@ -93,15 +93,17 @@ describe('when there is initially some blogs saved', () => {
         likes:'42'
       }
 
+      // I changed the code status to 404 to use "express-async-errors"
+      // in this case api returns an error message: "error": "Blog validation failed: title: Path `title` is required."
       await api
         .post('/api/blogs')
         .send(blogWithOutTitle)
-        .expect(400)
+        .expect(404)
 
       await api
         .post('/api/blogs')
         .send(blogWithOutUrl)
-        .expect(400)
+        .expect(404)
 
       let updatedBlogs = await helper.blogsInDb()
 

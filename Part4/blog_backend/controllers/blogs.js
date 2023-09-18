@@ -28,24 +28,34 @@ blogsRouter.post ('/', async (request, response) => {
     likes: body.likes || 0
   })
 
-  if(!body.title || !body.url) {
-    response.status(400).end()
-  } else {
-    const savedBlog = await blog.save()
-    response.status(201).json(savedBlog)
-  }
+  // This part need only for test addition of a new blog / MISSING TITLE OR URL property in request, will cause of response 400 Ex 4.12
+  // but this prevents "express-async-errors" from reporting missing title and url
+
+  // if(!body.title || !body.url) {
+  //   response.status(400).end()
+  // } else {
+  //   const savedBlog = await blog.save()
+  //   response.status(201).json(savedBlog)
+  // }
+
+  const savedBlog = await blog.save()
+  response.status(201).json(savedBlog)
 })
 
 blogsRouter.put('/:id', async (request, response) => {
   const body = request.body
 
+
+  // constraints for put updating
   const blog = {
-    title: body.title,
-    author: body.author,
-    url: body.url,
-    likes: body.likes
+    title: body.title || undefined, //prevents insertion of an empty line
+    author: body.author || undefined,
+    url: (body.url && body.url.length > 4) ? body.url : undefined, // prevents insertion of lines less than 5 characters
+    likes: body.likes || undefined
   }
 
+
+  console.log('blog', blog)
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true })
   response.json(updatedBlog)
 })
