@@ -1,7 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-
-
+const User = require('../models/user')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({})
@@ -21,11 +20,14 @@ blogsRouter.post ('/', async (request, response) => {
 
   const body = request.body
 
+  const user = await User.findById(body.userId)
+
   const blog = new Blog ({
     title: body.title,
     author: body.author,
     url: body.url,
-    likes: body.likes || 0
+    likes: body.likes || 0,
+    user: user.id
   })
 
   // This part need only for test addition of a new blog / MISSING TITLE OR URL property in request, will cause of response 400 Ex 4.12
@@ -39,6 +41,9 @@ blogsRouter.post ('/', async (request, response) => {
   // }
 
   const savedBlog = await blog.save()
+  user.blogs = user.blogs.concat(savedBlog._id)
+  await user.save()
+
   response.status(201).json(savedBlog)
 })
 
