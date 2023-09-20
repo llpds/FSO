@@ -14,12 +14,11 @@ const BlogForm = ({blogs, setBlogs, setMessage}) => {
   // --------------------------  submit  --------------------------
   const submitBlog = (event) => {
     event.preventDefault()
-    
-    const titleCorrespondence  = blogs.find(blog => blog.title.toLowerCase() === newTitle.toLowerCase())
+    const titleCorrespondence = blogs.find(blog => blog.title.toLowerCase() === newTitle.toLowerCase())
     const urlCorrespondence = blogs.find(blog => blog.url === newUrl)
 
     if(newTitle === '' || newAuthor === '' || newUrl === '') {
-      alert("all fields (name, number and url) must be filled")
+      alert("all fields (name, author and url) must be filled")
       return
     }
     

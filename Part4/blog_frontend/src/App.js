@@ -22,7 +22,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>  
+      <h2>Blog</h2>  
       
       <Notification message = {message}/>
       
@@ -30,7 +30,7 @@ const App = () => {
       
       <BlogForm blogs = {blogs} setBlogs = {setBlogs} setMessage = {setMessage}/>
       
-      <h2>Numbers</h2>
+      <h2>Blog list</h2>
       
       <Blogs blogs = {blogs} setBlogs = {setBlogs}  setMessage = {setMessage}/>
 
