@@ -30,16 +30,6 @@ blogsRouter.post ('/', async (request, response) => {
     user: user.id
   })
 
-  // This part need only for test addition of a new blog / MISSING TITLE OR URL property in request, will cause of response 400 Ex 4.12
-  // but this prevents "express-async-errors" from reporting missing title and url
-
-  // if(!body.title || !body.url) {
-  //   response.status(400).end()
-  // } else {
-  //   const savedBlog = await blog.save()
-  //   response.status(201).json(savedBlog)
-  // }
-
   const savedBlog = await blog.save()
   user.blogs = user.blogs.concat(savedBlog._id)
   await user.save()
@@ -52,6 +42,10 @@ blogsRouter.put('/:id', async (request, response) => {
 
 
   // constraints for put updating
+  // This is obvious behavior corresponding to creating a new user
+  // I don't see the need to issue an error message
+  // If necessary use  if(!title.length || title.length < 5) { response.status(404).send({ error: 'User validation failed: title is shorter than the minimum allowed length (5).' })}
+
   const blog = {
     title: body.title || undefined, //prevents insertion of an empty line
     author: body.author || undefined,
@@ -59,8 +53,6 @@ blogsRouter.put('/:id', async (request, response) => {
     likes: body.likes || undefined
   }
 
-
-  console.log('blog', blog)
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true })
   response.json(updatedBlog)
 })

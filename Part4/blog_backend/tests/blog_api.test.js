@@ -7,22 +7,23 @@ const Blog = require('../models/blog')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
+describe('when there is initially some BLOGs saved', () => {
+  beforeEach(async () => {
+    await Blog.deleteMany({})
 
-beforeEach(async () => {
-  await Blog.deleteMany({})
+    const blogObjects = helper.initialBlogs.map(blog => new Blog(blog))
 
-  const blogObjects = helper.initialBlogs.map(blog => new Blog(blog))
+    const promiseArray = blogObjects.map(blog => blog.save())
+    await Promise.all(promiseArray)
 
-  const promiseArray = blogObjects.map(blog => blog.save())
-  await Promise.all(promiseArray)
-})
+    await User.deleteMany({})
 
-afterAll(async () => {
-  await mongoose.connection.close()
-})
+    const passwordHash = await bcrypt.hash('sekret', 10)
+    const user = new User({ username: 'root', passwordHash })
 
+    await user.save()
+  })
 
-describe('when there is initially some blogs saved', () => {
   test('blogs are returned JSON Ex 4.8', async () => {
     await api
       .get('/api/blogs')
@@ -42,11 +43,16 @@ describe('when there is initially some blogs saved', () => {
 
   describe('addition of a new blog', () => {
     test('NEW BLOG can be added Ex 4.10', async () => {
+
+      const usersInDb = await helper.usersInDb()
+      const user = usersInDb[0]
+
       const newBlog =   {
         title:'new test t1',
         author:'new test a1',
         url:'new test u1',
-        likes:'42'
+        likes:'42',
+        userId: user.id
       }
 
       await api
@@ -63,10 +69,14 @@ describe('when there is initially some blogs saved', () => {
     },10000)
 
     test('MISSING LIKES property in request, will be equal 0 by default Ex 4.11', async () => {
+      const usersInDb = await helper.usersInDb()
+      const user = usersInDb[0]
+
       const newBlog =   {
         title:'new test t2',
         author:'new test a2',
-        url:'new test u2'
+        url:'new test u2',
+        userId: user.id
       }
 
       await api
@@ -83,29 +93,32 @@ describe('when there is initially some blogs saved', () => {
     },10000)
 
     test('MISSING TITLE OR URL property in request, will cause of response 400 Ex 4.12', async () => {
+      const usersInDb = await helper.usersInDb()
+      const user = usersInDb[0]
+
       const blogWithOutTitle =   {
         author:'new test a3',
         url:'new test u3',
-        likes:'42'
+        likes:'42',
+        userId: user.id
       }
 
       const blogWithOutUrl =   {
         title:'new test t4',
         author:'new test a4',
-        likes:'42'
+        likes:'42',
+        userId: user.id
       }
 
-      // I changed the code status to 404 to use "express-async-errors"
-      // in this case api returns an error message: "error": "Blog validation failed: title: Path `title` is required."
       await api
         .post('/api/blogs')
         .send(blogWithOutTitle)
-        .expect(404)
+        .expect(400)
 
       await api
         .post('/api/blogs')
         .send(blogWithOutUrl)
-        .expect(404)
+        .expect(400)
 
       let updatedBlogs = await helper.blogsInDb()
 
@@ -225,7 +238,7 @@ describe('when there is initially some blogs saved', () => {
   })
 })
 
-describe('when there is initially one user in db', () => {
+describe('when there is initially one USER in db', () => {
   beforeEach(async () => {
     await User.deleteMany({})
 
@@ -235,47 +248,107 @@ describe('when there is initially one user in db', () => {
     await user.save()
   })
 
-  test('creation succeeds with a fresh username', async () => {
-    const usersAtStart = await helper.usersInDb()
+  describe('addition of a new user', () => {
+    test('creation succeeds with a fresh username', async () => {
+      const usersAtStart = await helper.usersInDb()
 
-    const newUser = {
-      username: 'mluukkai',
-      name: 'Matti Luukkainen',
-      password: 'salainen',
-    }
+      const newUser = {
+        username: 'JSB',
+        name: 'Johann Sebastian Bach',
+        password: 'salainen',
+      }
 
-    await api
-      .post('/api/users')
-      .send(newUser)
-      .expect(201)
-      .expect('Content-Type', /application\/json/)
+      await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
 
-    const usersAtEnd = await helper.usersInDb()
-    expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
+      const usersAtEnd = await helper.usersInDb()
+      expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
 
-    const usernames = usersAtEnd.map(u => u.username)
-    expect(usernames).toContain(newUser.username)
+      const usernames = usersAtEnd.map(u => u.username)
+      expect(usernames).toContain(newUser.username)
+    })
+
+    test('creation fails with proper statuscode and message if username already taken', async () => {
+      const usersAtStart = await helper.usersInDb()
+
+      const newUser = {
+        username: 'root',
+        name: 'Superuser',
+        password: 'salainen',
+      }
+
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      expect(result.body.error).toContain('expected `username` to be unique')
+
+      const usersAtEnd = await helper.usersInDb()
+      expect(usersAtEnd).toEqual(usersAtStart)
+    })
+
+    test('creation fails without username or password or their length less than 3 symbols 4.16', async () => {
+      const usersAtStart = await helper.usersInDb()
+
+      const userWitoutUsername = {
+        name: 'Paul Dirac',
+        password: 'salainen',
+      }
+
+      const userWithoutPassword = {
+        username: 'LiHo',
+        name: 'Liam Howlett'
+      }
+
+      await api
+        .post('/api/users')
+        .send(userWitoutUsername)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      await api
+        .post('/api/users')
+        .send(userWithoutPassword)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+
+      const userWithShortUsername = {
+        username: 'un',
+        name: 'unnamed',
+        password: 'salainen',
+      }
+
+      const userWithShortPassword = {
+        username: 'shortPass',
+        name: 'shortPassword',
+        password: 'sa',
+      }
+
+      await api
+        .post('/api/users')
+        .send(userWithShortUsername)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      await api
+        .post('/api/users')
+        .send(userWithShortPassword)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      const usersAtEnd = await helper.usersInDb()
+      expect(usersAtEnd).toHaveLength(usersAtStart.length)
+    })
+
   })
+})
 
-  test('creation fails with proper statuscode and message if username already taken', async () => {
-    const usersAtStart = await helper.usersInDb()
-
-    const newUser = {
-      username: 'root',
-      name: 'Superuser',
-      password: 'salainen',
-    }
-
-    const result = await api
-      .post('/api/users')
-      .send(newUser)
-      .expect(400)
-      .expect('Content-Type', /application\/json/)
-
-    expect(result.body.error).toContain('expected `username` to be unique')
-
-    const usersAtEnd = await helper.usersInDb()
-    expect(usersAtEnd).toEqual(usersAtStart)
-  })
-
+afterAll(async () => {
+  await mongoose.connection.close()
 })
