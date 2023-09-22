@@ -62,8 +62,21 @@ blogsRouter.put('/:id', async (request, response) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-  await Blog.findByIdAndRemove(request.params.id)
-  response.status(204).end()
+
+  const blog = await Blog.findById(request.params.id)
+
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if(!blog.user){
+    response.status(401).json({ error: 'And... we have a virgin birth: blog without Creator' })
+  }
+
+  if (blog.user.toString() === decodedToken.id){
+    await Blog.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+  } else {
+    return response.status(401).json({ error: 'only user who made the blog record can delete it' })
+  }
+
 })
 
 module.exports = blogsRouter
