@@ -1,7 +1,5 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-const User = require('../models/user')
-const jwt = require('jsonwebtoken')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user')
@@ -20,11 +18,7 @@ blogsRouter.get('/:id', async (request,response) => {
 blogsRouter.post ('/', async (request, response) => {
   const body = request.body
 
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
-  }
-  const user = await User.findById(decodedToken.id)
+  const user = request.user
 
   const blog = new Blog ({
     title: body.title,
@@ -61,16 +55,20 @@ blogsRouter.put('/:id', async (request, response) => {
   response.json(updatedBlog)
 })
 
+// deleted blogs id is still saved in user.blogs... (((
 blogsRouter.delete('/:id', async (request, response) => {
-
+  const user = request.user
   const blog = await Blog.findById(request.params.id)
 
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if(!blog){
+    response.status(401).json({ error: 'This blog id doesn\'t exist' })
+  }
+
   if(!blog.user){
     response.status(401).json({ error: 'And... we have a virgin birth: blog without Creator' })
   }
 
-  if (blog.user.toString() === decodedToken.id){
+  if (blog.user.toString() === user.id){
     await Blog.findByIdAndRemove(request.params.id)
     response.status(204).end()
   } else {
