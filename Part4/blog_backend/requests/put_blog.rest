@@ -1,10 +1,10 @@
-PUT http://localhost:3003/api/blogs/64f48d1e55a4832c5004cef2
+PUT http://localhost:3003/api/blogs/6511b338a3b36c56326a2f73
 Content-Type: application/json
 
 {
-    "title":"rest t06 upd",
-    "author":"rest a06 upd",
-    "url":"rest u06",
-    "likes": 123
+    "title":"rest t17 upd",
+    "author":"rest a17",
+    "url":"rest u17 upd",
+    "likes": 17
 }
 

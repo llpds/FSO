@@ -1,5 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
+const User = require('../models/user') // delete if no need to delete blogs id from user
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user')
@@ -38,11 +39,8 @@ blogsRouter.post ('/', async (request, response) => {
 blogsRouter.put('/:id', async (request, response) => {
   const body = request.body
 
-
-  // constraints for put updating
-  // This is obvious behavior corresponding to creating a new user
-  // I don't see the need to issue an error message
-  // If necessary use  if(!title.length || title.length < 5) { response.status(404).send({ error: 'User validation failed: title is shorter than the minimum allowed length (5).' })}
+  if(!body.title.length || body.title.length < 2) { response.status(401).send({ error: 'Title is shorter than the minimum allowed length (5).' })}
+  if(!body.url.length || body.url.length < 5) { response.status(401).send({ error: 'Url is shorter than the minimum allowed length (5).' })}
 
   const blog = {
     title: body.title || undefined, //prevents insertion of an empty line
@@ -55,10 +53,11 @@ blogsRouter.put('/:id', async (request, response) => {
   response.json(updatedBlog)
 })
 
-// deleted blogs id is still saved in user.blogs... (((
+
 blogsRouter.delete('/:id', async (request, response) => {
   const user = request.user
   const blog = await Blog.findById(request.params.id)
+  user.blogs = user.blogs.filter(blogId => blogId.toString() !== request.params.id) // delete if no need to delete blogs id from user
 
   if(!blog){
     response.status(401).json({ error: 'This blog id doesn\'t exist' })
@@ -70,6 +69,7 @@ blogsRouter.delete('/:id', async (request, response) => {
 
   if (blog.user.toString() === user.id){
     await Blog.findByIdAndRemove(request.params.id)
+    await User.findByIdAndUpdate(user._id.toString(), user, { new:true }) // delete if no need to delete blogs id from user
     response.status(204).end()
   } else {
     return response.status(401).json({ error: 'only user who made the blog record can delete it' })
