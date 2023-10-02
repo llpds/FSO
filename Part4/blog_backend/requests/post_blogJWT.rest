@@ -1,11 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJpZCI6IjY1MGRlMTY4MDYyMTRjYzQ1NjgzODEyNyIsImlhdCI6MTY5NjA5MDcyNCwiZXhwIjoxNjk2MDk0MzI0fQ.SVK1SUg-qQRhONExNvJkPG43C2etVcgY3TR6GcU9nRY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJpZCI6IjY1MGRlMTY4MDYyMTRjYzQ1NjgzODEyNyIsImlhdCI6MTY5NjE2MTc0OSwiZXhwIjoxNjk2MTY1MzQ5fQ.e1VjXry07AI5EE9KQAet3xW9-KmaVigxFd-F1tcKr2c
 
 {
-    "title":"rest t24",
-    "author":"rest a24",
-    "url":"rest u24",
-    "likes":24
+    "title":"rest t33",
+    "author":"rest a33",
+    "url":"rest u33",
+    "likes":32
 }
 

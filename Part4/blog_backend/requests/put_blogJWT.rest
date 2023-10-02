@@ -1,0 +1,11 @@
+PUT http://localhost:3003/api/blogs/6511b338a3b36c56326a2f73
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJpZCI6IjY1MGRlMTY4MDYyMTRjYzQ1NjgzODEyNyIsImlhdCI6MTY5NjI2NzY1MSwiZXhwIjoxNjk2MjcxMjUxfQ.o5s56fxWnyNwF0XyC9g2le0MjYI4rhUvl5tXkbr0cXU
+
+{
+    "title":"rest t33 upd2",
+    "author":"rest a33",
+    "url":"rest u33",
+    "likes": 33
+}
+

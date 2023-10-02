@@ -38,17 +38,26 @@ const tokenExtractor = (request, response, next) => {
   next()
 }
 
+
 const userExtractor = async (request, response, next) => {
-  if (request.token) {
-    const uncheckedUsr = jwt.verify(request.token, process.env.SECRET) //read more about jwt.verify may be User.findById(uncheckedUsr.id) is redundant
-    if (!uncheckedUsr.id) {
-      return response.status(401).json({ error: 'token invalid' })
-    }
-    request.user = await User.findById(uncheckedUsr.id)
+  if(!request.token) {
+    request.user = null
+  } else {
+    let uncheckedUser
+
+    //const uncheckedUser = jwt.verify(request.token, process.env.SECRET) // cause of response 500 with expired token
+    jwt.verify(request.token, process.env.SECRET, (err, decoded) => { // work correct with expired token: "message": "jwt expired"
+      if(err) return response.status(401).json({ error: err })
+      uncheckedUser = decoded
+    })
+    request.user = await User.findById(uncheckedUser.id)
   }
+
+
 
   next()
 }
+
 
 module.exports = {
   requestLogger,

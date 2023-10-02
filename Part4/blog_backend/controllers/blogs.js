@@ -1,6 +1,7 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user') // delete if no need to delete blogs id from user
+const logger = require('../utils/logger')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user')
@@ -19,6 +20,7 @@ blogsRouter.get('/:id', async (request,response) => {
 blogsRouter.post ('/', async (request, response) => {
   const body = request.body
 
+  if (request.user === null) return response.status(401).json({ error: 'this operation cannot be performed without a token' })
   const user = request.user
 
   const blog = new Blog ({
@@ -39,8 +41,8 @@ blogsRouter.post ('/', async (request, response) => {
 blogsRouter.put('/:id', async (request, response) => {
   const body = request.body
 
-  if(!body.title.length || body.title.length < 2) { response.status(401).send({ error: 'Title is shorter than the minimum allowed length (5).' })}
-  if(!body.url.length || body.url.length < 5) { response.status(401).send({ error: 'Url is shorter than the minimum allowed length (5).' })}
+  if(!body.title) { logger.info('if the title does not exist, it will not be updated.')}
+  if(!body.url || body.url.length < 5) { logger.info('if the url does not exist or is shorter than required length (5 symbols), it will not be updated.')}
 
   const blog = {
     title: body.title || undefined, //prevents insertion of an empty line
