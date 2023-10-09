@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -10,6 +11,8 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [message, setMessage] = useState(null)
+  const [newBlog, setNewBlog] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -24,10 +27,14 @@ const App = () => {
       setUser(user)
     }
   },[])
+  
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
+    blogService.nullToken()
     setUser(null)
   }
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -36,13 +43,15 @@ const App = () => {
         username, password,
       })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
+
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
     }catch(exception){
-      setErrorMessage('wong credentials')
+      setMessage(['wong credentials','err'])
       setTimeout(()=> {
-        setErrorMessage(null)
+        setMessage(null)
       }, 5000)
     }
   }
@@ -76,14 +85,17 @@ const App = () => {
     return (
       <div>
         <h2>blogs</h2>
-        <h4>{user.name} logged in</h4>
-        <button
-            id ='logout_button'
-            type='submit'
-            onClick={handleLogout}
-          >
-            Logout
-        </button>
+        <p>{user.name} logged in
+          <button
+              id ='logout_button'
+              type='submit'
+              onClick={handleLogout}
+            >
+              Logout
+          </button>
+        </p>
+
+        <BlogForm blogs = {blogs} setBlogs = {setBlogs} setMessage = {setMessage}/>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
         )}
@@ -94,7 +106,8 @@ const App = () => {
 
   return (
     <div>
-      <Notification message= {errorMessage} />
+      <Notification message= {message} />
+      <h2>Add a new</h2>
       {pageForm()}
     </div>
   )
