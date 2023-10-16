@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
+import LoggedComponent from './components/auth/LoggedComponent'
+import LoginForm from './components/auth/LoginForm'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -28,7 +30,6 @@ const App = () => {
     }
   },[])
   
-
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
     blogService.nullToken()
@@ -56,59 +57,31 @@ const App = () => {
     }
   }
 
-  const pageForm = () => {
-    if(user === null){
-      return (
-        <div>
-          <h2>Log in to application</h2>
-          <form onSubmit = {handleLogin}>
-            username
-            <input 
-              type = "text"
-              name = "Username"
-              value = {username}
-              onChange = {({target}) => setUsername(target.value)}
-            /> <br />
-            password
-            <input 
-              type = "text"
-              name = "Password"
-              value = {password}
-              onChange = {({target}) => setPassword(target.value)}
-            /> <br />
-            <button type = "submit"> login </button>
-          </form>
-        </div>
-      )      
-    }
-  
-    return (
-      <div>
-        <h2>blogs</h2>
-        <p>{user.name} logged in
-          <button
-              id ='logout_button'
-              type='submit'
-              onClick={handleLogout}
-            >
-              Logout
-          </button>
-        </p>
-
-        <BlogForm blogs = {blogs} setBlogs = {setBlogs} setMessage = {setMessage}/>
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
-        )}
-      </div>
-    )
-  }
-
-
   return (
     <div>
       <Notification message= {message} />
-      <h2>Add a new</h2>
-      {pageForm()}
+      <h2>Blog app</h2>
+      
+      {!user && <LoginForm 
+                  username = {username}
+                  setUsername = {setUsername}
+                  password = {password}
+                  setPassword = {setPassword}
+                  handleLogin = {handleLogin}
+                />}
+
+      {user && 
+        <div>
+
+          <LoggedComponent user = {user} handleLogout = {handleLogout}/>
+          <BlogForm blogs = {blogs} setBlogs = {setBlogs} setMessage = {setMessage}/>
+          <h2>blogs</h2>
+          {blogs.map(blog =>
+            <Blog key={blog.id} blog={blog} />
+          )}
+        </div>
+      }
+      
     </div>
   )
 }

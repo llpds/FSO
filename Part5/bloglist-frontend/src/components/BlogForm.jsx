@@ -74,7 +74,8 @@ const BlogForm = ({blogs, setBlogs, setMessage}) => {
   }
 
   return(
-    <div>      
+    <div>
+      <h2>Add a new</h2>      
       <form onSubmit = {submitBlog}>
         <Input text = 'Title' value = {newTitle} onChange = {(event) => setNewTitle(event.target.value)} />
         <Input text = 'Author' value = {newAuthor} onChange = {(event) => setNewAuthor(event.target.value)} />
