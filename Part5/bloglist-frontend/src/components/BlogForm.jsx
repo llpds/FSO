@@ -1,10 +1,10 @@
-import { useState } from 'react'  
+import { useState, useRef } from 'react'  
 import Button from './elements/Button'
 import Input from './elements/Input'
 import blogService from '../services/blogs'
 
 
-const BlogForm = ({blogs, setBlogs, setMessage}) => {
+const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef}) => {
 
   // --------------------------  states --------------------------
   const [newTitle, setNewTitle] = useState('')
@@ -14,6 +14,7 @@ const BlogForm = ({blogs, setBlogs, setMessage}) => {
   // --------------------------  submit  --------------------------
   const submitBlog = (event) => {
     event.preventDefault()
+
     const titleCorrespondence = blogs.find(blog => blog.title.toLowerCase() === newTitle.toLowerCase())
     const urlCorrespondence = blogs.find(blog => blog.url === newUrl)
 
@@ -44,6 +45,7 @@ const BlogForm = ({blogs, setBlogs, setMessage}) => {
 
   // --------------------------  actions  --------------------------
   const addBlog = (newObject) => {
+    blogFormRef.current.toggleVisibility()
     blogService
       .create(newObject)
       .then(returnedBlog => {
