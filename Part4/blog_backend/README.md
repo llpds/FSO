@@ -32,3 +32,7 @@ for checking the uniqueness of a field: mongoose-unique-validator
 
 Usually a token is sensitive information, in this case (training project) it is not.
 I find it is convenient to store the training tokens in the repository, otherwise all request/*JWT.rest files would not be uploaded to the repository
+
+UPD:  
+  Blog post author: blog.user.username
+  Author of the article referenced in the blog link: blog.author - could be empty.
