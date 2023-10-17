@@ -13,9 +13,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
   const [message, setMessage] = useState(null)
-  const [newBlog, setNewBlog] = useState('')
   const blogFormRef = useRef()
 
   useEffect(() => {
@@ -60,7 +58,7 @@ const App = () => {
   }
 
   const blogForm = () => (
-    <Togglable buttonLabel="new blog" ref={blogFormRef}>
+    <Togglable buttonLabel="new blog" hideButtonLabel="cancel" ref={blogFormRef}>
       <BlogForm blogs = {blogs} setBlogs = {setBlogs} setMessage = {setMessage} blogFormRef={blogFormRef}/>
     </Togglable>
   )
@@ -85,7 +83,9 @@ const App = () => {
           {blogForm()}
           <h2>blogs</h2>
           {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
+            <div key={blog.id}>
+              <Blog blog={blog} />
+            </div>
           )}
         </div>
       }
