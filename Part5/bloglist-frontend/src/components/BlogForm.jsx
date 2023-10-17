@@ -4,11 +4,10 @@ import Input from './elements/Input'
 import blogService from '../services/blogs'
 
 
-const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef}) => {
+const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef, user}) => {
 
   // --------------------------  states --------------------------
   const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
 
   // --------------------------  submit  --------------------------
@@ -18,8 +17,8 @@ const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef}) => {
     const titleCorrespondence = blogs.find(blog => blog.title.toLowerCase() === newTitle.toLowerCase())
     const urlCorrespondence = blogs.find(blog => blog.url === newUrl)
 
-    if(newTitle === '' || newAuthor === '' || newUrl === '') {
-      alert("all fields (name, author and url) must be filled")
+    if(newTitle === '' || newUrl.length < 5) {
+      alert("Name and url must be filled. \n The URL must be at least 5 characters long.")
       return
     }
     
@@ -37,7 +36,6 @@ const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef}) => {
 
     addBlog({
       title: newTitle,
-      author: newAuthor,
       url: newUrl,
       likes: 0
     })
@@ -45,13 +43,13 @@ const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef}) => {
 
   // --------------------------  actions  --------------------------
   const addBlog = (newObject) => {
-    blogFormRef.current.toggleVisibility()
     blogService
       .create(newObject)
       .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
+        blogFormRef.current.toggleVisibility()
+        const blogToConcat = {...returnedBlog, user: {username: user.username}}
+        setBlogs(blogs.concat(blogToConcat))
         setNewTitle('')
-        setNewAuthor('')
         setNewUrl('')
         showMessage(`Added ${returnedBlog.title}`)
       })
@@ -80,7 +78,6 @@ const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef}) => {
       <h2>Add a new</h2>      
       <form onSubmit = {submitBlog}>
         <Input text = 'Title' value = {newTitle} onChange = {(event) => setNewTitle(event.target.value)} />
-        <Input text = 'Author' value = {newAuthor} onChange = {(event) => setNewAuthor(event.target.value)} />
         <Input text = 'Url' value = {newUrl} onChange = {(event) => setNewUrl(event.target.value)} />
         <Button text = "create" />
       </form>
