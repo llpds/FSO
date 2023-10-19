@@ -22,8 +22,10 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).send({ error: 'malformatted error' })
   } else if ( error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
-  } else if (error.name ===  'JsonWebTokenError') {
-    return response.status(401).json({ error: error.message })
+  // } else if (error.name ===  'JsonWebTokenError') { //         this messages are shown in userExtractor
+  //   return response.status(401).json({ error: error.message })
+  // } else if (error.name === 'TokenExpiredError') {
+  //   return response.status(401).json({ error: 'token expired' })
   }
 
   next(error)
@@ -43,13 +45,15 @@ const userExtractor = async (request, response, next) => {
   if(!request.token) {
     request.user = null
   } else {
-    let uncheckedUser
 
-    //const uncheckedUser = jwt.verify(request.token, process.env.SECRET) // cause of response 500 with expired token
-    jwt.verify(request.token, process.env.SECRET, (err, decoded) => { // work correct with expired token: "message": "jwt expired"
-      if(err) return response.status(401).json({ error: err })
+    // const uncheckedUser = jwt.verify(request.token, process.env.SECRET) //need to catch error by type in error handler, doesn't catch unknown token in requests/post_blogJWT_err.rest
+
+    let uncheckedUser //other way to show error message
+    jwt.verify(request.token, process.env.SECRET, (error, decoded) => {
+      if(error) return response.status(401).json({ error: error })
       uncheckedUser = decoded
     })
+
     request.user = await User.findById(uncheckedUser.id)
   }
 

@@ -1,6 +1,6 @@
-FullStackOpen exercises for part 4.
+# FullStackOpen exercises for part 4.
 
-new structure implemented:
+new structure:
   build
     frontend
 
@@ -33,6 +33,7 @@ for checking the uniqueness of a field: mongoose-unique-validator
 Usually a token is sensitive information, in this case (training project) it is not.
 I find it is convenient to store the training tokens in the repository, otherwise all request/*JWT.rest files would not be uploaded to the repository
 
-UPD:  
-  Blog post author: blog.user.username
-  Author of the article referenced in the blog link: blog.author - could be empty.
+## UPD: 
+
+19.10.2023
+  - JWT error message

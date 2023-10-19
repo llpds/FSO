@@ -58,18 +58,15 @@ blogsRouter.put('/:id', async (request, response) => {
 
 blogsRouter.delete('/:id', async (request, response) => {
   const user = request.user
+  if(!user) response.status(401).json({ error: 'invalid user' })
   const blog = await Blog.findById(request.params.id)
   user.blogs = user.blogs.filter(blogId => blogId.toString() !== request.params.id) // delete if no need to delete blogs id from user
 
-  if(!blog){
-    response.status(401).json({ error: 'This blog id doesn\'t exist' })
-  }
+  if(!blog) response.status(401).json({ error: 'This blog id doesn\'t exist' })
 
-  if(!blog.user){
-    response.status(401).json({ error: 'And... we have a virgin birth: blog without Creator' })
-  }
+  if(!blog.user) response.status(401).json({ error: 'And... we have a virgin birth: blog without Creator' })
 
-  if (blog.user.toString() === user.id){
+  if ( blog.user.toString() === user.id){
     await Blog.findByIdAndRemove(request.params.id)
     await User.findByIdAndUpdate(user._id.toString(), user, { new:true }) // delete if no need to delete blogs id from user
     response.status(204).end()
