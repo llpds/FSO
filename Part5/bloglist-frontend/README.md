@@ -12,6 +12,10 @@
   - like button functionality
   - all .then methods are removed
 
+### 5.10: Blog list frontend, step10
+  - blog is listed by number of likes
+
+
 
  ToDo:
 

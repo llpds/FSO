@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     const initBlog = async () => {
       const blogs = await blogService.getAll()
-        setBlogs( blogs )
+      setBlogs( blogs )
     }
     initBlog()
   }, [])
@@ -92,14 +92,17 @@ const App = () => {
           <LoggedComponent user = {user} handleLogout = {handleLogout}/>
           {blogForm()}
           <h2>blogs</h2>
-          {blogs.map(blog =>
-            <div key={blog.id}>
-              <Blog 
-                blog={blog}
-                updateBlogs = {updateBlogs}
-              />
-            </div>
-          )}
+          {blogs
+            .sort((a,b) => a.likes - b.likes )
+            .map(blog =>
+              <div key={blog.id}>
+                <Blog 
+                  blog={blog}
+                  updateBlogs = {updateBlogs}
+                  />
+              </div>
+            )
+          }
         </div>
       }
       
