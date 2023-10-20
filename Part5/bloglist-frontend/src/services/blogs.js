@@ -11,9 +11,9 @@ const nullToken = () => {
   token = null
 }
 
-const getAll = () => {
-  const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+const getAll = async () => {
+  const response = await axios.get(baseUrl)
+  return response.data
 }
 
 const create = async (newBlog) => {
@@ -25,4 +25,12 @@ const create = async (newBlog) => {
   return response.data
 }
 
-export default { getAll, create, setToken, nullToken }
+const update = async (id, data) => {
+  const config = {
+    headers: { Authorization: token}
+  }
+
+  const response = await axios.put(`${baseUrl}/${id}`, data, config)
+  return response.data
+}
+export default { getAll, create, update, setToken, nullToken }

@@ -8,6 +8,7 @@ const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef, user}) => {
 
   // --------------------------  states --------------------------
   const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
 
   // --------------------------  submit  --------------------------
@@ -17,8 +18,8 @@ const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef, user}) => {
     const titleCorrespondence = blogs.find(blog => blog.title.toLowerCase() === newTitle.toLowerCase())
     const urlCorrespondence = blogs.find(blog => blog.url === newUrl)
 
-    if(newTitle === '' || newUrl.length < 5) {
-      alert("Name and url must be filled. \n The URL must be at least 5 characters long.")
+    if(newTitle === '' || newAuthor === '' || newUrl.length < 5) {
+      alert("Name, author and url must be filled. \n The URL must be at least 5 characters long.")
       return
     }
     
@@ -37,26 +38,22 @@ const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef, user}) => {
     addBlog({
       title: newTitle,
       url: newUrl,
+      author: newAuthor,
       likes: 0
     })
   }
 
   // --------------------------  actions  --------------------------
-  const addBlog = (newObject) => {
-    blogService
-      .create(newObject)
-      .then(returnedBlog => {
-        blogFormRef.current.toggleVisibility()
-        const blogToConcat = {...returnedBlog, user: {username: user.username}}
-        setBlogs(blogs.concat(blogToConcat))
-        setNewTitle('')
-        setNewUrl('')
-        showMessage(`Added ${returnedBlog.title}`)
-      })
-      .catch(error => {
-        console.log('error', error.response.data.error)
-        showError(error.response.data.error)
-      })
+  const addBlog = async (newObject) => {
+    const addedBlog = await blogService.create(newObject)
+
+    blogFormRef.current.toggleVisibility()
+    const blogToConcat = {...addedBlog, user: user}
+    setBlogs(blogs.concat(blogToConcat))
+    setNewTitle('')
+    setNewAuthor('')
+    setNewUrl('')
+    showMessage(`Added ${addedBlog.title}`)
   }
 
   const showMessage = (msg) => {
@@ -78,6 +75,7 @@ const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef, user}) => {
       <h2>Add a new</h2>      
       <form onSubmit = {submitBlog}>
         <Input text = 'Title' value = {newTitle} onChange = {(event) => setNewTitle(event.target.value)} />
+        <Input text = 'Author' value = {newAuthor} onChange = {(event) => setNewAuthor(event.target.value)} />
         <Input text = 'Url' value = {newUrl} onChange = {(event) => setNewUrl(event.target.value)} />
         <Button text = "create" />
       </form>

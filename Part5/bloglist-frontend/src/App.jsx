@@ -16,10 +16,15 @@ const App = () => {
   const [message, setMessage] = useState(null)
   const blogFormRef = useRef()
 
+
+  // useEffect(async () => ...) works with warning
+  // react-dom.development.js:86 Warning: useEffect must not return anything besides a function, which is used for clean-up.
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    const initBlog = async () => {
+      const blogs = await blogService.getAll()
+        setBlogs( blogs )
+    }
+    initBlog()
   }, [])
 
   useEffect(()=> {
@@ -30,6 +35,10 @@ const App = () => {
       blogService.setToken(user.token)
     }
   },[])
+
+  const updateBlogs = (updatedBlog) => {
+    setBlogs(blogs.map(b => b.id === updatedBlog.id ? updatedBlog : b))
+  }
   
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
@@ -85,7 +94,10 @@ const App = () => {
           <h2>blogs</h2>
           {blogs.map(blog =>
             <div key={blog.id}>
-              <Blog blog={blog} />
+              <Blog 
+                blog={blog}
+                updateBlogs = {updateBlogs}
+              />
             </div>
           )}
         </div>
