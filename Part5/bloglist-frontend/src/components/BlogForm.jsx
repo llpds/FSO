@@ -48,7 +48,8 @@ const BlogForm = ({blogs, setBlogs, setMessage, blogFormRef, user}) => {
     const addedBlog = await blogService.create(newObject)
 
     blogFormRef.current.toggleVisibility()
-    const blogToConcat = {...addedBlog, user: user}
+    const blogToConcat = {...addedBlog, user: {username: user.username}} //wrong structure, w/o token
+    console.log('blogToConcat', blogToConcat)
     setBlogs(blogs.concat(blogToConcat))
     setNewTitle('')
     setNewAuthor('')

@@ -1,13 +1,19 @@
 import {useState} from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog , updateBlogs}) => {
+const Blog = ({ blog, user, updateBlogs, deleteBlog, setMessage}) => {
   const [detailsVisibility, setDetailsVisibility] = useState(false)
   const blogStyle = {
     padding: '10px 5px',
     border: '1px solid #0000cc',
     marginBottom: 5,
     borderRadius: '5px'
+  }
+
+  const removeButtonStyle = {
+    border: '1px solid red',
+    borderRadius: '3px',
+    color: 'red'
   }
   
   const toggleVisibility = () => {
@@ -31,14 +37,38 @@ const Blog = ({ blog , updateBlogs}) => {
     updateBlogs(blogToBlogs)
   }
 
+  const handleRemove = async () => {
+    // const blogId = blog.id
+    // const blogTitle = blog.title
+    if(window.confirm(`Remove blog ${blog.title}`)){
+      await blogService.destroy(blog.id)
+      deleteBlog(blog.id)
+      setMessage([`Blog ${blog.title} removed`, 'msg'])
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+    }
+  }
+
+
+
+  const buttonRemove = () => {
+    if(blog.user.username === user.username){
+      return (
+        <button style={removeButtonStyle} onClick={handleRemove}>remove</button>
+      )
+    }
+  }
+
   return (
     <div style={blogStyle}>
       {blog.title} <i>{blog.author}</i>
-      <button onClick={toggleVisibility}>{detailsVisibility ? 'hide' :'view'}</button>{blog.likes}
+      <button onClick={toggleVisibility}>{detailsVisibility ? 'hide' :'view'}</button>
       {detailsVisibility && <div>
           <p>url: {blog.url}</p>
           <p>likes: {blog.likes}<button onClick={handleLike}>like</button></p>
           <p>user: {blog.user.username}</p>
+          {buttonRemove()}
         </div>}
     </div>  
   )

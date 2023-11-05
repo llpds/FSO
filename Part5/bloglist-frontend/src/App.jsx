@@ -39,6 +39,10 @@ const App = () => {
   const updateBlogs = (updatedBlog) => {
     setBlogs(blogs.map(b => b.id === updatedBlog.id ? updatedBlog : b))
   }
+
+  const deleteBlog = (id) => {
+    setBlogs(blogs.filter(b => b.id !== id))
+  }
   
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
@@ -99,6 +103,9 @@ const App = () => {
                 <Blog 
                   blog={blog}
                   updateBlogs = {updateBlogs}
+                  deleteBlog = {deleteBlog}
+                  user = {user}
+                  setMessage = {setMessage}
                   />
               </div>
             )
