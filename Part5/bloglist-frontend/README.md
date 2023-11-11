@@ -18,7 +18,7 @@
 ### 5.11: Blog list frontend, step11
   - button and logic for deleting blog posts
   - LANZAROTE: 
-      Charco de losClicos
+      Charco de los Clicos
       Playa del Janubio
       Los Charcones
       Playa Mujeres
@@ -34,6 +34,10 @@
       Volcan El Cuervo
       Natural del Timanfaya
 
+### 5.12: Blog list frontend, step12
+  - propTypes
+  - ESLint
+
  ToDo:
 
   -  data integrity:  ex 5.8. when add new blog, field user in blog has wrong structure.
@@ -44,3 +48,5 @@
 
 
   -  when the browser is reloaded with expired token in localStorage it still login
+
+  -  button like works incorrect!!!

@@ -1,13 +1,13 @@
-const LoggedComponent = ({user, handleLogout}) => (
+const LoggedComponent = ({ user, handleLogout }) => (
   <p>{user.name} logged in
-  <button
+    <button
       id ='logout_button'
       type='submit'
       onClick={handleLogout}
     >
       Logout
-  </button>
-</p>
+    </button>
+  </p>
 )
 
 export default LoggedComponent

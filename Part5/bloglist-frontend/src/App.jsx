@@ -27,7 +27,7 @@ const App = () => {
     initBlog()
   }, [])
 
-  useEffect(()=> {
+  useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if(loggedUserJSON){
       const user = JSON.parse(loggedUserJSON)
@@ -43,7 +43,7 @@ const App = () => {
   const deleteBlog = (id) => {
     setBlogs(blogs.filter(b => b.id !== id))
   }
-  
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
     blogService.nullToken()
@@ -65,7 +65,7 @@ const App = () => {
       setPassword('')
     }catch(exception){
       setMessage(['wong credentials','err'])
-      setTimeout(()=> {
+      setTimeout(() => {
         setMessage(null)
       }, 5000)
     }
@@ -81,16 +81,18 @@ const App = () => {
     <div>
       <Notification message= {message} />
       <h2>Blog app</h2>
-      
-      {!user && <LoginForm 
-                  username = {username}
-                  setUsername = {setUsername}
-                  password = {password}
-                  setPassword = {setPassword}
-                  handleLogin = {handleLogin}
-                />}
 
-      {user && 
+      {!user &&
+        <LoginForm
+          username = {username}
+          setUsername = {setUsername}
+          password = {password}
+          setPassword = {setPassword}
+          handleLogin = {handleLogin}
+        />
+      }
+
+      {user &&
         <div>
 
           <LoggedComponent user = {user} handleLogout = {handleLogout}/>
@@ -100,19 +102,19 @@ const App = () => {
             .sort((a,b) => a.likes - b.likes )
             .map(blog =>
               <div key={blog.id}>
-                <Blog 
+                <Blog
                   blog={blog}
                   updateBlogs = {updateBlogs}
                   deleteBlog = {deleteBlog}
                   user = {user}
                   setMessage = {setMessage}
-                  />
+                />
               </div>
             )
           }
         </div>
       }
-      
+
     </div>
   )
 }
