@@ -36,6 +36,9 @@ const App = () => {
         const user = JSON.parse(loggedUserJSON)
         setUser(user)
         blogService.setToken(user.token)
+      } else {
+        window.localStorage.removeItem('sessionExpired')
+        window.localStorage.removeItem('loggedUser')
       }
     }
   },[])
@@ -61,7 +64,7 @@ const App = () => {
         username, password,
       })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
-      window.localStorage.setItem('sessionExpired', JSON.stringify({ 'date': Date.now() + 1*2*1000 }))
+      window.localStorage.setItem('sessionExpired', JSON.stringify({ 'date': Date.now() + 1*4*1000 }))
 
       blogService.setToken(user.token)
       setUser(user)
