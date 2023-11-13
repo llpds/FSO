@@ -64,7 +64,7 @@ const App = () => {
         username, password,
       })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
-      window.localStorage.setItem('sessionExpired', JSON.stringify({ 'date': Date.now() + 1*4*1000 }))
+      window.localStorage.setItem('sessionExpired', JSON.stringify({ 'date': Date.now() + 60*60*1000 })) //session time
 
       blogService.setToken(user.token)
       setUser(user)
