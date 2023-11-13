@@ -29,10 +29,14 @@ const App = () => {
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
-    if(loggedUserJSON){
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
+    const sessionExpired = window.localStorage.getItem('sessionExpired')
+    if(loggedUserJSON && sessionExpired){
+      const expire = JSON.parse(sessionExpired)
+      if(expire.date > Date.now()){
+        const user = JSON.parse(loggedUserJSON)
+        setUser(user)
+        blogService.setToken(user.token)
+      }
     }
   },[])
 
@@ -52,19 +56,19 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-
     try{
       const user = await loginService.login({
         username, password,
       })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      window.localStorage.setItem('sessionExpired', JSON.stringify({ 'date': Date.now() + 1*2*1000 }))
 
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
     }catch(exception){
-      setMessage(['wong credentials','err'])
+      setMessage(['wrong credentials','err'])
       setTimeout(() => {
         setMessage(null)
       }, 5000)

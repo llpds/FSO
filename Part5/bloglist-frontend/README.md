@@ -37,6 +37,13 @@
 ### 5.12: Blog list frontend, step12
   - propTypes
   - ESLint
+  -  when the browser is reloaded with expired token in localStorage it still login
+
+### 5.13: Blog list tests, step1
+
+  Make a test, which checks that the component displaying a blog renders the blog's title and author, but does not render its URL or number of likes by default.
+
+  Add CSS classes to the component to help the testing as necessary.
 
  ToDo:
 
@@ -47,6 +54,7 @@
     !!! update this part when you'll make frontend specific blog output functionality(example showBlog/id)
 
 
-  -  when the browser is reloaded with expired token in localStorage it still login
+  
 
-  -  button like works incorrect!!!
+
+p.s. After completing part 5b (ex 5.12) I decide not to do the same app as shown in course and not to continue its repository. It look like double work and cost of time. But 'notes' could be useful and i move it to FSO.
