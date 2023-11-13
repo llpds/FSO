@@ -42,7 +42,7 @@
 ### 5.13: Blog list tests, step1
 -  when the browser is reloaded with expired token in localStorage it still login: token lifetime 1h, after loggin frontEnd has the same period of time before cleaning local storage
 
-- not yet
+- unfinished
   Make a test, which checks that the component displaying a blog renders the blog's title and author, but does not render its URL or number of likes by default.
 
   Add CSS classes to the component to help the testing as necessary.
