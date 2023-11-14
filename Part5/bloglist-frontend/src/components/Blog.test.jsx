@@ -4,13 +4,14 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
-test('renders content', async () => {
+describe('<Blog />', () => {
+
   const blog = {
     id: 777777,
     title: 'titleTest',
     url: 'urlTest',
     likes: 14,
-    user: 123,
+    user: 'userBlogTest',
     author: 'authorTest'
   }
 
@@ -19,22 +20,47 @@ test('renders content', async () => {
     name: 'userTest'
   }
 
-  const mockHandler = jest.fn()
 
-  render(<Blog blog={blog} user ={user} toggleVisibility = {mockHandler} />)
+  test('renders content title and author. NOT: URl and likes. Ex 5.13', async () => {
 
-  screen.debug()
+    const { container } = render(<Blog blog={blog} user ={user} />)
+    const div = container.querySelector('.blog')
 
-  const userEv = userEvent.setup()
-  const button = screen.getByText('view')
-  await userEv.click(button)
-  screen.debug()
-  expect(mockHandler.mock.calls).toHaveLength(1)
+    expect(div).toHaveTextContent('titleTest')
+    expect(div).toHaveTextContent('authorTest')
+    expect(div).not.toHaveTextContent('urlTest')
+    expect(div).not.toHaveTextContent(14)
+  })
 
-  // expect(element).toBeDefined()
-  // const element = screen.getByText('titleTest')
 
-  // const { container } = render(<Blog blog={blog} user ={user} />)
-  // const div = container.querySelector('.blog')
-  // expect(div).toHaveTextContent('titleTest')
+  test('renders URL and likes after after clicking "view" button Ex 5.14', async () => {
+    const { container } = render(<Blog blog={blog} user ={user} />)
+    const div = container.querySelector('.blog')
+
+    const userEv = userEvent.setup()
+    const button = screen.getByText('view')
+    await userEv.click(button)
+
+    expect(div).toHaveTextContent('urlTest')
+    expect(div).toHaveTextContent(14)
+  })
+
+  test('twice click "Like" Ex 5.15', async () => {
+
+    const mockHandler = jest.fn()
+    const { container } = render(<Blog blog={blog} user ={user}  handleLike = {mockHandler}/>)
+    const div = container.querySelector('.blog')
+
+    const userEv = userEvent.setup()
+    const viewButton = screen.getByText('view')
+    await userEv.click(viewButton)
+    screen.debug()
+
+    const likeButton = screen.getByRole('button', { name: 'liked' })
+    await userEv.click(likeButton)
+    screen.debug()
+
+    //not work yet
+
+  })
 })

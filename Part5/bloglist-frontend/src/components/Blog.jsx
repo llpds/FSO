@@ -67,7 +67,7 @@ const Blog = ({ blog, user, updateBlogs, deleteBlog, setMessage }) => {
       {detailsVisibility &&
         <div>
           <p>url: {blog.url}</p>
-          <p>likes: {blog.likes}<button onClick={handleLike}>like</button></p>
+          <p>likes: {blog.likes}<button onClick={handleLike}>liked</button></p>
           <p>user: {blog.user.username}</p>
           {buttonRemove()}
         </div>}
