@@ -5,7 +5,7 @@ import blogService from '../services/blogs'
 import PropTypes from 'prop-types'
 
 
-const BlogForm = ({ blogs, setBlogs, setMessage, blogFormRef, user }) => {
+const BlogForm = ({ blogs, setBlogs, setMessage, blogFormRef, user, addBlog }) => {
 
   // --------------------------  states --------------------------
   const [newTitle, setNewTitle] = useState('')
@@ -42,34 +42,14 @@ const BlogForm = ({ blogs, setBlogs, setMessage, blogFormRef, user }) => {
       author: newAuthor,
       likes: 0
     })
-  }
-
-  // --------------------------  actions  --------------------------
-  const addBlog = async (newObject) => {
-    const addedBlog = await blogService.create(newObject)
 
     blogFormRef.current.toggleVisibility()
-    const blogToConcat = { ...addedBlog, user: { username: user.username } } //wrong structure, w/o token
-    setBlogs(blogs.concat(blogToConcat))
+
     setNewTitle('')
     setNewAuthor('')
     setNewUrl('')
-    showMessage(`Added ${addedBlog.title}`)
   }
 
-  const showMessage = (msg) => {
-    setMessage([msg, 'msg'])
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
-  }
-
-  const showError = (msg) => {
-    setMessage([msg, 'err'])
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
-  }
 
   return(
     <div>

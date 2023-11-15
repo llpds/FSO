@@ -16,18 +16,27 @@ const App = () => {
   const [message, setMessage] = useState(null)
   const blogFormRef = useRef()
 
+  const initBlog = async () => {
+    const blogs = await blogService.getAll()
+    setBlogs( blogs )
+  }
 
-  // useEffect(async () => ...) works with warning
-  // react-dom.development.js:86 Warning: useEffect must not return anything besides a function, which is used for clean-up.
+  const showMessage = ( msg ) => {
+    setMessage([msg, 'msg'])
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+  }
+
+  const showError = ( msg ) => {
+    setMessage([msg, 'err'])
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+  }
+
   useEffect(() => {
-    const initBlog = async () => {
-      const blogs = await blogService.getAll()
-      setBlogs( blogs )
-    }
     initBlog()
-  }, [])
-
-  useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     const sessionExpired = window.localStorage.getItem('sessionExpired')
     if(loggedUserJSON && sessionExpired){
@@ -43,12 +52,21 @@ const App = () => {
     }
   },[])
 
-  const updateBlogs = (updatedBlog) => {
-    setBlogs(blogs.map(b => b.id === updatedBlog.id ? updatedBlog : b))
+  const addBlog = async (newBlog) => {
+    const addedBlog = await blogService.create(newBlog)
+    initBlog()
+    showMessage(`Added ${addedBlog.title}`)
   }
 
-  const deleteBlog = (id) => {
-    setBlogs(blogs.filter(b => b.id !== id))
+  const updateBlog = async ( updBlog, blogToBack) => {
+    await blogService.update(updBlog.id, blogToBack)
+    setBlogs(blogs.map(b => b.id === updBlog.id ? updBlog : b))
+  }
+
+  const deleteBlog = async (blog) => {
+    await blogService.destroy(blog.id)
+    setBlogs(blogs.filter(b => b.id !== blog.id))
+    showMessage(`Blog ${blog.title} removed`)
   }
 
   const handleLogout = () => {
@@ -71,16 +89,13 @@ const App = () => {
       setUsername('')
       setPassword('')
     }catch(exception){
-      setMessage(['wrong credentials','err'])
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      showError('wrong credentials')
     }
   }
 
   const blogForm = () => (
     <Togglable buttonLabel="new blog" hideButtonLabel="cancel" ref={blogFormRef}>
-      <BlogForm blogs = {blogs} setBlogs = {setBlogs} setMessage = {setMessage} blogFormRef={blogFormRef} user = {user}/>
+      <BlogForm blogs = {blogs} setBlogs = {setBlogs} setMessage = {setMessage} blogFormRef={blogFormRef} user = {user} addBlog = {addBlog}/>
     </Togglable>
   )
 
@@ -111,10 +126,9 @@ const App = () => {
               <div key={blog.id}>
                 <Blog
                   blog={blog}
-                  updateBlogs = {updateBlogs}
+                  updateBlog = {updateBlog}
                   deleteBlog = {deleteBlog}
                   user = {user}
-                  setMessage = {setMessage}
                 />
               </div>
             )

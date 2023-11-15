@@ -10,7 +10,7 @@ describe('<Blog />', () => {
     id: 777777,
     title: 'titleTest',
     url: 'urlTest',
-    likes: 14,
+    likes: 5744,
     user: 'userBlogTest',
     author: 'authorTest'
   }
@@ -29,7 +29,7 @@ describe('<Blog />', () => {
     expect(div).toHaveTextContent('titleTest')
     expect(div).toHaveTextContent('authorTest')
     expect(div).not.toHaveTextContent('urlTest')
-    expect(div).not.toHaveTextContent(14)
+    expect(div).not.toHaveTextContent(5744)
   })
 
 
@@ -42,25 +42,23 @@ describe('<Blog />', () => {
     await userEv.click(button)
 
     expect(div).toHaveTextContent('urlTest')
-    expect(div).toHaveTextContent(14)
+    expect(div).toHaveTextContent(5744)
   })
 
   test('twice click "Like" Ex 5.15', async () => {
 
     const mockHandler = jest.fn()
-    const { container } = render(<Blog blog={blog} user ={user}  handleLike = {mockHandler}/>)
+    const { container } = render(<Blog blog={blog} user ={user} updateBlog = {mockHandler}/>)
     const div = container.querySelector('.blog')
 
     const userEv = userEvent.setup()
     const viewButton = screen.getByText('view')
     await userEv.click(viewButton)
-    screen.debug()
 
-    const likeButton = screen.getByRole('button', { name: 'liked' })
+    const likeButton = screen.getByRole('button', { name: 'like' })
     await userEv.click(likeButton)
-    screen.debug()
+    await userEv.click(likeButton)
 
-    //not work yet
-
+    expect(mockHandler.mock.calls).toHaveLength(2)
   })
 })

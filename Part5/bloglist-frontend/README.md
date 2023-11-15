@@ -39,20 +39,19 @@
   - ESLint
   
 
-### 5.13: Blog list tests, step1
--  when the browser is reloaded with expired token in localStorage it still login: token lifetime 1h, after loggin frontEnd has the same period of time before cleaning local storage
+### 5.13 & 5.14: Blog list tests, step1 & 2
+  -  when the browser is reloaded with expired token in localStorage it still login: token lifetime 1h, after loggin frontEnd has the same period of time before cleaning local storage
+  - tests for blog rendering before and after clicking button view. (with CSS classes as mark for tests)
 
-- unfinished
-  Make a test, which checks that the component displaying a blog renders the blog's title and author, but does not render its URL or number of likes by default.
-
-  Add CSS classes to the component to help the testing as necessary.
-
- ToDo:
-
-  -  data integrity:  ex 5.8. when add new blog, field user in blog has wrong structure.
+### 5.15: Blog list tests, step3
+   - test that ensures that if the like button is clicked twice, the event handler the component received as props is called twice.
+   -  data integrity:  ex 5.8. when add new blog, field user in blog has wrong structure.
      now concatenated blog.user hasn't the same ids as in the database (blogForm.jsx line:51-52)
      if you try to update the data before refreshing the page could cause an error
 
-    !!! update this part when you'll make frontend specific blog output functionality(example showBlog/id)
+    !!! could update this part when you'll make frontend specific blog output functionality(example showBlog/id)
+    and now just update blog list after saving
+    
+
 
 p.s. After completing part 5b (ex 5.12) I decide not to do the same app as shown in course and not to continue its repository. It look like double work and cost of time. But 'notes' could be useful and i move it to FSO.

@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
 
-const Blog = ({ blog, user, updateBlogs, deleteBlog, setMessage }) => {
+const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   const [detailsVisibility, setDetailsVisibility] = useState(false)
   const blogStyle = {
     padding: '10px 5px',
@@ -20,37 +19,24 @@ const Blog = ({ blog, user, updateBlogs, deleteBlog, setMessage }) => {
     setDetailsVisibility(!detailsVisibility)
   }
 
-  const handleLike = async () => {
-    const blogId = blog.id
-    // const blogLikeUp = {...blog, likes: blog.likes + 1} // it is better not to use destructuring here, you need to remember all properties of the object and all fields of the put method and clear unnecessary data by deleting. this may cause errors
-    // delete blogLikeUp.id
-    // delete blogLikeUp.user
+  const handleLike = () => {
+    const updBlog = { ...blog, likes: blog.likes + 1 } // I save the structure and change some of the data
     const blogToBack = { // I can easily control all the fields and prepare right data for back-end
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: blog.likes + 1
+      title: updBlog.title,
+      author: updBlog.author,
+      url: updBlog.url,
+      likes: updBlog.likes
     }
 
-    await blogService.update(blogId, blogToBack)
-    const blogToBlogs = { ...blog, likes: blog.likes + 1 } // I save the structure and change some of the data
-    updateBlogs(blogToBlogs)
+    // ex 5.15 '...the event handler the component received AS PROPS is called twice' -> move handleLike to app.jsx and handleRemove at the same time
+    updateBlog(updBlog, blogToBack)
   }
 
-  const handleRemove = async () => {
-    // const blogId = blog.id
-    // const blogTitle = blog.title
+  const handleRemove = () => {
     if(window.confirm(`Remove blog ${blog.title}`)){
-      await blogService.destroy(blog.id)
-      deleteBlog(blog.id)
-      setMessage([`Blog ${blog.title} removed`, 'msg'])
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      deleteBlog(blog)
     }
   }
-
-
 
   const buttonRemove = () => {
     if(blog.user.username === user.username){
@@ -67,7 +53,7 @@ const Blog = ({ blog, user, updateBlogs, deleteBlog, setMessage }) => {
       {detailsVisibility &&
         <div>
           <p>url: {blog.url}</p>
-          <p>likes: {blog.likes}<button onClick={handleLike}>liked</button></p>
+          <p>likes: {blog.likes}<button onClick={handleLike}>like</button></p>
           <p>user: {blog.user.username}</p>
           {buttonRemove()}
         </div>}
