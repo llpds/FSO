@@ -51,7 +51,11 @@
 
     !!! could update this part when you'll make frontend specific blog output functionality(example showBlog/id)
     and now just update blog list after saving
-    
+
+### 5.16: Blog list tests, step4
+  - test for the new blog form
+  - blogFormRef.current.toggleVisibility() moved from Blogform.jsx to app.jsx/addBlog().
+  - Blogform.jsx: added checking the length of the blogs array
 
 
 p.s. After completing part 5b (ex 5.12) I decide not to do the same app as shown in course and not to continue its repository. It look like double work and cost of time. But 'notes' could be useful and i move it to FSO.

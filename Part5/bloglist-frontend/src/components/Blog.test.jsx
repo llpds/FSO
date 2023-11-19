@@ -49,7 +49,6 @@ describe('<Blog />', () => {
 
     const mockHandler = jest.fn()
     const { container } = render(<Blog blog={blog} user ={user} updateBlog = {mockHandler}/>)
-    const div = container.querySelector('.blog')
 
     const userEv = userEvent.setup()
     const viewButton = screen.getByText('view')
