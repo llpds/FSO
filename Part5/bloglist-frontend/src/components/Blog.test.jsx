@@ -20,10 +20,12 @@ describe('<Blog />', () => {
     name: 'userTest'
   }
 
+  const emptyFunc = () => {}
+
 
   test('renders content title and author. NOT: URl and likes. Ex 5.13', async () => {
 
-    const { container } = render(<Blog blog={blog} user ={user} />)
+    const { container } = render(<Blog blog={blog} user ={user} updateBlog = {emptyFunc} deleteBlog = {emptyFunc} />)
     const div = container.querySelector('.blog')
 
     expect(div).toHaveTextContent('titleTest')
@@ -34,7 +36,7 @@ describe('<Blog />', () => {
 
 
   test('renders URL and likes after after clicking "view" button Ex 5.14', async () => {
-    const { container } = render(<Blog blog={blog} user ={user} />)
+    const { container } = render(<Blog blog={blog} user ={user} updateBlog = {emptyFunc} deleteBlog = {emptyFunc}/>)
     const div = container.querySelector('.blog')
 
     const userEv = userEvent.setup()
@@ -48,7 +50,7 @@ describe('<Blog />', () => {
   test('twice click "Like" Ex 5.15', async () => {
 
     const mockHandler = jest.fn()
-    const { container } = render(<Blog blog={blog} user ={user} updateBlog = {mockHandler}/>)
+    render(<Blog blog={blog} user ={user} updateBlog = {mockHandler} deleteBlog = {emptyFunc}/>)
 
     const userEv = userEvent.setup()
     const viewButton = screen.getByText('view')
