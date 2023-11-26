@@ -40,12 +40,12 @@
   
 
 ### 5.13 & 5.14: Blog list tests, step1 & 2
-  -  when the browser is reloaded with expired token in localStorage it still login: token lifetime 1h, after loggin frontEnd has the same period of time before cleaning local storage
+  - when the browser is reloaded with expired token in localStorage it still login: token lifetime 1h, after loggin frontEnd has the same period of time before cleaning local storage
   - tests for blog rendering before and after clicking button view. (with CSS classes as mark for tests)
 
 ### 5.15: Blog list tests, step3
    - test that ensures that if the like button is clicked twice, the event handler the component received as props is called twice.
-   -  data integrity:  ex 5.8. when add new blog, field user in blog has wrong structure.
+   - data integrity:  ex 5.8. when add new blog, field user in blog has wrong structure.
      now concatenated blog.user hasn't the same ids as in the database (blogForm.jsx line:51-52)
      if you try to update the data before refreshing the page could cause an error
 
@@ -57,3 +57,11 @@
   - blogFormRef.current.toggleVisibility() moved from Blogform.jsx to app.jsx/addBlog().
   - Blogform.jsx: added checking the length of the blogs array
 
+### 5.17: bloglist end to end testing, step1
+  - test for checking that the application displays the login form
+
+### 5.18: bloglist end to end testing, step2
+  - added baseURL and BACKEND to cypress.config.js
+  - creating a new user before each test
+  - successful and unsuccessful login attempts.
+  - Check that the notification with unsuccessful login is red.
