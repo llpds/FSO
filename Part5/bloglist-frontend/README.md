@@ -57,5 +57,3 @@
   - blogFormRef.current.toggleVisibility() moved from Blogform.jsx to app.jsx/addBlog().
   - Blogform.jsx: added checking the length of the blogs array
 
-
-p.s. After completing part 5b (ex 5.12) I decide not to do the same app as shown in course and not to continue its repository. It look like double work and cost of time. But 'notes' could be useful and i move it to FSO.
