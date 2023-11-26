@@ -73,3 +73,6 @@
 
 ### 5.20: bloglist end to end testing, step4
   - test that confirms users can like a blog
+
+### 5.21: bloglist end to end testing, step5
+  - test for ensuring that the user who created a blog can delete it
