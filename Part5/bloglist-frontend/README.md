@@ -70,3 +70,6 @@
   - cypress commands: login, createUser, createBlog
   - create blog
   - ensure that new blog in the blogs list
+
+### 5.20: bloglist end to end testing, step4
+  - test that confirms users can like a blog

@@ -6,11 +6,29 @@ describe('Blog app', function() {
     password: 'salainen'
   }
 
+  let baseBlog = {}
+
+  const makeBlog = (number) => {
+    const blog = {
+      title:  `test Title${number}`,
+      author: `test Author${number}`,
+      url:`testUrl${number}.aa`,
+      likes:number
+    }
+    return blog
+  }
+
   const blog = {
     title:  'test Title1',
     author: 'test Author1',
     url:'testUrl1.aa',
     likes:34
+  }
+  const blog2 = {
+    title:  'test Title2',
+    author: 'test Author2',
+    url:'testUrl2.aa',
+    likes:100
   }
 
   beforeEach(function() {
@@ -66,5 +84,17 @@ describe('Blog app', function() {
           expect(savedBlog.author).to.contain(blog.author)
         })
     })
+
+    it('Users can like a blog ex 5.20', function() {
+      for(let i = 1; i<10; i=i+3) {cy.createBlog(makeBlog(i))}
+      baseBlog = makeBlog(3)
+      cy.createBlog(baseBlog)
+
+      cy.get(`#${baseBlog.title.replaceAll(' ','')}`).as('theBlog')
+      cy.get('@theBlog').find('.blogVisibility').click()
+      cy.get('@theBlog').find('button.likeButton').click()
+      cy.get('@theBlog').contains(`likes: ${baseBlog.likes + 1}`)
+    })
+
   })
 })

@@ -42,7 +42,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   const buttonRemove = () => {
     if(blog.user.username === user.username){
       return (
-        <button style={removeButtonStyle} onClick={handleRemove}>remove</button>
+        <button className='removeButton' style={removeButtonStyle} onClick={handleRemove}>remove</button>
       )
     }
   }
@@ -50,11 +50,11 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   return (
     <div className='blog' id={blog.title.replaceAll(' ','')} style={blogStyle}>
       {blog.title} <i>{blog.author}</i>
-      <button onClick={toggleVisibility}>{detailsVisibility ? 'hide' :'view'}</button>
+      <button className='blogVisibility' onClick={toggleVisibility}>{detailsVisibility ? 'hide' :'view'}</button>
       {detailsVisibility &&
         <div>
           <p>url: {blog.url}</p>
-          <p>likes: {blog.likes}<button onClick={handleLike}>like</button></p>
+          <p>likes: {blog.likes}<button className='likeButton' onClick={handleLike}>like</button></p>
           <p>user: {blog.user.username}</p>
           {buttonRemove()}
         </div>}
