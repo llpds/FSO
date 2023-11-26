@@ -1,8 +1,26 @@
-Cypress.Commands.add('login', ({ username, password }) => {
-  cy.request('POST', 'http://localhost:3001/api/login', {
+Cypress.Commands.add('loginBack', ({ username, password }) => {
+  cy.request('POST', `${Cypress.env('BACKEND')}/login`, {
     username, password
   }).then(({ body }) => {
-    localStorage.setItem('loggedNoteappUser', JSON.stringify(body))
-    cy.visit('http://localhost:3000')
+    localStorage.setItem('loggedUser', JSON.stringify(body))
+    localStorage.setItem('sessionExpired', JSON.stringify({ 'date': Date.now() + 60*60*1000 }))
+    cy.visit('')
   })
+})
+
+Cypress.Commands.add('createUser', (user) => {
+  cy.request('POST', `${Cypress.env('BACKEND')}/users`, user)
+})
+
+Cypress.Commands.add('createBlog', ({ title, author, url, likes }) => {
+  cy.request({
+    url: `${Cypress.env('BACKEND')}/blogs`,
+    method: 'POST',
+    body: { title, author, url, likes },
+    headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loggedUser')).token}`
+    }
+  })
+
+  cy.visit('')
 })

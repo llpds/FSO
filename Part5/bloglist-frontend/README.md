@@ -64,4 +64,9 @@
   - added baseURL and BACKEND to cypress.config.js
   - creating a new user before each test
   - successful and unsuccessful login attempts.
-  - Check that the notification with unsuccessful login is red.
+  - check that the notification with unsuccessful login is red.
+
+### 5.19: bloglist end to end testing, step3
+  - cypress commands: login, createUser, createBlog
+  - create blog
+  - ensure that new blog in the blogs list

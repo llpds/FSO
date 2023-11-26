@@ -48,7 +48,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   }
 
   return (
-    <div className='blog' style={blogStyle}>
+    <div className='blog' id={blog.title.replaceAll(' ','')} style={blogStyle}>
       {blog.title} <i>{blog.author}</i>
       <button onClick={toggleVisibility}>{detailsVisibility ? 'hide' :'view'}</button>
       {detailsVisibility &&
