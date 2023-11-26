@@ -76,3 +76,6 @@
 
 ### 5.21: bloglist end to end testing, step5
   - test for ensuring that the user who created a blog can delete it
+
+### 5.22: bloglist end to end testing, step6
+  - tests that only the creator can see the delete button of a blog

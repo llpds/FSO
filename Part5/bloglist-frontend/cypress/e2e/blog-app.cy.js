@@ -6,7 +6,12 @@ describe('Blog app', function() {
     password: 'salainen'
   }
 
-  let baseBlog = {}
+  const second = {
+    name: 'second name',
+    username: 'second',
+    password: 'salainen'
+  }
+
 
   const makeBlog = (number) => {
     const blog = {
@@ -17,6 +22,8 @@ describe('Blog app', function() {
     }
     return blog
   }
+
+  const baseBlog = makeBlog(3)
 
   const blog = {
     title:  'test Title1',
@@ -87,7 +94,6 @@ describe('Blog app', function() {
 
     it('Users can like a blog ex 5.20', function() {
       for(let i = 1; i<5; i=i+3) {cy.createBlog(makeBlog(i))}
-      baseBlog = makeBlog(3)
       cy.createBlog(baseBlog)
 
       cy.get(`#${baseBlog.title.replaceAll(' ','')}`).as('theBlog')
@@ -98,7 +104,6 @@ describe('Blog app', function() {
 
     it('User who create blog can delete it ex 5.21', function() {
       for(let i = 1; i<5; i=i+3) {cy.createBlog(makeBlog(i))}
-      baseBlog = makeBlog(3)
       cy.createBlog(baseBlog)
 
       cy.get(`#${baseBlog.title.replaceAll(' ','')}`, { timeout: 15000 }).as('theBlog')
@@ -118,5 +123,22 @@ describe('Blog app', function() {
         })
     })
 
+    it.only('Only user who create blog can see the delete button ex 5.22', function() {
+      cy.createUser(second)
+      cy.createBlog(baseBlog)
+
+      cy.get(`#${baseBlog.title.replaceAll(' ','')}`, { timeout: 10000 }).as('theBlog')
+      cy.get('@theBlog').find('.blogVisibility').click()
+      cy.get('@theBlog').find('button.removeButton').should('be.visible')
+
+      cy.contains('Logout').click
+
+      cy.loginBack(second)
+
+      cy.get(`#${baseBlog.title.replaceAll(' ','')}`, { timeout: 10000 }).as('theBlog')
+      cy.get('@theBlog').find('.blogVisibility').click()
+      cy.get('@theBlog').find('button.removeButton').should('not.exist')
+
+    })
   })
 })
