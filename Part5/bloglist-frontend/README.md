@@ -79,3 +79,6 @@
 
 ### 5.22: bloglist end to end testing, step6
   - tests that only the creator can see the delete button of a blog
+
+### 5.23: bloglist end to end testing, step7
+  - checks that the blogs are ordered according to likes with the blog with the most likes being first

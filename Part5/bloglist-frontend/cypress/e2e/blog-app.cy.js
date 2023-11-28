@@ -12,31 +12,17 @@ describe('Blog app', function() {
     password: 'salainen'
   }
 
-
   const makeBlog = (number) => {
-    const blog = {
+    return {
       title:  `test Title${number}`,
       author: `test Author${number}`,
       url:`testUrl${number}.aa`,
       likes:number
     }
-    return blog
   }
 
-  const baseBlog = makeBlog(3)
-
-  const blog = {
-    title:  'test Title1',
-    author: 'test Author1',
-    url:'testUrl1.aa',
-    likes:34
-  }
-  const blog2 = {
-    title:  'test Title2',
-    author: 'test Author2',
-    url:'testUrl2.aa',
-    likes:100
-  }
+  const blogArr =  [makeBlog(2),makeBlog(3),makeBlog(4),makeBlog(6)]
+  const baseBlog = blogArr[1]
 
   beforeEach(function() {
     cy.request('POST', `${Cypress.env('BACKEND')}/testing/reset`)
@@ -70,7 +56,7 @@ describe('Blog app', function() {
       cy.get('button#formSubmitButton').click()
 
       cy.contains(`${user.name} logged in`).should('not.exist')
-      cy.get('.err', { timeout: 2500 })
+      cy.get('.err')
         .should('be.visible', 'wrong credentials')
         .and('have.css', 'color', 'rgb(255, 0, 0)')
     })
@@ -79,39 +65,35 @@ describe('Blog app', function() {
   describe('When logged in', function() {
     beforeEach(function() {
       cy.loginBack(user)
+      blogArr.forEach(b => cy.createBlog(b))
     })
 
     it('A blog can be created ex 5.19', function() {
-      cy.createBlog(blog)
 
       cy.request(`${Cypress.env('BACKEND')}/blogs`)
         .its('body').should((blogs) => {
-          const savedBlog = blogs.find( b => b.title === blog.title)
-          expect(savedBlog.url).to.contain(blog.url)
-          expect(savedBlog.author).to.contain(blog.author)
+          const savedBlog = blogs.find( b => b.title === baseBlog.title)
+          expect(savedBlog.url).to.contain(baseBlog.url)
+          expect(savedBlog.author).to.contain(baseBlog.author)
         })
     })
 
     it('Users can like a blog ex 5.20', function() {
-      for(let i = 1; i<5; i=i+3) {cy.createBlog(makeBlog(i))}
-      cy.createBlog(baseBlog)
-
-      cy.get(`#${baseBlog.title.replaceAll(' ','')}`).as('theBlog')
+      //cy.likeBlog(baseBlog, 1)
+      cy.get(`#${baseBlog.title.replaceAll(' ','')}`, { timeout: 15000 }).as('theBlog')
       cy.get('@theBlog').find('.blogVisibility').click()
       cy.get('@theBlog').find('button.likeButton').click()
       cy.get('@theBlog').contains(`likes: ${baseBlog.likes + 1}`)
     })
 
-    it('User who create blog can delete it ex 5.21', function() {
-      for(let i = 1; i<5; i=i+3) {cy.createBlog(makeBlog(i))}
-      cy.createBlog(baseBlog)
+    it('User who create blog can delete it front ex 5.21', function() {
 
       cy.get(`#${baseBlog.title.replaceAll(' ','')}`, { timeout: 15000 }).as('theBlog')
       cy.get('@theBlog').find('.blogVisibility').click()
       cy.get('@theBlog').find('button.removeButton').click()
       cy.get('@theBlog').should('not.exist')
 
-      cy.get('.msg', { timeout: 2500 })
+      cy.get('.msg')
         .contains(`Blog ${baseBlog.title} removed`)
         .should('be.visible')
         .and('have.css', 'color', 'rgb(0, 128, 0)')
@@ -123,9 +105,29 @@ describe('Blog app', function() {
         })
     })
 
-    it.only('Only user who create blog can see the delete button ex 5.22', function() {
+
+    it('User who create blog can delete it back ex 5.21', function() {
+      cy.request(`${Cypress.env('BACKEND')}/blogs`)
+        .its('body').then((blogs) => {
+          const blogToDelete = blogs.find( b => b.title === baseBlog.title)
+          cy.request({
+            url: `${Cypress.env('BACKEND')}/blogs/${blogToDelete.id}`,
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loggedUser')).token}`
+            }
+          })
+
+          cy.request(`${Cypress.env('BACKEND')}/blogs`)
+            .its('body').should((blogs) => {
+              const deletedBlog = blogs.find( b => b.title === baseBlog.title)
+              expect(deletedBlog).to.be.undefined
+            })
+        })
+    })
+
+    it('Only user who create blog can see the delete button ex 5.22', function() {
       cy.createUser(second)
-      cy.createBlog(baseBlog)
 
       cy.get(`#${baseBlog.title.replaceAll(' ','')}`, { timeout: 10000 }).as('theBlog')
       cy.get('@theBlog').find('.blogVisibility').click()
@@ -138,7 +140,24 @@ describe('Blog app', function() {
       cy.get(`#${baseBlog.title.replaceAll(' ','')}`, { timeout: 10000 }).as('theBlog')
       cy.get('@theBlog').find('.blogVisibility').click()
       cy.get('@theBlog').find('button.removeButton').should('not.exist')
+    })
 
+    it('blogs in descending order of likes ex 5.23', function() {
+
+      cy.get('.blog', { timeout: 10000 }).eq(0).should('contain', blogArr[3].title)
+      cy.get('.blog').eq(1).should('contain', blogArr[2].title)
+      cy.get('.blog').eq(2).should('contain', blogArr[1].title)
+      cy.get('.blog').eq(3).should('contain', blogArr[0].title)
+
+      cy.likeBlog(blogArr[0], 1)
+      cy.likeBlog(blogArr[1], 5)
+      cy.likeBlog(blogArr[2], 7)
+      cy.likeBlog(blogArr[3], 3)
+
+      cy.get('.blog').eq(0).should('contain', 'test Title4')
+      cy.get('.blog').eq(1).should('contain', 'test Title6')
+      cy.get('.blog').eq(2).should('contain', 'test Title3')
+      cy.get('.blog').eq(3).should('contain', 'test Title2')
     })
   })
 })

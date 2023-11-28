@@ -121,19 +121,21 @@ const App = () => {
           <LoggedComponent user = {user} handleLogout = {handleLogout}/>
           {blogForm()}
           <h2>blogs</h2>
-          {blogs
-            .sort((a,b) => a.likes - b.likes )
-            .map(blog =>
-              <div key={blog.id}>
-                <Blog
-                  blog={blog}
-                  updateBlog = {updateBlog}
-                  deleteBlog = {deleteBlog}
-                  user = {user}
-                />
-              </div>
-            )
-          }
+          <div className="blogsList">
+            {blogs
+              .sort((a,b) => b.likes - a.likes )
+              .map(blog =>
+                <div key={blog.id}>
+                  <Blog
+                    blog={blog}
+                    updateBlog = {updateBlog}
+                    deleteBlog = {deleteBlog}
+                    user = {user}
+                  />
+                </div>
+              )
+            }
+          </div>
         </div>
       }
 

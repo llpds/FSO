@@ -24,3 +24,12 @@ Cypress.Commands.add('createBlog', ({ title, author, url, likes }) => {
 
   cy.visit('')
 })
+
+Cypress.Commands.add('likeBlog', (blog, likes) => {
+  cy.get(`#${blog.title.replaceAll(' ','')}`).as('theBlog')
+  cy.get('@theBlog').find('.blogVisibility').click()
+  for (let i= 1; i<=likes; i++){
+    cy.get('@theBlog').find('button.likeButton').click()
+    cy.get('@theBlog').contains(`likes: ${blog.likes + i}`)
+  }
+})
