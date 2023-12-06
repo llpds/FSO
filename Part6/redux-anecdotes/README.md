@@ -2,13 +2,18 @@
 
   - Redux
 
-  ### 6.3: anecdotes, step1
-    - vote functionality w/o component
+### 6.3: anecdotes, step1
+  - vote functionality w/o component
 
 
-  ### :( 
-    component not working:
-      PM [vite] Internal server error: Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+### 6.4-6.8
+  - adding new anecdotes (6.4)
+  - sort by votes  (6.5)
+  - action-creation functions in anecdoteReducer (6.6)
+  - creation of new anecdotes in AnecdoteForm component (6.7)
+  - anecdote list rendering in AnecdoteList component (6.8)
+
+
 
     console:
       App.jsx:5 Selector unknown returned the root state when called. This can lead to unnecessary rerenders.
