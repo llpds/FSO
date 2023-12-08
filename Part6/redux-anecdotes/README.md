@@ -13,7 +13,8 @@
   - creation of new anecdotes in AnecdoteForm component (6.7)
   - anecdote list rendering in AnecdoteList component (6.8)
 
-
+### 6.9 Better anecdotes, step7
+  - filter, its state in the redux store, separate reducer and use of the combineReducer
 
     console:
       App.jsx:5 Selector unknown returned the root state when called. This can lead to unnecessary rerenders.
