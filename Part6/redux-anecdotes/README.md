@@ -23,3 +23,6 @@
 
 ### 6.11 Better anecdotes, step9
   - anecdoteReducer functionality with createSlice
+
+### 6.12 Better anecdotes, step10
+  - notification functionality by using the Redux Toolkit's
