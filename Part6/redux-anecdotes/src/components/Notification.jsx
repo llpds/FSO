@@ -12,7 +12,7 @@ const Notification = () => {
   if (notification.length > 0)
     return (
       <div style={style}>
-        {notification.map((n) => <div key = {(100000 * Math.random()).toFixed(0)}> {n} </div>)}
+        {notification.map((n) => <div key = {n.id}> {n.text} </div>)}
       </div>
     )
 

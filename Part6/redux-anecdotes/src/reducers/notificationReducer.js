@@ -1,11 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, nanoid } from '@reduxjs/toolkit'
 
 const notificationSlice = createSlice({
 name: 'notification',
   initialState: [],
   reducers: {
-    setNotification(state,action){
-      state.push(action.payload)
+    setNotification: {
+      reducer:(state,action)=>{
+        state.push(action.payload)
+      },
+      prepare: (text) => {
+        const id = nanoid()
+        return { payload: { id, text } }
+      },
     },
     clearNotification(state){
       state.shift()
@@ -19,7 +25,7 @@ export const showNnotification = (data) => (dispatch) => {
   dispatch(setNotification(data))
   setTimeout(() => {
     dispatch(clearNotification())
-  }, 4000)
+  }, 5000)
 }
 
 export default notificationSlice.reducer

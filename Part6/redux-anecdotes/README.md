@@ -26,3 +26,8 @@
 
 ### 6.12 Better anecdotes, step10
   - notification functionality by using the Redux Toolkit's
+    (https://redux-toolkit.js.org/tutorials/quick-start#full-counter-app-example)
+
+### 6.13 Better anecdotes, step11
+  - Notification component displays a message for five seconds when the user votes for an anecdote or creates a new one.
+    (https://redux-toolkit.js.org/api/createSlice#reducers)
