@@ -15,3 +15,8 @@
 
 ### 6.9 Better anecdotes, step7
   - filter, its state in the redux store, separate reducer and use of the combineReducer
+
+### 6.10 Better anecdotes, step8
+  - redux toolkit
+  - store creation in store.js
+  - filter definition by createSlice
