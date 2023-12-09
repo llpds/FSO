@@ -10,7 +10,6 @@ const filterSlice = createSlice({
       return action.payload
     }
   }
-
 })
 
 export const { setFilter } = filterSlice.actions

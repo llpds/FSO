@@ -20,3 +20,6 @@
   - redux toolkit
   - store creation in store.js
   - filter definition by createSlice
+
+### 6.11 Better anecdotes, step9
+  - anecdoteReducer functionality with createSlice
