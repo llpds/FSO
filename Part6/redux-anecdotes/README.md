@@ -34,3 +34,6 @@
 
 ### 6.14 Anecdotes and the backend, step1
   - app fetches the anecdotes from the backend implemented using json-server
+
+### 6.15 Anecdotes and the backend, step2
+  - creation of new anecdotes stores it in backend
