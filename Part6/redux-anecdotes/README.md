@@ -31,3 +31,6 @@
 ### 6.13 Better anecdotes, step11
   - Notification component displays a message for five seconds when the user votes for an anecdote or creates a new one.
     (https://redux-toolkit.js.org/api/createSlice#reducers)
+
+### 6.14 Anecdotes and the backend, step1
+  - app fetches the anecdotes from the backend implemented using json-server
