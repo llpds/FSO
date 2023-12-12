@@ -8,7 +8,7 @@ const Anecdote = ({anecdote}) => {
 
   const likeSubmit = () => {
     dispatch(vote(anecdote))
-    dispatch(showNnotification(`you voted "${anecdote.content}"`))
+    dispatch(showNnotification(`you voted "${anecdote.content}"`, 10))
   }
   return (
     <div key={anecdote.id}>

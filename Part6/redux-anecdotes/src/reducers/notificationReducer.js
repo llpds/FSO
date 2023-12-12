@@ -13,19 +13,19 @@ name: 'notification',
         return { payload: { id, text } }
       },
     },
-    clearNotification(state){
-      state.shift()
+    destroyNotification(state, action){
+      return state.filter(s => s.id !== action.payload)
     }
   }
 })
 
-export const {setNotification, clearNotification} = notificationSlice.actions
+export const {setNotification, destroyNotification} = notificationSlice.actions
 
-export const showNnotification = (data) => (dispatch) => {
-  dispatch(setNotification(data))
+export const showNnotification = (data, time=4) => dispatch => {
+  const id = dispatch(setNotification(data)).payload.id
   setTimeout(() => {
-    dispatch(clearNotification())
-  }, 5000)
+    dispatch(destroyNotification(id))
+  }, time * 1000)
 }
 
 export default notificationSlice.reducer
