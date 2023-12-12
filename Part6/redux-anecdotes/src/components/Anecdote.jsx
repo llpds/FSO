@@ -7,7 +7,7 @@ const Anecdote = ({anecdote}) => {
   const dispatch = useDispatch()
 
   const likeSubmit = () => {
-    dispatch(vote(anecdote.id))
+    dispatch(vote(anecdote))
     dispatch(showNnotification(`you voted "${anecdote.content}"`))
   }
   return (

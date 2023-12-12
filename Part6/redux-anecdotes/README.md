@@ -39,7 +39,10 @@
   - creation of new anecdotes stores it in backend
 
 ### 6.16 Anecdotes and the backend, step3
-  - initialization of the redux store (Rdux Thunk)
+  - initialization of the redux store (Redux Thunk)
 
 ### 6.17 Anecdotes and the backend, step4
   - the creation of a new anecdote to happen using asynchronous action creators (Redux Thunk)
+
+### 6.18 Anecdotes and the backend, step5
+  - save voting changes to backend (Redux Thunk)
