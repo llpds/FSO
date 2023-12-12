@@ -37,3 +37,6 @@
 
 ### 6.15 Anecdotes and the backend, step2
   - creation of new anecdotes stores it in backend
+
+### 6.16 Anecdotes and the backend, step3
+  - initialization of the redux store
