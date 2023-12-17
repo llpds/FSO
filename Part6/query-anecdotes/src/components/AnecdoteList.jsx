@@ -1,8 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { getAnecdotes } from '../requests'
+import { useDispatch } from 'react-redux'
+import { setStatus } from '../reducers/notAvailableReducer'
 
 
 const AnecdoteList = () => {
+  const dispatch = useDispatch()
 
   const result = useQuery({
     queryKey: ['anecdotes'],
@@ -15,11 +18,13 @@ const AnecdoteList = () => {
   }
 
   if ( result.isError ) {
-    return <div>anecdote service not available due to problems in server</div>
+    setTimeout(()=>{
+      dispatch(setStatus('notAvailable'))
+    }, 1000)
+    return false
   }
 
   const anecdotes = result.data
-
 
   const handleVote = (anecdote) => {
     console.log('vote')
