@@ -1,3 +1,4 @@
+import Anecdote from './Anecdote'
 import { useQuery } from '@tanstack/react-query'
 import { getAnecdotes } from '../requests'
 import { useDispatch } from 'react-redux'
@@ -26,23 +27,13 @@ const AnecdoteList = () => {
 
   const anecdotes = result.data
 
-  const handleVote = (anecdote) => {
-    console.log('vote')
-  }
-
   return (
     <div>
       <h3>Anecdotes:</h3>
       {anecdotes.map(anecdote =>
         <div key={anecdote.id}>
-          <div>
-            {anecdote.content}
-          </div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => handleVote(anecdote)}>vote</button>
-          </div>
-        </div>
+          <Anecdote anecdote={anecdote} />
+        </ div>
       )}
     </div>
   )

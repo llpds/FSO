@@ -7,3 +7,7 @@
 
   UPD: "ONLY an error page will be displayed"
   - redux, decomposition
+
+### Exercise 6.21-6.22
+  - adding anecdote using React Query
+  - voting for anecdotes using the React Query.
