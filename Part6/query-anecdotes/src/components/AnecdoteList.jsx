@@ -22,7 +22,7 @@ const AnecdoteList = () => {
     setTimeout(()=>{
       dispatch(setStatus('notAvailable'))
     }, 1000)
-    return false
+    return <div>loading data...</div>
   }
 
   const anecdotes = result.data

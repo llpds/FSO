@@ -1,4 +1,7 @@
+import useNotificationValue from "../myHooks/useNotificationValue"
+
 const Notification = () => {
+  const notifications = useNotificationValue()
   const style = {
     border: 'solid',
     padding: 10,
@@ -6,11 +9,11 @@ const Notification = () => {
     marginBottom: 5
   }
   
-  if (true) return null
+  if (notifications.length < 1) return null
 
   return (
     <div style={style}>
-      
+      {notifications.map((n) => <div key = {n.id}> {n.text} </div>)}
     </div>
   )
 }

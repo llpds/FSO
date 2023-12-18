@@ -11,3 +11,6 @@
 ### Exercise 6.21-6.22
   - adding anecdote using React Query
   - voting for anecdotes using the React Query.
+
+### Exercise 6.23
+  - notification functionality realized by context and useReducer
