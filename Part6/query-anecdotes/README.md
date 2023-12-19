@@ -13,4 +13,8 @@
   - voting for anecdotes using the React Query.
 
 ### Exercise 6.23
-  - notification functionality realized by context and useReducer
+  - notification functionality (anecdote creation or voting) realized by context and useReducer
+  UPD: show message after successful delivery of data to the server (PUT/POST)
+
+### Exercise 6.24
+  - insertion handling (min 5 characters)

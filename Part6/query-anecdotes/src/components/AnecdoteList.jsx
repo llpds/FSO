@@ -21,7 +21,7 @@ const AnecdoteList = () => {
   if ( result.isError ) {
     setTimeout(()=>{
       dispatch(setStatus('notAvailable'))
-    }, 1000)
+    }, 100)
     return <div>loading data...</div>
   }
 

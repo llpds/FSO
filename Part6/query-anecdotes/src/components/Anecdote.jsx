@@ -11,12 +11,12 @@ const Anecdote = ({anecdote}) => {
     onSuccess: (updatedAnecdote) => {
       const anecdotes = queryClient.getQueryData(['anecdotes'])
       queryClient.setQueryData(['anecdotes'], anecdotes.map(a => a.id === updatedAnecdote.id ? updatedAnecdote : a))
+      showNotification(`anecdote '${updatedAnecdote.content}' voted `)
     }
   })
 
   const handleVote = (anecdote) => {
     updateAnecdoteMutation.mutate({...anecdote, votes: anecdote.votes + 1 })
-    showNotification(`anecdote '${anecdote.content}' voted `)
   }
 
   return (
