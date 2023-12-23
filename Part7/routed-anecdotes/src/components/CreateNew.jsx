@@ -18,7 +18,7 @@ const CreateNew = (props) => {
 
   return (
     <div>
-      <h2>create a new anecdote</h2>
+      <h2>Create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>
           content
