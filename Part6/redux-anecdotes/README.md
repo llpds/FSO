@@ -49,6 +49,6 @@
 
 ### 6.19 Anecdotes and the backend, step6
   - notification time setting in action creator 
-    > for likes is defined in the Anecdote component (10 sec)
-    > for anecdote creation isn't defined (by default 4 sec)
+    >- for likes is defined in the Anecdote component (10 sec)
+    >- for anecdote creation isn't defined (by default 4 sec)
   - modified anecdoteReducer

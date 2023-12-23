@@ -36,4 +36,4 @@ I find it is convenient to store the training tokens in the repository, otherwis
 ## UPD: 
 
 19.10.2023
-  - JWT error message
+  - JWT error message (utils/middleware: errorHandler, userExtractor)
