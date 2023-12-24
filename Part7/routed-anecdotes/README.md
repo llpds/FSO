@@ -7,3 +7,8 @@
 
 ### 7.2: routed anecdotes, step2
   - shows single anecdote nad its navigation
+  upd: info link
+
+### 7.3: routed anecdotes, step3
+  - create new anecdote
+  - shows notification during 5 sec after creation
