@@ -12,3 +12,6 @@
 ### 7.3: routed anecdotes, step3
   - create new anecdote
   - shows notification during 5 sec after creation
+
+### 7.4: anecdotes and hooks step1
+  - useField in anecdote creation process
