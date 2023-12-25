@@ -15,3 +15,6 @@
 
 ### 7.4: anecdotes and hooks step1
   - useField in anecdote creation process
+
+### 7.5: anecdotes and hooks step2
+  - Reset button to clear all input fields
