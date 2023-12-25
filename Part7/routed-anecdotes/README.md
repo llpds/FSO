@@ -18,3 +18,6 @@
 
 ### 7.5: anecdotes and hooks step2
   - Reset button to clear all input fields
+
+### 7.6: anecdotes and hooks step3
+  - 7.5 solution with spread syntax doesn't cause a warning
