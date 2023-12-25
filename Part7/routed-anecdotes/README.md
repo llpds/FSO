@@ -13,6 +13,8 @@
   - create new anecdote
   - shows notification during 5 sec after creation
 
+## b: custom hooks
+
 ### 7.4: anecdotes and hooks step1
   - useField in anecdote creation process
 
