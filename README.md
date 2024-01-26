@@ -2,6 +2,8 @@
 
 This course will introduce you to modern JavaScript-based web development. The main focus is on building single page applications with ReactJS that use REST APIs built with Node.js.
 
+branch redux for part7
+
 ## The repository contains solutions to course exercises in parts, respectively.
 
 ### Part 0 -  Fundamentals of Web apps (https://fullstackopen.com/en/part0)
@@ -19,3 +21,4 @@ This course will introduce you to modern JavaScript-based web development. The m
 ### Part 6 -  Advanced state management (https://fullstackopen.com/en/part6)
 
 ### Part 7 - React router, custom hooks, styling app with CSS and webpack (https://fullstackopen.com/en/part7)
+    - 7.10 branch redux
