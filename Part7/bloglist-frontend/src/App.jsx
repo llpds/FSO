@@ -7,6 +7,9 @@ import Notification from './components/Notification'
 import Togglable from './components/elements/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { initializeBlogs } from './reducers/blogReducer'
+import { showErrorRedux, showMessageRedux } from './reducers/notificationReducer'
+import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -15,6 +18,13 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
   const blogFormRef = useRef()
+
+  const dispatch = useDispatch()
+  const blogsRedux = useSelector(state => state.blogs)
+  const notificationRedux = useSelector(state => state.notification)
+
+  console.log('blogsRedux', blogsRedux)
+  console.log('notificationRedux', notificationRedux)
 
   const initBlog = async () => {
     const blogs = await blogService.getAll()
@@ -36,6 +46,7 @@ const App = () => {
   }
 
   useEffect(() => {
+    dispatch(initializeBlogs())
     initBlog()
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     const sessionExpired = window.localStorage.getItem('sessionExpired')
@@ -57,6 +68,7 @@ const App = () => {
     blogFormRef.current.toggleVisibility()
     initBlog()
     showMessage(`Added ${addedBlog.title}`)
+    dispatch(showMessageRedux(`Added ${addedBlog.title}`))
   }
 
   const updateBlog = async (updBlog, blogToBack) => {
@@ -110,7 +122,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={message} />
+      <Notification/>
       <h2>Blog app</h2>
 
       {!user && (
