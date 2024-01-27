@@ -12,42 +12,32 @@ import { showErrorRedux, showMessageRedux } from './reducers/notificationReducer
 import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [message, setMessage] = useState(null)
   const blogFormRef = useRef()
 
   const dispatch = useDispatch()
   const blogsRedux = useSelector(state => state.blogs)
   const notificationRedux = useSelector(state => state.notification)
 
-  console.log('blogsRedux', blogsRedux)
-  console.log('notificationRedux', notificationRedux)
+  const bl = [...blogsRedux].sort((a, b) => b.likes - a.likes)
+  // const bl1 = [...blogs].sort((a, b) => b.likes - a.likes)
+  // const blSt = bl1[0]
+  const blRd = bl[0]
+  // console.log('blogs', blSt)
+  console.log('blogsRedux', blRd)
+  // console.log(blSt === blRd)
 
-  const initBlog = async () => {
-    const blogs = await blogService.getAll()
-    setBlogs(blogs)
-  }
-
-  const showMessage = (msg) => {
-    setMessage([msg, 'msg'])
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
-  }
-
-  const showError = (msg) => {
-    setMessage([msg, 'err'])
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
-  }
+  // const initBlog = async () => {
+  //   const blogs = await blogService.getAll()
+  //   setBlogs(blogs)
+  // }
 
   useEffect(() => {
     dispatch(initializeBlogs())
-    initBlog()
+    // initBlog()
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     const sessionExpired = window.localStorage.getItem('sessionExpired')
     if (loggedUserJSON && sessionExpired) {
@@ -63,23 +53,16 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = async (newBlog) => {
-    const addedBlog = await blogService.create(newBlog)
-    blogFormRef.current.toggleVisibility()
-    initBlog()
-    showMessage(`Added ${addedBlog.title}`)
-    dispatch(showMessageRedux(`Added ${addedBlog.title}`))
-  }
 
   const updateBlog = async (updBlog, blogToBack) => {
     await blogService.update(updBlog.id, blogToBack)
-    setBlogs(blogs.map((b) => (b.id === updBlog.id ? updBlog : b)))
+    // setBlogs(blogs.map((b) => (b.id === updBlog.id ? updBlog : b)))
   }
 
   const deleteBlog = async (blog) => {
     await blogService.destroy(blog.id)
-    setBlogs(blogs.filter((b) => b.id !== blog.id))
-    showMessage(`Blog ${blog.title} removed`)
+    // setBlogs(blogs.filter((b) => b.id !== blog.id))
+    dispatch(showMessageRedux(`Blog ${blog.title} removed`))
   }
 
   const handleLogout = () => {
@@ -106,7 +89,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      showError('wrong credentials')
+      dispatch(showErrorRedux('Wrong credentials'))
     }
   }
 
@@ -116,7 +99,7 @@ const App = () => {
       hideButtonLabel="cancel"
       ref={blogFormRef}
     >
-      <BlogForm blogs={blogs} addBlog={addBlog} />
+      <BlogForm blogs={[...blogsRedux]} blogFormRef = {blogFormRef}/>
     </Togglable>
   )
 
@@ -141,7 +124,7 @@ const App = () => {
           {blogForm()}
           <h2>blogs</h2>
           <div className="blogsList">
-            {blogs
+            {[...blogsRedux]
               .sort((a, b) => b.likes - a.likes)
               .map((blog) => (
                 <div key={blog.id}>
