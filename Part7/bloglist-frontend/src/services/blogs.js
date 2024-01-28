@@ -31,7 +31,7 @@ const update = async (id, data) => {
   }
 
   const response = await axios.put(`${baseUrl}/${id}`, data, config)
-  return id
+  return response.data
 }
 
 const destroy = async (id) => {

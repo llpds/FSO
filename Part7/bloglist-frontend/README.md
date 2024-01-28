@@ -18,3 +18,9 @@ for back use blog-backend from Part4
 
   - store blog posts in the Redux store
   - create new blog with redux (controlled input)
+
+### 7.12: Redux, step3
+
+  - like and delete functionality with Redux
+  - decomposition: blogList
+  - blocks are initialized after user login

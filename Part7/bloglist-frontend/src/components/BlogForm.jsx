@@ -4,6 +4,7 @@ import Input from './elements/Input'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import  { createBlog } from '../reducers/blogReducer'
+import { initializeBlogs } from '../reducers/blogReducer'
 
 const BlogForm = ({ blogs, blogFormRef }) => {
   // --------------------------  states --------------------------
@@ -15,11 +16,7 @@ const BlogForm = ({ blogs, blogFormRef }) => {
 
   const addBlog = async (newBlog) => {
     dispatch(createBlog(newBlog))
-    // const addedBlog = await blogService.create(newBlog)
     blogFormRef.current.toggleVisibility()
-    // initBlog()
-    // dispatch(showMessageRedux(`Added ${addedBlog.title}`))
-    //dispatch(showMessageRedux('Added'))
   }
 
   // --------------------------  submit  --------------------------
@@ -93,7 +90,6 @@ const BlogForm = ({ blogs, blogFormRef }) => {
   )
 }
 
-//blogs, setBlogs, setMessage, blogFormRef, user
 BlogForm.propTypes = {
   blogs: PropTypes.array.isRequired,
   blogFormRef: PropTypes.object.isRequired,

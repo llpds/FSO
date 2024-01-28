@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import Blog from './components/Blog'
+import BlogList from './components/BlogList'
 import BlogForm from './components/BlogForm'
 import LoggedComponent from './components/auth/LoggedComponent'
 import LoginForm from './components/auth/LoginForm'
@@ -12,7 +12,6 @@ import { showErrorRedux, showMessageRedux } from './reducers/notificationReducer
 import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
-  // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -20,27 +19,17 @@ const App = () => {
 
   const dispatch = useDispatch()
   const blogsRedux = useSelector(state => state.blogs)
-  const notificationRedux = useSelector(state => state.notification)
 
   const bl = [...blogsRedux].sort((a, b) => b.likes - a.likes)
-  // const bl1 = [...blogs].sort((a, b) => b.likes - a.likes)
-  // const blSt = bl1[0]
-  const blRd = bl[0]
-  // console.log('blogs', blSt)
+  const blRd = bl
   console.log('blogsRedux', blRd)
-  // console.log(blSt === blRd)
 
-  // const initBlog = async () => {
-  //   const blogs = await blogService.getAll()
-  //   setBlogs(blogs)
-  // }
 
   useEffect(() => {
-    dispatch(initializeBlogs())
-    // initBlog()
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     const sessionExpired = window.localStorage.getItem('sessionExpired')
     if (loggedUserJSON && sessionExpired) {
+      dispatch(initializeBlogs())
       const expire = JSON.parse(sessionExpired)
       if (expire.date > Date.now()) {
         const user = JSON.parse(loggedUserJSON)
@@ -51,19 +40,8 @@ const App = () => {
         window.localStorage.removeItem('loggedUser')
       }
     }
-  }, [])
+  }, [dispatch])
 
-
-  const updateBlog = async (updBlog, blogToBack) => {
-    await blogService.update(updBlog.id, blogToBack)
-    // setBlogs(blogs.map((b) => (b.id === updBlog.id ? updBlog : b)))
-  }
-
-  const deleteBlog = async (blog) => {
-    await blogService.destroy(blog.id)
-    // setBlogs(blogs.filter((b) => b.id !== blog.id))
-    dispatch(showMessageRedux(`Blog ${blog.title} removed`))
-  }
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
@@ -88,6 +66,7 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      dispatch(initializeBlogs())
     } catch (exception) {
       dispatch(showErrorRedux('Wrong credentials'))
     }
@@ -122,21 +101,7 @@ const App = () => {
         <div>
           <LoggedComponent user={user} handleLogout={handleLogout} />
           {blogForm()}
-          <h2>blogs</h2>
-          <div className="blogsList">
-            {[...blogsRedux]
-              .sort((a, b) => b.likes - a.likes)
-              .map((blog) => (
-                <div key={blog.id}>
-                  <Blog
-                    blog={blog}
-                    updateBlog={updateBlog}
-                    deleteBlog={deleteBlog}
-                    user={user}
-                  />
-                </div>
-              ))}
-          </div>
+          <BlogList user={user} />
         </div>
       )}
     </div>
