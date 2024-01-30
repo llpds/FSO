@@ -1,9 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import Blog from './Blog'
 
-const BlogList = ({ user }) => {
-  const dispatch = useDispatch()
+const BlogList = () => {
   const blogsRedux = useSelector(state => state.blogs)
 
   return (
@@ -15,7 +14,6 @@ const BlogList = ({ user }) => {
           <div key={blog.id}>
             <Blog
               blog={blog}
-              user={user}
             />
           </div>
         ))

@@ -2,17 +2,17 @@ import { useState } from 'react'
 import Button from './elements/Button'
 import Input from './elements/Input'
 import PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import  { createBlog } from '../reducers/blogReducer'
-import { initializeBlogs } from '../reducers/blogReducer'
 
-const BlogForm = ({ blogs, blogFormRef }) => {
+const BlogForm = ({ blogFormRef }) => {
   // --------------------------  states --------------------------
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
 
   const dispatch = useDispatch()
+  const blogs = useSelector(state => state.blogs)
 
   const addBlog = async (newBlog) => {
     dispatch(createBlog(newBlog))
@@ -91,7 +91,6 @@ const BlogForm = ({ blogs, blogFormRef }) => {
 }
 
 BlogForm.propTypes = {
-  blogs: PropTypes.array.isRequired,
   blogFormRef: PropTypes.object.isRequired,
 }
 

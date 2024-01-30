@@ -24,3 +24,8 @@ for back use blog-backend from Part4
   - like and delete functionality with Redux
   - decomposition: blogList
   - blocks are initialized after user login
+
+### 7.13: Redux, step4
+
+  - store signed-in user in the Redux store
+  - in login and create new blog forms is used uncontrolled input
