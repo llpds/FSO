@@ -17,3 +17,14 @@ bloglist-frontend from ex5.23
 
   - store blog posts in the Redux store
   - create new blog with redux (controlled input)
+
+### 7.12: Redux, step3
+
+  - like and delete functionality with Redux
+  - decomposition: blogList
+  - blocks are initialized after user login
+
+### 7.13: Redux, step4
+
+  - store signed-in user in the Redux store
+  - in login and create new blog forms is used uncontrolled input
