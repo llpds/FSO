@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import LoggedComponent from './components/auth/LoggedComponent'
@@ -7,33 +7,25 @@ import Notification from './components/Notification'
 import Togglable from './components/elements/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { useNotificationShow } from './NotificationContext'
+
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [message, setMessage] = useState(null)
   const blogFormRef = useRef()
+  const showNotification = useNotificationShow()
+  const showMessage = (msg) => showNotification([msg, 'msg'])
+  const showError = (msg) => showNotification([msg, 'err'])
 
   const initBlog = async () => {
     const blogs = await blogService.getAll()
     setBlogs(blogs)
   }
 
-  const showMessage = (msg) => {
-    setMessage([msg, 'msg'])
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
-  }
-
-  const showError = (msg) => {
-    setMessage([msg, 'err'])
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
-  }
 
   useEffect(() => {
     initBlog()
@@ -110,7 +102,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={message} />
+      <Notification />
       <h2>Blog app</h2>
 
       {!user && (

@@ -28,3 +28,11 @@ bloglist-frontend from ex5.23
 
   - store signed-in user in the Redux store
   - in login and create new blog forms is used uncontrolled input
+
+
+## React Query and context
+
+### 7.10: React Query and context step1
+
+  - useReducer-hook and context manage the notification data
+    
