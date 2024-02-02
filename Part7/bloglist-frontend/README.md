@@ -36,3 +36,7 @@ bloglist-frontend from ex5.23
 
   - useReducer-hook and context manage the notification data
     
+### 7.11: React Query and context step2
+
+  - React-query manages blogs data (display blogs and create new one)
+  

@@ -7,12 +7,15 @@ import Notification from './components/Notification'
 import Togglable from './components/elements/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import requestService from './requests'
 import { useNotificationShow } from './NotificationContext'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
+import { getNotes, createBlog } from './requests'
 
 
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -21,14 +24,32 @@ const App = () => {
   const showMessage = (msg) => showNotification([msg, 'msg'])
   const showError = (msg) => showNotification([msg, 'err'])
 
+  const result = useQuery({
+    queryKey: ['blogs'],
+    // queryFn: getNotes
+    queryFn: blogService.getAll
+  })
+
+  // console.log(JSON.parse(JSON.stringify(result)))
+  // console.log('result.data', result.data)
+
+  const queryClient = useQueryClient()
+
+  const newBlogMutation = useMutation({
+    mutationFn: blogService.create,
+    onSuccess: () => {
+      queryClient.invalidateQueries('blogs')
+    }
+  })
+
+
   const initBlog = async () => {
     const blogs = await blogService.getAll()
-    setBlogs(blogs)
+    // setBlogs(blogs)
   }
 
-
   useEffect(() => {
-    initBlog()
+    // initBlog()
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     const sessionExpired = window.localStorage.getItem('sessionExpired')
     if (loggedUserJSON && sessionExpired) {
@@ -37,6 +58,7 @@ const App = () => {
         const user = JSON.parse(loggedUserJSON)
         setUser(user)
         blogService.setToken(user.token)
+        requestService.setToken2(user.token)
       } else {
         window.localStorage.removeItem('sessionExpired')
         window.localStorage.removeItem('loggedUser')
@@ -45,20 +67,25 @@ const App = () => {
   }, [])
 
   const addBlog = async (newBlog) => {
-    const addedBlog = await blogService.create(newBlog)
+    newBlogMutation.mutate({ newBlog })
+    // const addedBlog = await blogService.create(newBlog)
     blogFormRef.current.toggleVisibility()
-    initBlog()
-    showMessage(`Added ${addedBlog.title}`)
+    // initBlog()
+    // showMessage(`Added ${addedBlog.title}`)
+    showMessage('Added')
   }
+
+  if(result.isLoading) { return <div> Loading data...</div> }
+  const blogs = result.data
 
   const updateBlog = async (updBlog, blogToBack) => {
     await blogService.update(updBlog.id, blogToBack)
-    setBlogs(blogs.map((b) => (b.id === updBlog.id ? updBlog : b)))
+    // setBlogs(blogs.map((b) => (b.id === updBlog.id ? updBlog : b)))
   }
 
   const deleteBlog = async (blog) => {
     await blogService.destroy(blog.id)
-    setBlogs(blogs.filter((b) => b.id !== blog.id))
+    // setBlogs(blogs.filter((b) => b.id !== blog.id))
     showMessage(`Blog ${blog.title} removed`)
   }
 
