@@ -38,5 +38,8 @@ bloglist-frontend from ex5.23
     
 ### 7.11: React Query and context step2
 
-  - React-query manages blogs data (display blogs and create new one)
+  - React-query manages blogs data (display blogs and create new one, controlled input)
+
+### 7.12: React Query and context step3
   
+  - like and delete functionality with Query and Context

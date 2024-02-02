@@ -21,17 +21,8 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   }
 
   const handleLike = () => {
-    const updBlog = { ...blog, likes: blog.likes + 1 } // I save the structure and change some of the data
-    const blogToBack = {
-      // I can easily control all the fields and prepare right data for back-end
-      title: updBlog.title,
-      author: updBlog.author,
-      url: updBlog.url,
-      likes: updBlog.likes,
-    }
-
-    // ex 5.15 '...the event handler the component received AS PROPS is called twice' -> move handleLike to app.jsx and handleRemove at the same time
-    updateBlog(updBlog, blogToBack)
+    const blogToUpd = { ...blog, likes: blog.likes + 1 }
+    updateBlog(blogToUpd)
   }
 
   const handleRemove = () => {

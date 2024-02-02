@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 
 const BlogForm = ({ blogs, addBlog }) => {
   // --------------------------  states --------------------------
-  const [newTitle, setNewTitle] = useState('wwwww')
-  const [newAuthor, setNewAuthor] = useState('wwwww')
-  const [newUrl, setNewUrl] = useState('wwwww')
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   // --------------------------  submit  --------------------------
   const submitBlog = (event) => {
