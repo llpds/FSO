@@ -1,15 +1,14 @@
 import { useState, useEffect, useRef, useContext } from 'react'
-import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import LoggedComponent from './components/auth/LoggedComponent'
 import LoginForm from './components/auth/LoginForm'
 import Notification from './components/Notification'
+import BlogList from './components/BlogList'
 import Togglable from './components/elements/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import requestService from './requests'
 import { useNotificationShow } from './NotificationContext'
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 
 
 
@@ -22,38 +21,6 @@ const App = () => {
   const showMessage = (msg) => showNotification([msg, 'msg'])
   const showError = (msg) => showNotification([msg, 'err'])
 
-  const result = useQuery({
-    queryKey: ['blogs'],
-    queryFn: blogService.getAll
-  })
-
-  const queryClient = useQueryClient()
-
-  const newBlogMutation = useMutation({
-    mutationFn: blogService.create,
-    onSuccess: () => {
-      queryClient.invalidateQueries('blogs')
-    }
-  })
-
-  const updateBlogMutation = useMutation({
-    mutationFn: blogService.update,
-    onSuccess: () => {
-      queryClient.invalidateQueries('blogs')
-    },
-  })
-
-
-  const deleteBlogMutation = useMutation({
-    mutationFn: blogService.destroy,
-    onSuccess: () => {
-      queryClient.invalidateQueries('blogs')
-    },
-  })
-
-  const initBlog = async () => {
-    const blogs = await blogService.getAll()
-  }
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -71,26 +38,6 @@ const App = () => {
       }
     }
   }, [])
-
-  if(result.isLoading) { return <div> Loading data...</div> }
-  const blogs = result.data
-
-  const addBlog = async (newBlog) => {
-    newBlogMutation.mutate( newBlog )
-    blogFormRef.current.toggleVisibility()
-    showMessage(`Added ${newBlog.title}`)
-  }
-
-  const updateBlog = async (blogToUpd) => {
-    const { user, ...blogToBack } = blogToUpd // no need to send users info to backend
-    updateBlogMutation.mutate(blogToBack)
-    showMessage(`Blog ${blogToUpd.title} liked`)
-  }
-
-  const deleteBlog = async (blog) => {
-    deleteBlogMutation.mutate(blog.id)
-    showMessage(`Blog ${blog.title} removed`)
-  }
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
@@ -120,16 +67,6 @@ const App = () => {
     }
   }
 
-  const blogForm = () => (
-    <Togglable
-      buttonLabel="new blog"
-      hideButtonLabel="cancel"
-      ref={blogFormRef}
-    >
-      <BlogForm blogs={blogs} addBlog={addBlog} />
-    </Togglable>
-  )
-
   return (
     <div>
       <Notification />
@@ -148,21 +85,11 @@ const App = () => {
       {user && (
         <div>
           <LoggedComponent user={user} handleLogout={handleLogout} />
-          {blogForm()}
-          <h2>blogs</h2>
+          <Togglable buttonLabel="new blog" hideButtonLabel="cancel" ref={blogFormRef}>
+            <BlogForm blogFormRef={blogFormRef} />
+          </Togglable>
           <div className="blogsList">
-            {blogs
-              .sort((a, b) => b.likes - a.likes)
-              .map((blog) => (
-                <div key={blog.id}>
-                  <Blog
-                    blog={blog}
-                    updateBlog={updateBlog}
-                    deleteBlog={deleteBlog}
-                    user={user}
-                  />
-                </div>
-              ))}
+            <BlogList user = {user}/>
           </div>
         </div>
       )}

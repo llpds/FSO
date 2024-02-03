@@ -42,4 +42,5 @@ bloglist-frontend from ex5.23
 
 ### 7.12: React Query and context step3
   
-  - like and delete functionality with Query and Context
+  - like and delete functionality with Query
+  - decomposition blogForm (Create), blogList (Read, Upd, Delete)

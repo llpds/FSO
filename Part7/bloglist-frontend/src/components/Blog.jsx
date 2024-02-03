@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import { useNotificationShow } from '../NotificationContext'
+import { useQueryClient, useMutation } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
+import blogService from '../services/blogs'
 
-const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
+const Blog = ({ blog, user, deleteBlog }) => {
   const [detailsVisibility, setDetailsVisibility] = useState(false)
   const blogStyle = {
     padding: '10px 5px',
@@ -15,6 +18,24 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
     borderRadius: '3px',
     color: 'red',
   }
+  const showNotification = useNotificationShow()
+  const showMessage = (msg) => showNotification([msg, 'msg'])
+
+  const queryClient = useQueryClient()
+
+  const updateBlogMutation = useMutation({
+    mutationFn: blogService.update,
+    onSuccess: () => {
+      queryClient.invalidateQueries('blogs')
+    },
+  })
+
+  const deleteBlogMutation = useMutation({
+    mutationFn: blogService.destroy,
+    onSuccess: () => {
+      queryClient.invalidateQueries('blogs')
+    },
+  })
 
   const toggleVisibility = () => {
     setDetailsVisibility(!detailsVisibility)
@@ -22,12 +43,15 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 
   const handleLike = () => {
     const blogToUpd = { ...blog, likes: blog.likes + 1 }
-    updateBlog(blogToUpd)
+    const { user, ...blogToBack } = blogToUpd // no need to send users info to backend
+    updateBlogMutation.mutate(blogToBack)
+    showMessage(`Blog ${blogToUpd.title} liked`)
   }
 
   const handleRemove = () => {
     if (window.confirm(`Remove blog ${blog.title}`)) {
-      deleteBlog(blog)
+      deleteBlogMutation.mutate(blog.id)
+      showMessage(`Blog ${blog.title} removed`)
     }
   }
 
@@ -72,7 +96,5 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  updateBlog: PropTypes.func.isRequired,
-  deleteBlog: PropTypes.func.isRequired,
 }
 export default Blog
