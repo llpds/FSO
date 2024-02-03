@@ -1,6 +1,7 @@
 # FSO part 7
 
 bloglist-frontend from ex5.23
+for back use blog-backend from Part4
 
 ### 7.9: automatic code formatting
 
@@ -27,6 +28,7 @@ bloglist-frontend from ex5.23
 ### 7.13: Redux, step4
 
   - store signed-in user in the Redux store
+<<<<<<< HEAD
   - in login and create new blog forms is used uncontrolled input
 
 
@@ -49,3 +51,11 @@ bloglist-frontend from ex5.23
 ### 7.13: React Query and context step4
 
   - useReducer-hook and context manage the data for the logged in user.
+
+## master branch, State management: Redux
+
+### 7.14: Users view
+
+  - new view which shows all users information. (column: user, blogs created) 
+      http://localhost:5173/users
+

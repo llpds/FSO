@@ -1,8 +1,13 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { useDispatch, useSelector } from 'react-redux'
 
-const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
+const Blog = ({ blog }) => {
   const [detailsVisibility, setDetailsVisibility] = useState(false)
+  const dispatch = useDispatch()
+  const user = useSelector (state => state.user)
+
   const blogStyle = {
     padding: '10px 5px',
     border: '1px solid #0000cc',
@@ -21,22 +26,12 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   }
 
   const handleLike = () => {
-    const updBlog = { ...blog, likes: blog.likes + 1 } // I save the structure and change some of the data
-    const blogToBack = {
-      // I can easily control all the fields and prepare right data for back-end
-      title: updBlog.title,
-      author: updBlog.author,
-      url: updBlog.url,
-      likes: updBlog.likes,
-    }
-
-    // ex 5.15 '...the event handler the component received AS PROPS is called twice' -> move handleLike to app.jsx and handleRemove at the same time
-    updateBlog(updBlog, blogToBack)
+    dispatch(likeBlog(blog))
   }
 
   const handleRemove = () => {
     if (window.confirm(`Remove blog ${blog.title}`)) {
-      deleteBlog(blog)
+      dispatch(deleteBlog(blog))
     }
   }
 
@@ -77,11 +72,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   )
 }
 
-// blog, user, updateBlog, deleteBlog
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  updateBlog: PropTypes.func.isRequired,
-  deleteBlog: PropTypes.func.isRequired,
 }
 export default Blog
