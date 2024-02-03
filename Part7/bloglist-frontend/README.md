@@ -28,3 +28,24 @@ bloglist-frontend from ex5.23
 
   - store signed-in user in the Redux store
   - in login and create new blog forms is used uncontrolled input
+
+
+## React Query and context
+
+### 7.10: React Query and context step1
+
+  - useReducer-hook and context manage the notification data
+    
+### 7.11: React Query and context step2
+
+  - React-query manages blogs data (display blogs and create new one, controlled input)
+
+### 7.12: React Query and context step3
+  
+  - like and delete functionality with Query
+  - decomposition blogForm (Create), blogList (Read, Upd, Delete)
+      App use blogService two time in blogForm and blogList: does not cause additional calls to the backend
+
+### 7.13: React Query and context step4
+
+  - useReducer-hook and context manage the data for the logged in user.
