@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 import { clearBlogs, initializeBlogs } from './blogReducer'
-import { clearUsers } from './usersReducer'
+import { clearUsers, initializeUsers } from './usersReducer'
 import { showErrorRedux } from './notificationReducer'
 
 const loggedUserSlice = createSlice({
@@ -31,6 +31,7 @@ export const loginUser = (username, password) => async dispatch => {
     blogService.setToken(user.token)
     dispatch(poseUser(user))
     dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   } catch {
     dispatch(showErrorRedux('wrong credentials'))
   }
