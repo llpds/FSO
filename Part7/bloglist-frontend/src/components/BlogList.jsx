@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
+import { useUserValue } from '../UserContext'
 import blogService from '../services/blogs'
 import Blog from './Blog'
 
 
-const BlogList = ({ user }) => {
+const BlogList = () => {
+  const user = useUserValue()
 
   const result = useQuery({
     queryKey: ['blogs'],
