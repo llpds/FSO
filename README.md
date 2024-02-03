@@ -2,7 +2,7 @@
 
 This course will introduce you to modern JavaScript-based web development. The main focus is on building single page applications with ReactJS that use REST APIs built with Node.js.
 
-branch redux for part7
+branch redux and query for part7 ex. 7.10 - 7.13
 
 ## The repository contains solutions to course exercises in parts, respectively.
 
@@ -21,4 +21,5 @@ branch redux for part7
 ### Part 6 -  Advanced state management (https://fullstackopen.com/en/part6)
 
 ### Part 7 - React router, custom hooks, styling app with CSS and webpack (https://fullstackopen.com/en/part7)
-    - 7.10 branch redux
+    - 7.10 - 7.13 branch redux  State management: Redux
+    - 7.10 - 7.13 branch query  State management: React Query and context

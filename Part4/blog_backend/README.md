@@ -37,3 +37,9 @@ I find it is convenient to store the training tokens in the repository, otherwis
 
 19.10.2023
   - JWT error message (utils/middleware: errorHandler, userExtractor)
+
+
+## Redux branch
+### 7.12: Redux, step3
+
+  - controllers blogs PUT and POST methods returns BLOG data WITH USER INFO

@@ -5,6 +5,7 @@ const logger = require('../utils/logger')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user')
+  console.log('blogs', blogs)
   response.json(blogs)
 })
 
@@ -33,8 +34,9 @@ blogsRouter.post ('/', async (request, response) => {
 
   const savedBlog = await blog.save()
   user.blogs = user.blogs.concat(savedBlog._id)
-  await user.save()
+  const savedUser = await user.save()
 
+  savedBlog.user = savedUser
   response.status(201).json(savedBlog)
 })
 
@@ -51,7 +53,8 @@ blogsRouter.put('/:id', async (request, response) => {
     likes: body.likes || undefined
   }
 
-  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true })
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true }).populate('user')
+  console.log('updatedBlog', updatedBlog)
   response.json(updatedBlog)
 })
 
