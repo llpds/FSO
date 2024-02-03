@@ -44,7 +44,7 @@ bloglist-frontend from ex5.23
   
   - like and delete functionality with Query
   - decomposition blogForm (Create), blogList (Read, Upd, Delete)
-      Mistake: App use blogService two time in blogForm and blogList
+      App use blogService two time in blogForm and blogList: does not cause additional calls to the backend
 
 ### 7.13: React Query and context step4
 

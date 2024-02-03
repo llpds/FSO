@@ -14,7 +14,7 @@ const BlogList = () => {
 
   if(result.isLoading) { return <div> Loading data...</div> }
   const blogs = result.data
-
+  console.log('blogs', blogs)
   return (
     <div>
       <h2>blogs</h2>

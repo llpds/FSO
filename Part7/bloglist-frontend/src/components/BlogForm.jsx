@@ -31,6 +31,7 @@ const BlogForm = ({ blogFormRef }) => {
 
   if(result.isLoading) { return <div> Loading data...</div> }
   const blogs = result.data
+console.log('blogsform', blogs)
 
   const addBlog = async (newBlog) => {
     newBlogMutation.mutate( newBlog )
