@@ -5,7 +5,8 @@ import { logoutUser, setUser } from './reducers/loggedUserReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import {  BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import BlogList from './components/BlogList'
-import Users from './components/Users'
+import UsersList from './components/UsersList'
+import UserInfo from './components/UserInfo'
 import LoggedComponent from './components/auth/LoggedComponent'
 import LoginForm from './components/auth/LoginForm'
 import Notification from './components/Notification'
@@ -18,8 +19,8 @@ const App = () => {
 
   const dispatch = useDispatch()
   const user = useSelector (state => state.user)
-  const users = useSelector (state => state.users)
-  console.log('users', users)
+  // const users = useSelector (state => state.users)
+  // console.log('users main', users)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -54,7 +55,8 @@ const App = () => {
         <div>
           <LoggedComponent/>
           <Routes>
-            <Route path="/users" element = {<Users />} />
+            <Route path="/users/:id" element = {<UserInfo />} />
+            <Route path="/users" element = {<UsersList />} />
             <Route path="/" element = {<BlogList />} />
           </Routes>
         </div>

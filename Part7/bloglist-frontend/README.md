@@ -28,7 +28,6 @@ for back use blog-backend from Part4
 ### 7.13: Redux, step4
 
   - store signed-in user in the Redux store
-<<<<<<< HEAD
   - in login and create new blog forms is used uncontrolled input
 
 
@@ -59,3 +58,6 @@ for back use blog-backend from Part4
   - new view which shows all users information. (column: user, blogs created) 
       http://localhost:5173/users
 
+### 7.15: Individual user view
+
+  - view for individual user with added blogs title
