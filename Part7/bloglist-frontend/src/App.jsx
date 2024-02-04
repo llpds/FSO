@@ -12,6 +12,7 @@ import LoginForm from './components/auth/LoginForm'
 import Notification from './components/Notification'
 
 import blogService from './services/blogs'
+import BlogView from './components/BlogView'
 
 const App = () => {
 
@@ -57,6 +58,7 @@ const App = () => {
           <Routes>
             <Route path="/users/:id" element = {<UserInfo />} />
             <Route path="/users" element = {<UsersList />} />
+            <Route path="/blogs/:id" element = {<BlogView />} />
             <Route path="/" element = {<BlogList />} />
           </Routes>
         </div>

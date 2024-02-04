@@ -61,3 +61,10 @@ for back use blog-backend from Part4
 ### 7.15: Individual user view
 
   - view for individual user with added blogs title
+
+### 7.16: Blog view
+
+  - blog view with like functionality
+  - links to blog from home page
+  - deleted: ex 5.7 functionality: when clicking to blog expands blogs detail
+    !!! commented out: I don’t want to delete this now, should delete it before submitting it (components/Blog)
