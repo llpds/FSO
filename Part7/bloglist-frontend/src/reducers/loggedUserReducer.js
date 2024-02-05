@@ -42,7 +42,7 @@ export const logoutUser = () => dispatch => {
   window.localStorage.removeItem('loggedUser')
   blogService.nullToken()
   dispatch(poseUser(null))
-  dispatch(clearBlogs())
+  // dispatch(clearBlogs())
   dispatch(clearUsers())
 }
 

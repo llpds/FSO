@@ -6,11 +6,15 @@ const usersSlice = createSlice({
   initialState: [],
   reducers: {
     setUsers(state, action) { return action.payload },
+    updateNumberOfBlog(state,action) {
+      return state.map(u => u.id === action.payload.id ? action.payload : u)
+      // return action.payload
+    },
     resetUsers(state, action) { return [] }
   }
 })
 
-export const { setUsers, resetUsers } = usersSlice.actions
+export const { setUsers, resetUsers, updateNumberOfBlog } = usersSlice.actions
 
 export const initializeUsers = () => async dispatch => {
   const users = await usersService.getAll()

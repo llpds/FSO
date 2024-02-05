@@ -8,13 +8,14 @@ import Blog from './Blog'
 const BlogList = () => {
   const blogFormRef = useRef()
   const blogsRedux = useSelector(state => state.blogs)
+  const user = useSelector(state => state.user)
 
   return (
     <div className="blogsList">
 
-      <Togglable buttonLabel="new blog" hideButtonLabel="cancel" ref={blogFormRef}>
+      {user && (<Togglable buttonLabel="new blog" hideButtonLabel="cancel" ref={blogFormRef}>
         <BlogForm blogFormRef = {blogFormRef}/>
-      </Togglable>
+      </Togglable>)}
       <h2>blogs</h2>
       {[...blogsRedux]
         .sort((a, b) => b.likes - a.likes)

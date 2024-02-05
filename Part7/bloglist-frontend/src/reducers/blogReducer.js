@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import blogService from '../services/blogs'
 import { showMessageRedux } from '../reducers/notificationReducer'
+import { updateNumberOfBlog } from './usersReducer'
 
 const blogSlice = createSlice({
   name: 'blogs',
@@ -30,6 +31,7 @@ export const initializeBlogs = () => async dispatch => {
 export const createBlog = content => async dispatch => {
   const addedBlog = await blogService.create(content)
   dispatch(appendBlog(addedBlog))
+  dispatch(updateNumberOfBlog(addedBlog.user))
   dispatch(showMessageRedux(`Added ${addedBlog.title}`))
 }
 
@@ -42,6 +44,7 @@ export const likeBlog = blog => async dispatch => {
 export const deleteBlog = blog => async dispatch => {
   await blogService.destroy(blog.id)
   dispatch(showMessageRedux(`Blog ${blog.title} removed`))
+  console.log('blog', blog)
   dispatch(destroyBlog(blog))
 }
 

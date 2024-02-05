@@ -3,7 +3,7 @@ import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/usersReducer'
 import { logoutUser, setUser } from './reducers/loggedUserReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import {  BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import {  BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom'
 import BlogList from './components/BlogList'
 import UsersList from './components/UsersList'
 import UserInfo from './components/UserInfo'
@@ -13,6 +13,7 @@ import Notification from './components/Notification'
 
 import blogService from './services/blogs'
 import BlogView from './components/BlogView'
+import NavBar from './components/NavBar'
 
 const App = () => {
 
@@ -26,10 +27,10 @@ const App = () => {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     const sessionExpired = window.localStorage.getItem('sessionExpired')
+    dispatch(initializeBlogs())
     if (loggedUserJSON && sessionExpired) {
       const expire = JSON.parse(sessionExpired)
       if (expire.date > Date.now()) {
-        dispatch(initializeBlogs())
         dispatch(initializeUsers())
         const user = JSON.parse(loggedUserJSON)
         dispatch(setUser(user))
@@ -44,26 +45,24 @@ const App = () => {
 
 
   return (
-    <Router>
+    <>
       <Notification/>
+      <NavBar />
+      {user
+        ? <LoggedComponent/>
+        : <em>Hello wayfarer, at first need <Link to="/login"> login </Link> </em>
+      }
+
       <h2>Blog app</h2>
 
-      {!user && (
-        <LoginForm />
-      )}
-
-      {user && (
-        <div>
-          <LoggedComponent/>
-          <Routes>
-            <Route path="/users/:id" element = {<UserInfo />} />
-            <Route path="/users" element = {<UsersList />} />
-            <Route path="/blogs/:id" element = {<BlogView />} />
-            <Route path="/" element = {<BlogList />} />
-          </Routes>
-        </div>
-      )}
-    </Router>
+      <Routes>
+        <Route path="/users/:id" element = {<UserInfo />} />
+        <Route path="/blogs/:id" element = {<BlogView />} />
+        <Route path="/login" element = {user ? <Navigate replace to="/" /> : <LoginForm />} />
+        <Route path="/users" element={user ? <UsersList /> : <Navigate replace to="/login" />} />
+        <Route path="/" element = { <BlogList /> } />
+      </Routes>
+    </>
   )
 }
 

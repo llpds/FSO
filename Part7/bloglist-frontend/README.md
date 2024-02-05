@@ -68,3 +68,12 @@ for back use blog-backend from Part4
   - links to blog from home page
   - deleted: ex 5.7 functionality: when clicking to blog expands blogs detail
     !!! commented out: I don’t want to delete this now, should delete it before submitting it (components/Blog)
+
+### 7.17: Navigation
+
+  - navigation menu
+
+    guests can read blogs and like it
+    user can add blog and watch the users
+    
+    Fixed: when user create blog, his number of blogs still the same before refresh the page
