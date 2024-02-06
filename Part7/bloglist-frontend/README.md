@@ -77,3 +77,8 @@ for back use blog-backend from Part4
     user can add blog and watch the users
     
     Fixed: when user create blog, his number of blogs still the same before refresh the page
+
+### 7.18, 7.19: comments, step1
+
+  - functionality for commenting on blog posts
+  

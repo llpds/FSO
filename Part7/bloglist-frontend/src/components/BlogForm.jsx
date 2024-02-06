@@ -7,9 +7,9 @@ import  { createBlog } from '../reducers/blogReducer'
 
 const BlogForm = ({ blogFormRef }) => {
   // --------------------------  states --------------------------
-  const [newTitle, setNewTitle] = useState('rrrrr')
-  const [newAuthor, setNewAuthor] = useState('rrrrr')
-  const [newUrl, setNewUrl] = useState('rrrrr')
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   const dispatch = useDispatch()
   const blogs = useSelector(state => state.blogs)

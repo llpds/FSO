@@ -1,8 +1,29 @@
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { likeBlog, makeComment, deleteBlog } from '../reducers/blogReducer'
 import { useNavigate } from 'react-router-dom'
+
+const CommentForm = () => {
+  const dispatch = useDispatch()
+  const id = useParams().id
+
+  const handleComment =  event => {
+    event.preventDefault()
+    const comment = { content: event.target.comment.value }
+    event.target.comment.value = ''
+    dispatch(makeComment(id, comment))
+  }
+
+  return (
+    <div>
+      <form id="loginForm" onSubmit={handleComment}>
+        <input type="text" id="blogComment" name="comment" autoComplete="off" />
+        <button id="commentSubmitButton" type="submit">Add comment</button>
+      </form>
+    </div>
+  )
+}
 
 const BlogView = () => {
   const dispatch = useDispatch()
@@ -55,9 +76,14 @@ const BlogView = () => {
         <button className="likeButton" onClick={handleLike}>
           like
         </button>
-        {buttonRemove()}
+        {user && buttonRemove()}
       </p>
       <p>Added by: {blog.user.name}</p>
+      <h4>Comments:</h4>
+      <CommentForm />
+      <ul>
+        {blog.comments.map(c => <li key={c.id}> {c.content} </li>)}
+      </ul>
     </div>
   )
 }
