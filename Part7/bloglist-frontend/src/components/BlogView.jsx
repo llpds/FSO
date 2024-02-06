@@ -3,27 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { likeBlog, makeComment, deleteBlog } from '../reducers/blogReducer'
 import { useNavigate } from 'react-router-dom'
-
-const CommentForm = () => {
-  const dispatch = useDispatch()
-  const id = useParams().id
-
-  const handleComment =  event => {
-    event.preventDefault()
-    const comment = { content: event.target.comment.value }
-    event.target.comment.value = ''
-    dispatch(makeComment(id, comment))
-  }
-
-  return (
-    <div>
-      <form id="loginForm" onSubmit={handleComment}>
-        <input type="text" id="blogComment" name="comment" autoComplete="off" />
-        <button id="commentSubmitButton" type="submit">Add comment</button>
-      </form>
-    </div>
-  )
-}
+import CommentForm from './CommentForm'
 
 const BlogView = () => {
   const dispatch = useDispatch()

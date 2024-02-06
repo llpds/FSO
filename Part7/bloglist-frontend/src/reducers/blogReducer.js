@@ -12,10 +12,6 @@ const blogSlice = createSlice({
     updateBlog(state, action) {
       return state.map(b => b.id === action.payload.id ? action.payload : b)
     },
-    updateComment(state, action) {
-      const updatedBlog = action.payload.blog
-      return state.map(b => b.id === updatedBlog.id ? updatedBlog : b)
-    },
     destroyBlog(state, action) {
       return state.filter(b => b.id !==action.payload.id)
     },
@@ -41,20 +37,20 @@ export const createBlog = content => async dispatch => {
 
 export const makeComment = (id, comment) => async dispatch => {
   const updatedComment = await blogService.createComment(id, comment)
-  dispatch(updateComment(updatedComment))
+  dispatch(updateBlog(updatedComment.blog))
+  dispatch(showMessageRedux(`Added  comment ${updatedComment.content} to blog ${updatedComment.blog.title}`))
 }
 
 export const likeBlog = blog => async dispatch => {
-  const { user, ...prepBlog } = blog // no need to send users info to backend
+  const { user, ...prepBlog } = blog
   const updatedBlog = await blogService.update(blog.id, { ...prepBlog,  likes: blog.likes +1 })
-  console.log('updatedBlog', updatedBlog)
   dispatch(updateBlog(updatedBlog))
 }
 
 export const deleteBlog = blog => async dispatch => {
   await blogService.destroy(blog.id)
-  dispatch(showMessageRedux(`Blog ${blog.title} removed`))
   dispatch(destroyBlog(blog))
+  dispatch(showMessageRedux(`Blog ${blog.title} removed`))
   dispatch(initializeUsers())
 }
 

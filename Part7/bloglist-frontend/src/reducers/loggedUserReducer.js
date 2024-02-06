@@ -3,7 +3,7 @@ import loginService from '../services/login'
 import blogService from '../services/blogs'
 import { clearBlogs, initializeBlogs } from './blogReducer'
 import { clearUsers, initializeUsers } from './usersReducer'
-import { showErrorRedux } from './notificationReducer'
+import { showMessageRedux, showErrorRedux } from './notificationReducer'
 
 const loggedUserSlice = createSlice({
   name: 'user',
@@ -32,6 +32,7 @@ export const loginUser = (username, password) => async dispatch => {
     dispatch(poseUser(user))
     dispatch(initializeBlogs())
     dispatch(initializeUsers())
+    dispatch(showMessageRedux(`User ${user.name} logged in`))
   } catch {
     dispatch(showErrorRedux('wrong credentials'))
   }
@@ -42,8 +43,8 @@ export const logoutUser = () => dispatch => {
   window.localStorage.removeItem('loggedUser')
   blogService.nullToken()
   dispatch(poseUser(null))
-  // dispatch(clearBlogs())
   dispatch(clearUsers())
+  dispatch(showMessageRedux('You logged out. Have a nice day.'))
 }
 
 export default loggedUserSlice.reducer
