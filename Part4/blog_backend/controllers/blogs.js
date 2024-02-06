@@ -1,16 +1,17 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
+const Comment = require('../models/comment')
 const User = require('../models/user') // delete if no need to delete blogs id from user
 const logger = require('../utils/logger')
 
 blogsRouter.get('/', async (request, response) => {
-  const blogs = await Blog.find({}).populate('user')
+  const blogs = await Blog.find({}).populate('user').populate('comments')
   console.log('blogs', blogs)
   response.json(blogs)
 })
 
 blogsRouter.get('/:id', async (request,response) => {
-  const blog = await Blog.findById(request.params.id)
+  const blog = await Blog.findById(request.params.id).populate('comments')
   if(blog){
     response.json(blog)
   } else {
@@ -53,8 +54,7 @@ blogsRouter.put('/:id', async (request, response) => {
     likes: body.likes || undefined
   }
 
-  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true }).populate('user')
-  console.log('updatedBlog', updatedBlog)
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true }).populate('user').populate('comments')
   response.json(updatedBlog)
 })
 
@@ -63,7 +63,7 @@ blogsRouter.delete('/:id', async (request, response) => {
   const user = request.user
   if(!user) response.status(401).json({ error: 'invalid user' })
   const blog = await Blog.findById(request.params.id)
-  user.blogs = user.blogs.filter(blogId => blogId.toString() !== request.params.id) // delete if no need to delete blogs id from user
+  user.blogs = user.blogs.filter(blogId => blogId.toString() !== request.params.id) // delete blogId from users data
 
   if(!blog) response.status(401).json({ error: 'This blog id doesn\'t exist' })
 
@@ -71,7 +71,8 @@ blogsRouter.delete('/:id', async (request, response) => {
 
   if ( blog.user.toString() === user.id){
     await Blog.findByIdAndRemove(request.params.id)
-    await User.findByIdAndUpdate(user._id.toString(), user, { new:true }) // delete if no need to delete blogs id from user
+    await Comment.deleteMany({ blog: request.params.id }) // cascading deletion blogs comments
+    await User.findByIdAndUpdate(user._id.toString(), user, { new:true }) // save users changes
     response.status(204).end()
   } else {
     return response.status(401).json({ error: 'only user who made the blog record can delete it' })
