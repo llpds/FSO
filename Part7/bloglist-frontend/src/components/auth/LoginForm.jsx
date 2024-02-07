@@ -1,6 +1,7 @@
 import { loginUser } from '../../reducers/loggedUserReducer'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { TextField, Box, Button } from '@mui/material'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -19,15 +20,33 @@ const LoginForm = () => {
   return (
     <div>
       <h2>Log in to application</h2>
-      <form id="loginForm" onSubmit={handleLogin}>
-        username
-        <input type="text" id="userName" name="Username" autoComplete="off" />
-        <br />
-        password
-        <input type="text" id="password" name="Password" autoComplete="off" />
-        <br />
-        <button id="formSubmitButton" type="submit">login</button>
-      </form>
+      <Box
+        id="loginForm"
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        autoComplete="off"
+        onSubmit={handleLogin}
+      >
+        <TextField
+          id="blogFormTitle"
+          label="Username"
+          variant="outlined"
+          size = "small"
+          name="Username"
+        />
+        <TextField
+          id="blogFormAuthor"
+          label="Password"
+          variant="outlined"
+          size = "small"
+          name="Password"
+        />
+        <Button variant="outlined" color="primary" type="submit" size = "large">
+          login
+        </Button>
+      </Box>
     </div>
   )
 }

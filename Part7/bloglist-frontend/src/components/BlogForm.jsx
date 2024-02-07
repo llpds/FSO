@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import Button from './elements/Button'
+// import Button from './elements/Button'
 import Input from './elements/Input'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import  { createBlog } from '../reducers/blogReducer'
+import { TextField, Box, Button } from '@mui/material'
 
 const BlogForm = ({ blogFormRef }) => {
   // --------------------------  states --------------------------
@@ -65,27 +66,43 @@ const BlogForm = ({ blogFormRef }) => {
   return (
     <div className="blogFormTest">
       <h2>Add a new</h2>
-      <form onSubmit={submitBlog}>
-        <Input
-          data-testid="titleTest"
-          text="Title"
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        autoComplete="off"
+        onSubmit={submitBlog}
+      >
+        <TextField
+          id="blogFormTitle"
+          label="Title"
+          variant="outlined"
           value={newTitle}
           onChange={(event) => setNewTitle(event.target.value)}
+          size = "small"
         />
-        <Input
-          data-testid="authorTest"
-          text="Author"
+        <TextField
+          id="blogFormAuthor"
+          label="Author"
+          variant="outlined"
           value={newAuthor}
           onChange={(event) => setNewAuthor(event.target.value)}
+          size = "small"
         />
-        <Input
-          data-testid="urlTest"
-          text="Url"
+        <TextField
+          id="blogFormUrl"
+          label="Url"
+          variant="outlined"
           value={newUrl}
           onChange={(event) => setNewUrl(event.target.value)}
+          size = "small"
         />
-        <Button text="create" />
-      </form>
+        <Button variant="outlined" color="primary" type="submit" size = "large">
+          create
+        </Button>
+      </Box>
+
     </div>
   )
 }

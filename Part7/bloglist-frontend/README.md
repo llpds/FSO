@@ -82,3 +82,12 @@ for back use blog-backend from Part4
 
   - functionality for commenting on blog posts
   
+### 7:20 Styles, step1
+
+  -  improvement of appearance with MaterialUI
+
+      w/o                                     1.7 mb
+          
+      app + MaterialUI only container              3.8 mb
+                      container using   + 2mb
+
