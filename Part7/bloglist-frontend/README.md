@@ -86,6 +86,8 @@ for back use blog-backend from Part4
 
   -  improvement of appearance with MaterialUI
 
+      next work: nawBar, blogView
+
       w/o                                     1.7 mb
           
       app + MaterialUI only container              3.8 mb
