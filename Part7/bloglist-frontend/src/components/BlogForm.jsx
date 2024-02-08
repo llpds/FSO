@@ -1,13 +1,10 @@
 import { useState } from 'react'
-// import Button from './elements/Button'
-import Input from './elements/Input'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import  { createBlog } from '../reducers/blogReducer'
 import { TextField, Box, Button } from '@mui/material'
 
 const BlogForm = ({ blogFormRef }) => {
-  // --------------------------  states --------------------------
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
@@ -20,7 +17,6 @@ const BlogForm = ({ blogFormRef }) => {
     blogFormRef.current.toggleVisibility()
   }
 
-  // --------------------------  submit  --------------------------
   const submitBlog = (event) => {
     event.preventDefault()
     if (blogs.length > 0) {

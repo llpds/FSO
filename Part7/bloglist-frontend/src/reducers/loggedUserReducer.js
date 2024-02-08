@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
-import { clearBlogs, initializeBlogs } from './blogReducer'
+import { initializeBlogs } from './blogReducer'
 import { clearUsers, initializeUsers } from './usersReducer'
 import { showMessageRedux, showErrorRedux } from './notificationReducer'
 

@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { makeComment } from '../reducers/blogReducer'
+import { TextField, Box, Button } from '@mui/material'
 
 const CommentForm = () => {
   const dispatch = useDispatch()
@@ -8,18 +9,37 @@ const CommentForm = () => {
 
   const handleComment =  event => {
     event.preventDefault()
+    if(event.target.comment.value === '') {alert(
+      'Field comment must be filled'
+    )
+    return
+    }
     const comment = { content: event.target.comment.value }
     event.target.comment.value = ''
     dispatch(makeComment(id, comment))
   }
 
   return (
-    <div>
-      <form id="loginForm" onSubmit={handleComment}>
-        <input type="text" id="blogComment" name="comment" autoComplete="off" />
-        <button id="commentSubmitButton" type="submit">Add comment</button>
-      </form>
-    </div>
+    <Box
+      id="blogComment"
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '25ch' },
+      }}
+      autoComplete="off"
+      onSubmit={handleComment}
+    >
+      <TextField
+        id="blogComment"
+        name="comment"
+        label="Comment"
+        variant="outlined"
+        size = "small"
+      />
+      <Button variant="outlined" color="primary" type="submit" size = "large">
+        Add comment
+      </Button>
+    </Box>
   )
 }
 

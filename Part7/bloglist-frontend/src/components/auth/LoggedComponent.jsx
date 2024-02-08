@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../reducers/loggedUserReducer'
+import { Button } from '@mui/material'
 
 
 const LoggedComponent = () => {
@@ -9,9 +10,9 @@ const LoggedComponent = () => {
   return(
     <>
       <em>{user.name} logged in</em>
-      <button id="logout_button" type="submit" onClick={() => dispatch(logoutUser())}>
+      <Button color="inherit" id="logout_button" onClick={() => dispatch(logoutUser())} >
         Logout
-      </button>
+      </Button>
     </>
   )
 }

@@ -1,6 +1,6 @@
 # FSO part 7
 
-bloglist-frontend from ex5.23
+bloglist-frontend starts from ex5.23
 for back use blog-backend from Part4
 
 ### 7.9: automatic code formatting
@@ -82,14 +82,6 @@ for back use blog-backend from Part4
 
   - functionality for commenting on blog posts
   
-### 7:20 Styles, step1
+### 7:20, 7.21 Styles, step1, step 2
 
   -  improvement of appearance with MaterialUI
-
-      next work: nawBar, blogView
-
-      w/o                                     1.7 mb
-          
-      app + MaterialUI only container              3.8 mb
-                      container using   + 2mb
-

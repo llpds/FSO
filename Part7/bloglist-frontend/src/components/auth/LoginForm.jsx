@@ -7,7 +7,7 @@ const LoginForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleLogin =  event => {
+  const handleLogin = event => {
     event.preventDefault()
     const username = event.target.Username.value
     const password = event.target.Password.value

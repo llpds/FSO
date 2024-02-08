@@ -7,7 +7,6 @@ import {  BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-r
 import BlogList from './components/BlogList'
 import UsersList from './components/UsersList'
 import UserInfo from './components/UserInfo'
-import LoggedComponent from './components/auth/LoggedComponent'
 import LoginForm from './components/auth/LoginForm'
 import Notification from './components/Notification'
 
@@ -18,11 +17,8 @@ import NavBar from './components/NavBar'
 const App = () => {
 
 
-
   const dispatch = useDispatch()
   const user = useSelector (state => state.user)
-  // const users = useSelector (state => state.users)
-  // console.log('users main', users)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -46,15 +42,8 @@ const App = () => {
 
   return (
     <>
-      <Notification/>
       <NavBar />
-      {user
-        ? <LoggedComponent/>
-        : <em>Hello wayfarer, at first need <Link to="/login"> login </Link> </em>
-      }
-
-      <h2>Blog app</h2>
-
+      <Notification/>
       <Routes>
         <Route path="/users/:id" element = {<UserInfo />} />
         <Route path="/blogs/:id" element = {<BlogView />} />
