@@ -1,7 +1,24 @@
 # FSO part 7
 
+## Description: 
+
 bloglist-frontend starts from ex5.23
-for back use blog-backend from Part4
+
+The application manages blog posts, with the possibility of likes and comments, for both users and guests
+
+Creating posts and viewing information about users are for users
+
+Deleting a blog is only possible for the user who created it.
+
+
+### Tech:
+  - React
+  - Redux
+  - Router
+  - MeaterialUI.
+
+  - React Query (branch query)
+
 
 ### 7.9: automatic code formatting
 
