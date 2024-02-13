@@ -15,3 +15,10 @@
 ### 9.3 Command line
 
   - The two previous functions receive parameters from the console
+
+### 9.4 Express
+
+  - express, endpoitn hello, answer 'Hello Full Stack!'
+    prod: npm start
+    dev: npm run dev
+    port: 3001
