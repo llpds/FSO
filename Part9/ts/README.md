@@ -22,3 +22,8 @@
     prod: npm start
     dev: npm run dev
     port: 3001
+
+### 9.5 WebBMI
+
+  - endpoint bmi using calculateBmi
+    http://localhost:3003/bmi?height=180&weight=72
