@@ -27,3 +27,7 @@
 
   - endpoint bmi using calculateBmi
     http://localhost:3003/bmi?height=180&weight=72
+
+### 9.6 EsLint
+
+  - use ESlint and fix all warning
