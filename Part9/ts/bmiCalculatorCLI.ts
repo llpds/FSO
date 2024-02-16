@@ -1,4 +1,5 @@
 // CLI: npm run calculateBmi 180 74
+
 import calculateBmi from './bmiCalculator';
 
 interface CliDataBmi {

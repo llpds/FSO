@@ -1,3 +1,5 @@
+// http://localhost:3003/bmi?height=180&weight=72
+
 const calculateBmi = (h: number, w: number ): string => {
 const bmi = w / (h/100) ** 2;
 if(bmi < 16) return 'Underweight (Severe thinness)';
