@@ -7,3 +7,7 @@
 
   - back for Patientor. Configured ESLint and tsconfig
       endpoint: http://localhost:3001/api/ping
+
+### 9.9: Patientor backend, step2
+
+  - front-end receives "pong" from back-end
