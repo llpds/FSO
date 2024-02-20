@@ -11,3 +11,9 @@
 ### 9.9: Patientor backend, step2
 
   - front-end receives "pong" from back-end
+
+### 9.10: Patientor backend, step3
+
+  - diagnoses fetching
+    endpoint: /api/diagnoses
+    type: Diagnosis
