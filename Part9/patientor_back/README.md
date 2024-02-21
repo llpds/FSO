@@ -15,5 +15,11 @@
 ### 9.10: Patientor backend, step3
 
   - diagnoses fetching
-    endpoint: /api/diagnoses
-    type: Diagnosis
+      endpoint: http://localhost:3001/api/diagnoses
+      type: Diagnosis
+
+### 9.11: Patientor backend, step4
+
+  - patient to frontend, excluding field ssn
+      endpoint: http://localhost:3001/api/patients
+      type: Patient
