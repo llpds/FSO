@@ -23,3 +23,12 @@
   - patient to frontend, excluding field ssn
       endpoint: http://localhost:3001/api/patients
       type: Patient
+
+### 9.12 - 9.13: Patientor backend, step5 - 6
+
+  - adding patient functionality
+      POST endpoint /api/patients
+      uuid for creating unique id
+  - safe parcing, valifation and type predicate, gender enum type
+
+      
