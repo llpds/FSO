@@ -11,6 +11,6 @@ export const getAllDiaries = () => {
 
 export const createDiary = (object: NewDiaryEntry) => {
   return axios
-    .post<NewDiaryEntry>(baseUrl, object)
+    .post<DiaryEntry>(baseUrl, object)
     .then(res => res.data)
 }
