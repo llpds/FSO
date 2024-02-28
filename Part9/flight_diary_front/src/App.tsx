@@ -41,7 +41,7 @@ const App = () => {
     target: EventTarget & T;
   }
     
-  const onWeatherChange = (e: SyntheticEvent<HTMLButtonElement>) => {
+  const onWeatherChange = (e: SyntheticEvent<HTMLInputElement>) => {
     if( typeof e.target.value === "string") {
       const value = e.target.value;
       const weatherIns = Object.values(Weather).find(w => w.toString() === value);
@@ -67,7 +67,7 @@ const App = () => {
     // Another way is to define the type of the target object in the callback
     // function using the & type intersection operator:
     
-  const onVisibilityChange = (e: SyntheticEvent<HTMLButtonElement>) => {
+  const onVisibilityChange = (e: SyntheticEvent<HTMLInputElement>) => {
     if ( typeof e.target.value === "string") {
       const value = e.target.value;
       const visibilityIns = Object.values(Visibility).find(v => v.toString() === value);

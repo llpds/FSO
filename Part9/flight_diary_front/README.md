@@ -14,8 +14,3 @@
   - input forms, controlled components
     date: date input element
     weather and visibility: radio buttons
-
-    !!! onChange 
-    Type '(e: SyntheticEvent<HTMLButtonElement>) => void' is not assignable to type 'ChangeEventHandler<HTMLInputElement>'.
-
-    when implement MaterialUI, use (event: SelectChangeEvent<string>)
