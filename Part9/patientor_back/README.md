@@ -31,4 +31,9 @@
       uuid for creating unique id
   - safe parcing, valifation and type predicate, gender enum type
 
+
+### 9.20: Patientor, step1
+
+  - endpoint /api/patients/:id returns all patient info with entries.
+
       
