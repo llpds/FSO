@@ -46,7 +46,7 @@ const isGender = (param: string): param is Gender => {
   return Object.values(Gender).map(g => g.toString()).includes(param);
 };
 
-const parseGender= (gender: unknown): Gender => {
+const parseGender = (gender: unknown): Gender => {
   if (!isString(gender) || !isGender(gender)) {
       throw new Error('Incorrect or missing gender: ' + gender);
   }
@@ -65,7 +65,7 @@ const toNewPatient = (object: unknown): NewPatient => {
       ssn: parseSsn(object.ssn),
       gender: parseGender(object.gender),
       occupation: parseOccupation(object.occupation),
-      entries:[]
+      entries:[],
     };
     return newEntry;
   }

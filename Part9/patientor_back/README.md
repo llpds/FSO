@@ -29,11 +29,18 @@
   - adding patient functionality
       POST endpoint /api/patients
       uuid for creating unique id
-  - safe parcing, valifation and type predicate, gender enum type
+  - safe parcing, validation and type predicate, gender enum type
 
 
 ### 9.20: Patientor, step1
 
-  - endpoint /api/patients/:id returns all patient info with entries.
+  - endpoint /api/patients/:id returns all patient info with entries field.
 
+
+### 9.21: Patientor, step1
+
+  - frontend: page which shows patient info
+
+
+### 9.22: Patientor, step 3
       
