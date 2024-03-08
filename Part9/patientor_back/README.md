@@ -43,4 +43,6 @@
 
 
 ### 9.22: Patientor, step 3
-      
+  
+  - types OccupationalHealthcareEntry and HospitalEntry
+  - checking that the field type has a correct value
