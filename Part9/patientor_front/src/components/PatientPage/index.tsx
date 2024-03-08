@@ -26,14 +26,25 @@ const PatientPage = () => {
   if(!patient) return null;
   return (
     <div className="App">
-      <Typography variant="h5" marginTop= {5} marginBottom={3}>
-        Title: {patient.name} 
+      <Typography variant="h4" marginTop= {5} marginBottom={3}>
+        {patient.name} 
         {patient.gender === 'male' && <MaleIcon />}
         {patient.gender === 'female' && <FemaleIcon />}
         {patient.gender === 'other' && <KeyIcon />}
       </Typography>
       <p>ssn: {patient.ssn}</p>
       <p>occupation: {patient.occupation}</p>
+
+      <Typography variant="h5" marginTop= {5} marginBottom={3}>
+        entries
+      </Typography>
+        {patient.entries?.map((e,i) => <div key={i}>
+          {e.date} {e.description}
+          <ul>
+            {e.diagnosisCodes?.map((d,i) => <li key={i}> {d} </li>)}
+          </ul>
+        </div>)}
+
     </div>
   );
 };

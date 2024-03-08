@@ -9,3 +9,7 @@
 ### 9.21: Patientor, step2
 
   - patient info
+
+### 9.23: Patientor, step 4
+
+  - patient's page shows date, description and diagnoseCodes of the patient's entries
