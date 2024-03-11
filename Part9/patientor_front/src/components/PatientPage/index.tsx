@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Patient, Diagnosis } from "../../types";
+import { Patient, Diagnosis, Gender } from "../../types";
 import { useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import MaleIcon from '@mui/icons-material/Male';
@@ -33,9 +33,9 @@ const PatientPage = ({ diagnoses }: Props) => {
     <div className="App">
       <Typography variant="h4" marginTop= {5} marginBottom={3}>
         {patient.name} 
-        {patient.gender === 'male' && <MaleIcon />}
-        {patient.gender === 'female' && <FemaleIcon />}
-        {patient.gender === 'other' && <KeyIcon />}
+        {patient.gender === Gender.Male && <MaleIcon />}
+        {patient.gender === Gender.Female && <FemaleIcon />}
+        {patient.gender === Gender.Other && <KeyIcon />}
       </Typography>
       <p>ssn: {patient.ssn}</p>
       <p>occupation: {patient.occupation}</p>
@@ -43,9 +43,11 @@ const PatientPage = ({ diagnoses }: Props) => {
       <Typography variant="h5" marginTop= {5} marginBottom={3}>
         entries
       </Typography>
-        {patient.entries?.map((e,i) => <div key={i}>
-          <ShowEntry key={e.id} entry={e} diagnoses={diagnoses}/>
-        </div>)}
+        {}
+        { patient.entries?.length == 0 
+            ? <p>No entries</p>
+            : patient.entries?.map((e) => <ShowEntry key={e.id} entry={e} diagnoses={diagnoses}/>)
+        }
 
     </div>
   );

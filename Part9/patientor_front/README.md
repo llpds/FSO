@@ -17,3 +17,7 @@
 ### 9.24: Patientor, step 5
 
   - patient's page shows enties and diagnoses name of the patients entries
+
+### 9.25: Patientor, step 6
+
+  - Entry's details on the patient page
