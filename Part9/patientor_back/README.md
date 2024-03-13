@@ -46,3 +46,7 @@
   
   - types OccupationalHealthcareEntry and HospitalEntry
   - checking that the field type has a correct value
+
+### 9.26: Patientor, step 7
+
+  - endpoint /api/patients/:id/entries endpoint for adding a patient entries
