@@ -38,7 +38,6 @@ router.post('/:id/entries', (req, res) => {
     const id = req.params.id;
     const newEntry = toNewEntry(req.body);
     const updatedPatient = patientService.addEntry(id, newEntry);
-
     if(!updatedPatient){
       res.status(400).send({error:'no such patient id'});
     } else {

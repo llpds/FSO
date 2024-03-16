@@ -47,6 +47,10 @@
   - types OccupationalHealthcareEntry and HospitalEntry
   - checking that the field type has a correct value
 
-### 9.26: Patientor, step 7
+### 9.26: Patientor, step 7 upd
 
   - endpoint /api/patients/:id/entries endpoint for adding a patient entries
+  upd: 
+    save entry w/o entry diagnosisCode.
+    non empty text field
+    newEntry parseDiagnosisCode is array with strings

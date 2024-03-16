@@ -8,6 +8,9 @@ const parseString = (name: unknown): string => {
   if (!isString(name)) {
     throw new Error('Incorrect or missing name');
   }
+  if(name.length===0){
+    throw new Error('Text field must contain at least one char');
+  }
 
   return name;
 };
@@ -35,7 +38,7 @@ const isDate = (date: string): boolean => {
 
 const parseDate = (date: unknown): string => {
   if (!isString(date) || !isDate(date)) {
-      throw new Error('Incorrect or missing date: ' + date);
+      throw new Error('Incorrect or missing "Date": ' + date);
   }
   return date;
 };
@@ -81,12 +84,11 @@ const parseHealthCheckRating = (healthCheckRating: unknown): HealthCheckRating =
 };
 
 const parseDiagnosisCodes = (object: unknown): Array<DiagnoseEntry['code']> =>  {
-  if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
+  if (!Array.isArray(object) || !object.every(v=>isString(v))) {
     // we will just trust the data to be in correct form
     return [] as Array<DiagnoseEntry['code']>;
   }
-
-  return object.diagnosisCodes as Array<DiagnoseEntry['code']>;
+  return object as Array<DiagnoseEntry['code']>;
 };
 
 const parseDischarge = (object: unknown): Discharge =>  {
@@ -142,13 +144,15 @@ export const toNewEntry = (object: unknown): NewEntry => {
     throw new Error('Incorrect or missing data');
   }
 
-  if ('date' in object && 'type' in object && 'specialist' in object && 'description' in object && 'diagnosisCodes' in object && 'type' in object )  {
+  if ('date' in object && 'type' in object && 'specialist' in object && 'description' in object && 'type' in object )  {
     const newEntry: NewBaseEntry = {
       date: parseDate(object.date),
       specialist: parseString(object.specialist),
       description: parseString(object.description),
-      diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
     };
+    if('diagnosisCodes' in object) {
+      newEntry.diagnosisCodes = parseDiagnosisCodes(object.diagnosisCodes);
+    } 
     
     const parsedType:EntryType = parseType (object.type);
 
