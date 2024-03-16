@@ -1,14 +1,12 @@
 import { useState, SyntheticEvent } from "react";
-
-import {  TextField, InputLabel, MenuItem, Select, Grid, Button, SelectChangeEvent } from '@mui/material';
+import {  TextField, InputLabel, MenuItem, Select, Grid, Button, SelectChangeEvent, FormControl } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-
-import { PatientFormValues, Diagnosis, HealthCheckRating, EntryType, NewBaseEntry } from "../../types";
+import { useAppSelector } from "../../store";
+import { HealthCheckRating, EntryType, NewBaseEntry, NewEntry } from "../../types";
 
 interface Props {
-  diagnoses : readonly Diagnosis[];
+  onSubmit: (values: NewEntry) => void;
   onCancel: () => void;
-  onSubmit: (values: PatientFormValues) => void;
 }
 
 interface RatingsOption{
@@ -20,13 +18,16 @@ const ratingsOptions: RatingsOption[] = [];
 Object.values(HealthCheckRating).forEach(v => {if(typeof v === 'number') ratingsOptions.push({value: v, label:v.toString()}); });
 
 
-const AddEntryForm = ({ diagnoses, onCancel, onSubmit }: Props) => {
+const AddEntryForm = ({onSubmit, onCancel }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [type, setType] = useState(EntryType.HealthCheck);
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [specialist, setSpecialist] = useState('');
   const [healthCheckRating, setHealthCheckRating] = useState(HealthCheckRating.Healthy);
   const [diagnosesCodes, setDiagnosesCodes] = useState<string[] | never[]>([]);
+
+  const diagnoses = useAppSelector(state => state.diagnoses);
 
 
   const diagnosesOption:string[] = diagnoses.map(d=> d.code);
@@ -36,7 +37,6 @@ const AddEntryForm = ({ diagnoses, onCancel, onSubmit }: Props) => {
     if ( typeof e.target.value === "number") {
       const value = e.target.value;
       const rating = Object.values(HealthCheckRating).find(g => g === value);
-      console.log('rating', typeof rating);
       if (typeof rating === 'number') {
         setHealthCheckRating(rating);
       }
@@ -49,23 +49,22 @@ const AddEntryForm = ({ diagnoses, onCancel, onSubmit }: Props) => {
     if(diagnosesCodes.length > 0) newBaseEntry.diagnosisCodes = diagnosesCodes;
     switch(type){
       case EntryType.HealthCheck:
-        onSubmit ({...newBaseEntry, healthCheckRating, type: type});
+        onSubmit({...newBaseEntry, healthCheckRating, type: type});
         break;
       default:
         console.log('newer');
       }
 
-      setType(EntryType.HealthCheck);
-      setDescription('');
-      setDate('');
-      setSpecialist('');
-      setHealthCheckRating(HealthCheckRating.Healthy);
-      setDiagnosesCodes([]);
+      // setType(EntryType.HealthCheck);
+      // setDescription('');
+      // setDate('');
+      // setSpecialist('');
+      // setHealthCheckRating(HealthCheckRating.Healthy);
+      // setDiagnosesCodes([]);
   };
 
   return (
-    <div>
-      <form onSubmit={addEntry} >
+      <FormControl fullWidth>    
         <TextField
           label="Description"
           fullWidth 
@@ -98,10 +97,11 @@ const AddEntryForm = ({ diagnoses, onCancel, onSubmit }: Props) => {
           options={diagnosesOption}
           renderInput={(params) => <TextField {...params} label="Diagnoses code"/>}
         />
-
-        <InputLabel style={{ marginTop: 20 }}>HealthCheckRating</InputLabel>
+        <FormControl>
+        <InputLabel style={{ marginTop: 20 }} id="healthCheckRating">HealthCheckRating</InputLabel>
         <Select
-          label="HealthCheckRating"
+          style={{ marginTop: 10 }}
+          labelId="healthCheckRating"
           fullWidth
           value={healthCheckRating.toString()}
           onChange={onHealthCheckRatingChange}
@@ -115,8 +115,8 @@ const AddEntryForm = ({ diagnoses, onCancel, onSubmit }: Props) => {
           }</MenuItem>
         )}
         </Select>
-
-        <Grid>
+        </FormControl>
+        <Grid style={{ marginTop: 10 }}>
           <Grid item>
             <Button
               color="secondary"
@@ -130,18 +130,15 @@ const AddEntryForm = ({ diagnoses, onCancel, onSubmit }: Props) => {
           </Grid>
           <Grid item>
             <Button
-              style={{
-                float: "right",
-              }}
-              type="submit"
+              onClick={addEntry} 
+              style={{ float: "right" }}
               variant="contained"
             >
               Save
             </Button>
           </Grid>
         </Grid>
-      </form>
-    </div>
+      </FormControl>
   );
 };
 

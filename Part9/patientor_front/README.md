@@ -24,4 +24,14 @@
 
 ### 9.27: Patientor, step 8
 
+  - redux: patientReducer, diagnoseReducer
   - adding patient entries functionality
+
+  - oho,
+    'Uncaught TypeError: createTheme_default is not a function'
+    happens too much
+    
+    https://mui.com/x/react-data-grid/getting-started/
+    usually reinstall helps:
+      npm install @mui/x-data-grid
+      npm install @mui/material @emotion/react @emotion/styled

@@ -8,17 +8,17 @@ import AddPatientModal from "../AddPatientModal";
 
 import HealthRatingBar from "../HealthRatingBar";
 
-import patientService from "../../services/patients";
+// import patientService from "../../services/patients";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { createPatient } from "../../reducers/patientReducer";
 
-interface Props {
-  patients : Patient[]
-  setPatients: React.Dispatch<React.SetStateAction<Patient[]>>
-}
 
-const PatientListPage = ({ patients, setPatients } : Props ) => {
-
+const PatientListPage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [error, setError] = useState<string>();
+
+  const patients = useAppSelector(state => state.patients);
+  const dispatch = useAppDispatch();
 
   const openModal = (): void => setModalOpen(true);
 
@@ -29,8 +29,7 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
 
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
-      const patient = await patientService.create(values);
-      setPatients(patients.concat(patient));
+      dispatch(createPatient(values));
       setModalOpen(false);
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
@@ -51,7 +50,7 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
   return (
     <div className="App">
       <Box>
-        <Typography align="center" variant="h6">
+        <Typography align="left" variant="h5">
           Patient list
         </Typography>
       </Box>

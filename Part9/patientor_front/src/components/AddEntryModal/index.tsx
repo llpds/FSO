@@ -1,21 +1,20 @@
 import { Alert } from '@mui/material';
 
 import AddEntryForm from "./AddEntryForm";
-import {  Diagnosis, PatientFormValues } from "../../types";
+import {  NewEntry } from "../../types";
 import Box from '@mui/material/Box';
 
 interface Props {
-  diagnoses : Diagnosis[];
+  onSubmit: (values: NewEntry) => void;
   onClose: () => void;
-  onSubmit: (values: PatientFormValues) => void;
   error?: string;
 }
 
-const AddEntryModal = ({ diagnoses, onClose, onSubmit, error }: Props) => (
-  <Box sx={{ marginTop: '10px', padding: '10px', border: 2, borderStyle: 'dashed' }}>
+const AddEntryModal = ({ onSubmit, onClose, error }: Props) => (
+  <Box sx={{ marginTop: '10px', padding: '10px', border: 2, borderStyle: 'dashed'  }}>
     <h4>New HealthCheck entry</h4>
     {error && <Alert severity="error">{error}</Alert>}
-    <AddEntryForm diagnoses={diagnoses} onSubmit={onSubmit} onCancel={onClose}/>
+    <AddEntryForm onSubmit={onSubmit} onCancel={onClose}/>
   </Box>
   // <Dialog fullWidth={true} open={inputOpen} onClose={() => onClose()}>
   //   <DialogTitle>Add a new patient</DialogTitle>
