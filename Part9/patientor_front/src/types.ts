@@ -76,4 +76,5 @@ export type Entry =
 
 type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
 
+export type NewBaseEntry = Omit<BaseEntry, 'id'>;
 export type NewEntry = UnionOmit<Entry, 'id'>;

@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import { Patient, Diagnosis, Gender } from "../../types";
 import { useParams } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
+import AddEntryModal from "../AddEntryModal";
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 import KeyIcon from '@mui/icons-material/Key';
@@ -16,6 +17,8 @@ interface Props {
 }
 
 const PatientPage = ({ diagnoses }: Props) => {
+  const [inputOpen, setInputOpen] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
   const [patient, setPatient] = useState<forState>('');
   const id = useParams().id;
 
@@ -26,6 +29,16 @@ const PatientPage = ({ diagnoses }: Props) => {
       void fetchPatient();
   }, [id]);
 
+  const submitNewEntry =({data}) => {
+    console.log('first', data);
+  };
+
+  const openInput = (): void => setInputOpen(true);
+
+  const closeInput = (): void => {
+    setInputOpen(false);
+    setError('');
+  };
 
 
   if(!patient) return null;
@@ -39,7 +52,18 @@ const PatientPage = ({ diagnoses }: Props) => {
       </Typography>
       <p>ssn: {patient.ssn}</p>
       <p>occupation: {patient.occupation}</p>
-
+      {inputOpen
+        ? <AddEntryModal
+            diagnoses={diagnoses}
+            onSubmit={submitNewEntry}
+            error={error}
+            onClose={closeInput}
+          />
+        : <Button variant="contained" onClick={() => openInput()}>
+            Add New Entry
+          </Button>
+      }
+      
       <Typography variant="h5" marginTop= {5} marginBottom={3}>
         entries
       </Typography>
