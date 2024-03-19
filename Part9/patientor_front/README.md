@@ -35,4 +35,4 @@
 ### 9.28 - 9.29: Patientor, step 9 - 10
 
   - adding patient entries functionality: Hospital, OccupationalHealthcareEntry
-  - input elements with type date
+  - Entry creation forms improvements: input elements with type date

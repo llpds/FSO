@@ -27,15 +27,6 @@ const App = () => {
   const weatherOptions: WeatherOption[] = Object.values(Weather).map(w => ({
     value: w, label: w.toString()
   }));
-
-  // extending the HTMLElement type with generics
-  // type HTMLElementEvent<T extends HTMLElement> = Event & {
-  //   target: T;
-  // }
-
-  // const onWeatherChange = (e: HTMLElementEvent<HTMLButtonElement>) => {
-  // const onWeatherChange = (e: React.SyntheticEvent) => {
-  // const onWeatherChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
   interface SyntheticEvent<T> extends React.SyntheticEvent {
     target: EventTarget & T;
@@ -57,15 +48,6 @@ const App = () => {
   const visibilityOptions: VisibilityOption[] = Object.values(Visibility).map(v => ({
     value: v, label: v.toString()
   }));
-  
-  //https://freshman.tech/snippets/typescript/fix-value-not-exist-eventtarget/
-
-    // // type narrow:
-    // const onVisibilityChange = (e: Event) => {
-    //   const target = e.target as HTMLButtonElement;
-    
-    // Another way is to define the type of the target object in the callback
-    // function using the & type intersection operator:
     
   const onVisibilityChange = (e: SyntheticEvent<HTMLInputElement>) => {
     if ( typeof e.target.value === "string") {
