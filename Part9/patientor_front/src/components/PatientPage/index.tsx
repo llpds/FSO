@@ -37,6 +37,7 @@ const PatientPage = () => {
       const updatedPatient = await patientService.createEntry(id, data);
       setPatient(updatedPatient);
       setInputOpen(false);
+      setError('');
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         if (e?.response?.data && typeof e?.response?.data === "string") {
@@ -60,8 +61,6 @@ const PatientPage = () => {
     setError('');
   };
 
-
- 
   return (
     <div className="App">
       <Typography variant="h4" marginTop= {5} marginBottom={3}>

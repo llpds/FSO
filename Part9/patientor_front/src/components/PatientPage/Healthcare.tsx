@@ -1,10 +1,21 @@
+import { Typography } from '@mui/material';
+import { OccupationalHealthcareEntry } from "../../types";
+
 interface HelathcareDescriptionProps{
-  description: string
+  entry: OccupationalHealthcareEntry
 }
 
-const Helathcare = ({ description }: HelathcareDescriptionProps) => {
+const Helathcare = ({ entry }: HelathcareDescriptionProps) => {
   return (
-    <div>{ description }</div>
+    <div>
+      {entry.sickLeave 
+        &&<div>
+          <Typography> Sickleave </Typography>
+          <p>Start: {entry.sickLeave.startDate}</p>
+          <p>End: {entry.sickLeave.endDate}</p>
+        </div>
+      }
+    </div>
   );
 };
 

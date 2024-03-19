@@ -4,10 +4,10 @@ import Hospital from './Hospital';
 import Healthcare from './Healthcare';
 import HealthCheck from './HealthCheck';
 
+import { Typography } from '@mui/material';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import WorkIcon from '@mui/icons-material/Work';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-
 import Box from '@mui/material/Box';
 
 
@@ -29,7 +29,7 @@ const ShowEntry = ({ entry, diagnoses }: Props) => {
       case EntryType.Hospital:
         return <Hospital discharge = {entry.discharge} />;
       case EntryType.OccupationalHealthcare:
-        return <Healthcare description = { entry.description}/>;
+        return <Healthcare entry = { entry }/>;
       case EntryType.HealthCheck: 
         return <HealthCheck healthCheckRating = { entry.healthCheckRating }/>;
       default:
@@ -44,6 +44,7 @@ const ShowEntry = ({ entry, diagnoses }: Props) => {
       {entry.type === EntryType.OccupationalHealthcare && <><WorkIcon /> {entry.employerName} </>}
       {entry.type === EntryType.HealthCheck && <MedicalServicesIcon />}
       <br />
+      <Typography marginTop= {1} > Description </Typography>
       <i>{entry.description}</i>
       <ul>
             {entry.diagnosisCodes?.map((c,i) => <li key={i}> {c} {c ? diagnoses.find(d => d.code === c)?.name : null} </li>)}

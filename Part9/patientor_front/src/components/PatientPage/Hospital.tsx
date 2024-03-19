@@ -1,10 +1,7 @@
-type discharge = {
-  date: string,
-  criteria: string,
-};
+import { Discharge } from "../../types";
 
 interface HospitalDischargeProps {
-  discharge: discharge
+  discharge: Discharge
 }
 
 const Hospital = ({ discharge }: HospitalDischargeProps) => {
