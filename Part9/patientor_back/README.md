@@ -54,3 +54,6 @@
     save entry w/o entry diagnosisCode.
     non empty text field
     newEntry parseDiagnosisCode is array with strings
+
+  upd2:
+    sickleave date checking

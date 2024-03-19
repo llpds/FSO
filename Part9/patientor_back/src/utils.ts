@@ -97,7 +97,7 @@ const parseDischarge = (object: unknown): Discharge =>  {
   }
   
   return { 
-    date: parseString(object.date),
+    date: parseDate(object.date),
     criteria: parseString(object.criteria)
   };
 };
@@ -107,8 +107,8 @@ const parseSickLeave = (object: unknown): SickLeave =>  {
   }
   
   return { 
-    startDate: parseString(object.startDate),
-    endDate: parseString(object.endDate)
+    startDate: parseDate(object.startDate),
+    endDate: parseDate(object.endDate)
   };
 };
 
