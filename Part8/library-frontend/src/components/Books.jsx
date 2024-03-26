@@ -1,9 +1,11 @@
-const Books = (props) => {
-  if (!props.show) {
+import PropTypes from 'prop-types'
+
+const Books = ({ booksQuery }) => {
+  if (booksQuery.data === undefined) {
     return null
   }
 
-  const books = []
+  const books = booksQuery.data.allBooks
 
   return (
     <div>
@@ -27,6 +29,10 @@ const Books = (props) => {
       </table>
     </div>
   )
+}
+
+Books.propTypes = {
+  booksQuery: PropTypes.object
 }
 
 export default Books

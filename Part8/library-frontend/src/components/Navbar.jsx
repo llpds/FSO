@@ -6,7 +6,6 @@ const NavBar = () => {
   }
   return (
     <div>
-      <h1>Software anecdotes</h1>
       <Link style={padding} to="/authors"> authors </Link>
       <Link style={padding} to="/books"> books </Link>
     </div>

@@ -17,16 +17,27 @@ query AllAuthors {
 }
 `
 
+const ALL_BOOKS = gql`
+query AllBooks {
+  allBooks {
+    title
+    published
+    id
+    author
+  }
+}
+`
 
 const App = () => {
   const authorsQuery = useQuery(ALL_AUTHORS)
+  const booksQuery = useQuery(ALL_BOOKS)
 
   return (
     <div>
       <NavBar />
 
       <Routes>
-        <Route path="/books" element={<Books />} />
+        <Route path="/books" element={<Books booksQuery={booksQuery} />} />
         <Route path="/authors" element={<Authors authorsQuery={authorsQuery} />} /> 
       </Routes>
 
