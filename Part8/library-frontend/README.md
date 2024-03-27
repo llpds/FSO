@@ -8,3 +8,6 @@ library-frontend
 
 - 8.9: Books view
     Books view shows on a page all other details of all books except their genres
+
+- 8.10: Adding a book
+    functionality for adding new books

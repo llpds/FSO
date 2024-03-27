@@ -7,7 +7,8 @@ const NavBar = () => {
   return (
     <div>
       <Link style={padding} to="/authors"> authors </Link>
-      <Link style={padding} to="/books"> books </Link>
+      <Link style={padding} to="/"> books </Link>
+      <Link style={padding} to="/newbook"> new book </Link>
     </div>
   )
 }
