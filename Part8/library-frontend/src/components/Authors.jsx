@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import BirthYearForm from './BirthYearForm'
 
 const Authors = ({ authorsQuery }) => {
   
@@ -26,6 +27,7 @@ const Authors = ({ authorsQuery }) => {
           ))}
         </tbody>
       </table>
+      <BirthYearForm  authors = { authors }/>
     </div>
   )
 }

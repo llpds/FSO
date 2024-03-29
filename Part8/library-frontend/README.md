@@ -11,3 +11,8 @@ library-frontend
 
 - 8.10: Adding a book
     functionality for adding new books
+
+- 8.11 - 8.12: Authors birth year advanced
+
+    change birth year only for excisting authors
+    select not ready!
