@@ -17,7 +17,7 @@ library-frontend
     change birth year only for excisting authors
     select not ready!
 
-- partC
+- partD
   - 8.17 Listing books
     List of books are fixed
 
