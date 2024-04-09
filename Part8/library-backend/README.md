@@ -49,8 +49,7 @@ library
             published: 1997,
             genres: ["crime"]
           ) {
-            title,
-            author
+            title
           }
         }
 
