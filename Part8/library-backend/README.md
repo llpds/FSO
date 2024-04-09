@@ -66,7 +66,7 @@ library
         }
 
  - partC
-  - 8.13: Database, part 1 //ready to push github
+  - 8.13: Database, part 1
     - saves data to mongo
 
         mutation {
@@ -99,9 +99,7 @@ library
         }
 
   - 8.14: Database, part 2
-    - other queries(allBooks with param: author and genre, field Author is not required) and mutations (!are completed)
-      
-      p.s. field author in allBook may be later, ti doesn't works now
+    - other queries(allBooks with param: author and genre) and mutations are completed
 
   - 8.15 Database, part 3
     - database validation errors cause GraphQLError with a suitable error message.
@@ -111,5 +109,8 @@ library
       - query: me,
       - mutations: createUser, login
         
-        all users have the same hardcoded password
-        addBook and editAuthor work only for logged users
+        all users have the same hardcoded password, addBook and editAuthor work only for logged users
+
+ - partCfix
+    - books count in author info
+    - saving a new author when saving a new book

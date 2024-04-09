@@ -125,6 +125,7 @@ const typeDefs = `
 type Author {
   name: String!
   born: Int
+  bookCount: String
   id: ID!
 }
 
@@ -158,6 +159,14 @@ type Query {
 }
 
 type Mutation {
+  addA(
+    title: String!
+    published: Int!
+    author: String!
+    genres: [String]!
+  ): Author
+
+
   addBook(
     title: String!
     published: Int!
@@ -189,17 +198,23 @@ type Mutation {
 
 const resolvers = {
   Query: {
-    authorCount: async () => Author.collection.countDocuments(),
+    authorCount: () => Author.collection.countDocuments(),
+    // "id": "6607d25266c6c2c606d674bf",
+    // "name": "Robert Martin"
 
     // bookCount: async () => Book.collection.countDocuments({ published: {$gt: 2000}}),
+  //   bookCount: async () => Book.collection.aggregate([
+  //     { $match: { published: {$gt: 2000}} },
+  //     { $group: { _id: null, n: { $sum: 1 } } }
+  //  ]),
+
     // bookCount: async () => Book.collection.countDocuments({ title: {$eq: 'Clean Code'}}),
     // bookCount: async () => Book.collection.countDocuments({ genres: {$eq: 'design'}}),
     // bookCount: async () => Book.collection.countDocuments({ genres: {$all: ['agile', 'design']}}),
-    // doesn't work bookCount: async () => Book.collection.countDocuments({ author: {$eq: {id:"6607d25266c6c2c606d674bf"} }})
-    
-    bookCount: async () => Book.collection.countDocuments(),
 
-    allBooks: async (root, args) => {
+    bookCount: () => Book.collection.countDocuments(),
+
+    allBooks: async (_root, args) => {
       const crit = {}
         if(args.author){
           const author = await Author.findOne({ name: args.author })
@@ -216,22 +231,19 @@ const resolvers = {
       let res = await Book.find(crit).populate('author')
       return res
     },
-    allAuthors: async (root, args) => Author.find({}),
-    me: (root, args, context) => {
+    allAuthors: async () => Author.find({}),
+    me: (_root, _args, context) => {
       return context.currentUser
     }
   },
-/*
   Author: {
-   // name: (root) => root.name,
-   // bookCount: (root) => books.filter(b => b.author === root.name).length
-   // bookCount: async (root) => Book.collection.countDocuments({ author: {$eq: root.name} })
+    // name: (root) => "root.name"
+    // bookCount: async (root) => Book.collection.countDocuments({ author: {$eq: root.name} })
+    bookCount: async (root) => Book.find({ author: root._id}).countDocuments()
   },
-*/
   Mutation: {
-    addBook: async (root, args, context) => {
+    addBook: async (_root, args, context) => {
       const currentUser = context.currentUser
-
       if(!currentUser){
         throw new GraphQLError('not authenticated', {
           extensions: {
@@ -240,8 +252,21 @@ const resolvers = {
         })
       }
       
-      const author = await Author.findOne({ name: args.author })
-      if(!author) throw new GraphQLError(`there is no author with name:${args.author} in the database`)
+      let author = await Author.findOne({ name: args.author })
+      if(!author) {
+        author = new Author({ name: args.author})
+        try {
+          await author.save()
+        } catch (error) {
+          throw new GraphQLError('Saving author failed', {
+            extensions: {
+              code: 'BAD_USER_INPUT',
+              invalidArgs: args.name,
+              error
+            }
+          })
+        }
+      }
 
       const book = new Book({ ...args, author: author._id })
       try {
@@ -259,6 +284,7 @@ const resolvers = {
       return populatedBook
     },
     addAuthor: async (root, args) => {
+
       const author = new Author({ ...args })
       
       try {
@@ -272,6 +298,35 @@ const resolvers = {
           }
         })
       }
+
+      return author
+    },
+    addA: async (root, args, context) => {
+      const currentUser = context.currentUser
+      if(!currentUser){
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+          }
+        })
+      }
+      const author = await Author.findOne({ name: args.author })
+      const author2 = { id: author._id, name: author.name, born: author.born}
+      console.log('author', author)
+      console.log('author2', author2)
+      const book = new Book({...args, author: author._id})
+      // console.log('book', book)
+      // try {
+      //   await book.save()
+      // } catch (error) {
+      //   throw new GraphQLError('Saving book failed', {
+      //     extensions: {
+      //       code: 'BAD_USER_INPUT',
+      //       invalidArgs: args.name,
+      //       error
+      //     }
+      //   })
+      // }
 
       return author
     },
@@ -305,7 +360,7 @@ const resolvers = {
 
       return author
     },
-    createUser: async (root, args) => {
+    createUser: async (_root, args) => {
       const user = new User({ username: args.username, favoriteGenre: args.favoriteGenre })
   
       return user.save()
@@ -319,7 +374,7 @@ const resolvers = {
           })
         })
     },
-    login: async (root, args) => {
+    login: async (_root, args) => {
       const user = await User.findOne({ username: args.username })
       if ( !user || args.password !== 'secret' ) {
         throw new GraphQLError('wrong credentials', {
@@ -333,7 +388,6 @@ const resolvers = {
         username: user.username,
         id: user._id,
       }
-  
       return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
     },
   }
