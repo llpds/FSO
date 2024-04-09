@@ -15,7 +15,6 @@ const BirthYearForm = ({ authors }) => {
   const [born, setBorn] = useState('')
   const [err, setErr] = useState()
 
-  console.log('nameOpt', nameOpt)
   const [ changeBorn, result ] = useMutation(EDIT_BIRTH_YEAR, {
     onError: (e) => {
       const msg = e.graphQLErrors.map(e => e.message).join('/n')
@@ -29,7 +28,6 @@ const BirthYearForm = ({ authors }) => {
 
     const bornInt = Number(born)
     const name = nameOpt ? nameOpt.value : nameOpt
-    console.log('name', name)
     changeBorn({ variables: { name, setBornTo: bornInt } })
 
     setBorn('')
@@ -62,7 +60,7 @@ const BirthYearForm = ({ authors }) => {
             I couldn’t find any difference in the mechanics between react select and select tag,
             they react identically to the introduction of incorrect and empty fields.
             React select imposes restrictions on the shape of the state, or extra time...
-            When the external design has been developed, the react tag is more preferable.
+            When the external design has been developed, the select tag is more preferable.
             Next time, use this: 
               <select value={} onChange={}>
                 <option value="someOption">Some option</option>

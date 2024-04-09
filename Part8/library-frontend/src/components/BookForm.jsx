@@ -4,33 +4,34 @@ import { ALL_AUTHORS, ALL_BOOKS, CREATE_BOOK } from '../queries'
 import Notify from './Notify'
 
 const NewBook = () => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [published, setPublished] = useState('')
+  const [title, setTitle] = useState('title10')
+  const [author, setAuthor] = useState('Robert Martin')
+  const [published, setPublished] = useState('2002')
   const [genre, setGenre] = useState('')
-  const [genres, setGenres] = useState([])
+  const [genres, setGenres] = useState(['classic'])
   const [err, setErr] = useState()
 
   const [ createBook ] = useMutation(CREATE_BOOK, {
     refetchQueries: [ { query: ALL_AUTHORS }, { query: ALL_BOOKS }],
     onError: (e) => {
       const msg = e.graphQLErrors.map(e => e.message).join('/n')
-      setErr(msg)
+      const ext = ` INFO: ${e.graphQLErrors[0].extensions.error.message}`
+      setErr(msg.concat(ext))
+    },
+    onCompleted: () => {
+      setErr(null)
+      setTitle('')
+      setPublished('')
+      setAuthor('')
+      setGenres([])
+      setGenre('')
     }
   })
 
   const submit = async (event) => {
     event.preventDefault()
     const publishedInt = Number(published)
-    console.log('typeof publishedInt', typeof publishedInt)
-    createBook({ variables: {title, published: publishedInt, genres, author}})
-    
-    setErr(null)
-    setTitle('')
-    setPublished('')
-    setAuthor('')
-    setGenres([])
-    setGenre('')
+    createBook({ variables: { title, published: publishedInt, genres, author } })
   }
 
   const addGenre = () => {

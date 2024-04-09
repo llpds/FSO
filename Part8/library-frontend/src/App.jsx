@@ -1,32 +1,37 @@
-// import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Authors from './components/Authors'
 import Books from './components/Books'
-import NewBook from './components/NewBook'
+import BookForm from './components/BookForm'
+import BooksRecommend from './components/BooksRecommend'
 import NavBar from './components/Navbar'
-import { useQuery } from '@apollo/client'
-import { ALL_AUTHORS, ALL_BOOKS } from './queries'
+
+import LoginForm from './components/LoginForm'
 
 
 const App = () => {
-  const authorsQuery = useQuery(ALL_AUTHORS)
-  const booksQuery = useQuery(ALL_BOOKS)
+  const [token, setToken] = useState(null)
+
+  // console.log('token', token)
+  // console.log('window.localStorage', window.localStorage)
+  
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('library-user-token')
+    if (loggedUserJSON) {
+      setToken(loggedUserJSON)
+    }
+  }, [])
 
   return (
     <div>
-      <NavBar />
-
+      <NavBar token = {token} setToken={setToken}/>
       <Routes>
-        <Route path="/" element={<Books booksQuery={booksQuery} />} />
-        <Route path="/authors" element={<Authors authorsQuery={authorsQuery} />} />
-        <Route path="/newbook" element={<NewBook />} />
-      </Routes>
-
-      {/* <div>
-        <button onClick={() => setPage('authors')}>authors</button>
-        <button onClick={() => setPage('books')}>books</button>
-        <button onClick={() => setPage('add')}>add book</button>
-      </div>       */}
+        <Route path="/" element={<Books/>} />
+        <Route path="/authors" element={<Authors />} />
+        <Route path="/newbook" element={token ? <BookForm /> : <Navigate replace to="/" />} />
+        <Route path="/recommend" element={token ? <BooksRecommend /> : <Navigate replace to="/" />} />
+        <Route path="/login" element={token ? <Navigate replace to="/" /> : <LoginForm setToken={setToken} />} />
+      </Routes> 
     </div>
   )
 }

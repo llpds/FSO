@@ -1,8 +1,10 @@
-import PropTypes from 'prop-types'
+import { useQuery } from '@apollo/client'
+import { ALL_AUTHORS } from '../queries'
 import BirthYearForm from './BirthYearForm'
 
-const Authors = ({ authorsQuery }) => {
-  
+const Authors = () => {
+  const token = window.localStorage.getItem('library-user-token')
+  const authorsQuery = useQuery(ALL_AUTHORS)
   if (authorsQuery.data === undefined) {
     return null
   }
@@ -22,17 +24,15 @@ const Authors = ({ authorsQuery }) => {
             <tr key={a.name}>
               <td>{a.name}</td>
               <td>{a.born}</td>
-              <td>{a.bookCount}</td>
+              <td>{a.bookCount ? a.bookCount : 'not now'}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <BirthYearForm  authors = { authors }/>
+      {token && <BirthYearForm  authors = { authors }/>}
     </div>
   )
 }
-Authors.propTypes = {
-  authorsQuery: PropTypes.object
-}
+
 
 export default Authors
