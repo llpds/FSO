@@ -1,8 +1,10 @@
 library
     
-  The server application stores information about authors and their books
-  port: 4000
-  all users have the same hardcoded password: 'secret'
+The server application stores information about authors and their books
+
+port: 4000
+
+all users have the same hardcoded password: 'secret'
     
   
 - PartA
