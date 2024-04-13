@@ -1,8 +1,10 @@
 library
     
   The server application stores information about authors and their books
+  port: 4000
+  all users have the same hardcoded password: 'secret'
     
-  stack: GraphQl
+  
 - PartA
   - 8.1: The number of books and authors
       - queries bookCount and authorCount return the number of books and the number of authors.
@@ -64,7 +66,7 @@ library
           }
         }
 
- - partC
+- partC
   - 8.13: Database, part 1
     - saves data to mongo
 
@@ -110,6 +112,10 @@ library
         
         all users have the same hardcoded password, addBook and editAuthor work only for logged users
 
- - partCfix
+- partCfix
     - books count in author info
     - saving a new author when saving a new book
+
+- partE
+  - 8.23: Subscriptions - server
+      - bookAdded subscription

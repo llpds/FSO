@@ -24,4 +24,6 @@ branch redux and query for part7 ex. 7.10 - 7.13
     - 7.10 - 7.13 branch redux  State management: Redux
     - 7.10 - 7.13 branch query  State management: React Query and context
 
+### Part 8 - [GraphQL](https://fullstackopen.com/en/part8)
+
 ### Part 9 - [TypeScript](https://fullstackopen.com/en/part9)

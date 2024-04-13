@@ -1,22 +1,28 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { ALL_AUTHORS, ALL_BOOKS, CREATE_BOOK } from '../queries'
+import { updateCache } from '../utils/updateCache'
+
 import Notify from './Notify'
 
 const NewBook = () => {
-  const [title, setTitle] = useState('title10')
-  const [author, setAuthor] = useState('Robert Martin')
-  const [published, setPublished] = useState('2002')
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [published, setPublished] = useState('')
   const [genre, setGenre] = useState('')
-  const [genres, setGenres] = useState(['classic'])
+  const [genres, setGenres] = useState([])
   const [err, setErr] = useState()
 
   const [ createBook ] = useMutation(CREATE_BOOK, {
-    refetchQueries: [ { query: ALL_AUTHORS }, { query: ALL_BOOKS }],
+    update: (cache, response) => {
+      updateCache(cache, { query: ALL_BOOKS, variables: { genre: null } }, response.data.addBook)
+    },
+    refetchQueries: [{ query: ALL_AUTHORS }],
     onError: (e) => {
-      const msg = e.graphQLErrors.map(e => e.message).join('/n')
-      const ext = ` INFO: ${e.graphQLErrors[0].extensions.error.message}`
-      setErr(msg.concat(ext))
+      let msg = e.graphQLErrors.map(e => e.message).join('/n')
+      if(e.graphQLErrors[0]?.extensions?.error?.message)
+        msg = msg.concat(` INFO: ${e.graphQLErrors[0].extensions.error.message}`)
+      setErr(msg)
     },
     onCompleted: () => {
       setErr(null)
@@ -46,6 +52,7 @@ const NewBook = () => {
         <div>
           title
           <input
+            id="inputBookTitle"
             value={title}
             onChange={({ target }) => setTitle(target.value)}
           />
@@ -53,6 +60,7 @@ const NewBook = () => {
         <div>
           author
           <input
+            id="inputBookAuthor"
             value={author}
             onChange={({ target }) => setAuthor(target.value)}
           />
@@ -60,6 +68,7 @@ const NewBook = () => {
         <div>
           published
           <input
+            id="inputBookPublished"
             type="number"
             value={published}
             onChange={({ target }) => setPublished(target.value)}
@@ -67,6 +76,7 @@ const NewBook = () => {
         </div>
         <div>
           <input
+            id="inputBookGenre"
             value={genre}
             onChange={({ target }) => setGenre(target.value)}
           />

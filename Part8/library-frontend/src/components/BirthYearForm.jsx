@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
-import Select from 'react-select'
 import { useMutation } from '@apollo/client'
 import { PropTypes } from 'prop-types'
 import { EDIT_BIRTH_YEAR } from '../queries'
+
+import Select from 'react-select'
 import Notify from './Notify'
-
-
-
 
 const BirthYearForm = ({ authors }) => {
   const options = authors.map(a => ({ value: a.name, label: a.name }))
@@ -36,9 +34,9 @@ const BirthYearForm = ({ authors }) => {
 
   useEffect(() => {
     if (result.data && result.data.editAuthor === null) {
-      setErr('person not found')
+      setErr('author not found')
     }
-  }, [result.data]) 
+  }, [result.data])
 
 
   return (
@@ -47,27 +45,7 @@ const BirthYearForm = ({ authors }) => {
       <Notify errorMessage = {err}/>
 
       <form onSubmit={submit}>
-        {/* if need a textfield to check for non-existent author */}
-        {/* <div>  
-          name <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
-        </div> */}
-        
-        {/* 
-            When use this template recall next: I’ve already tried several options,
-            I couldn’t find any difference in the mechanics between react select and select tag,
-            they react identically to the introduction of incorrect and empty fields.
-            React select imposes restrictions on the shape of the state, or extra time...
-            When the external design has been developed, the select tag is more preferable.
-            Next time, use this: 
-              <select value={} onChange={}>
-                <option value="someOption">Some option</option>
-                ...
-              </select>
-            or see part9 Patientor_front -> AddEntryForm -> Select (mui material) 
-        */}
+
         <Select
           defaultValue={nameOpt}
           onChange={setNameOpt}
@@ -75,6 +53,7 @@ const BirthYearForm = ({ authors }) => {
         />
         <div>
           birth year <input
+            id="inputAuthorBorn"
             type="number"
             value={born}
             onChange={({ target }) => setBorn(target.value)}

@@ -1,6 +1,6 @@
 library-frontend
 
-  Frontend side of the library application 
+  Frontend side of the library application
 
 - 8.8: Authors view
     implemented router
@@ -35,3 +35,20 @@ library-frontend
   - 8.22 Up-to-date cache and book recommendations
       The book view is kept up to date.
       (if a book was added before selecting a genre and it is not in the cache, after changing the genre it will be in the list)
+
+- partE
+  - 8.24: Subscriptions - client, part 1
+      implemented subsсription and subscribed to bookAdded (user notified by alert)
+
+  - 8.25: Subscriptions - client, part 2
+      the list of books is updated using a subscription in accordance with the selected genre
+
+  - 8.26: n+1
+      solved n+1 problem for:
+
+            query {
+              allAuthors {
+                name 
+                bookCount
+              }
+            }

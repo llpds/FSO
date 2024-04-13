@@ -1,14 +1,14 @@
 # [FSO part 8 GraphQL](https://fullstackopen.com/en/part8)
 
-- 8.1 - 8.7 library-backend:
-    descr: 
-      The server application stores information about authors and their books
-    stack: GraphQl
+  Library is an application to storing information about books and authors.
+    Here you can see (guest part):
+      - list of books filtered by genre
+      - list of authors with date of birth and number of books
+    Logged user can use:
+      - recommendations for their favorite genre
+      - add new books (if the author is new, he/she will be added)
+      - correct authors date of birth
 
-- 8.8 - 8.12 library-frontend
-    descr:
-      Frontend side of the library application
+    Back: node, express, mongoose, graphQl, subscription, web socket, jwt
 
-- 8.13 - 8.16 library-backend
-    descr:
-      backend with mongodb and user management
+    Front: vite, react, router, qrapthQL

@@ -1,15 +1,15 @@
-import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { LOGIN } from '../queries'
+
+import PropTypes from 'prop-types'
 import Notify from './Notify'
 import styles from './Component.module.css'
 
 const LoginForm = ({ setToken }) => {
-  const [username, setUsername] = useState('mlukkai')
-  const [password, setPassword] = useState('secret')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState()
-
 
   const [ login, result ] = useMutation(LOGIN, {
     onError: (error) => {
@@ -28,22 +28,25 @@ const LoginForm = ({ setToken }) => {
 
   const submit = async (event) => {
     event.preventDefault()
-
     login({ variables: { username, password } })
   }
-  const padding = { "padding": "15px"}
+
+  const padding = { 'padding': '15px' }
+
   return (
     <div style = {padding}>
       <Notify errorMessage = {error}/>
       <form onSubmit={submit}>
         <div>
           username <input
+            id="inputLoginName"
             value={username}
             onChange={({ target }) => setUsername(target.value)}
           />
         </div>
         <div>
           password <input
+            id="inputLoginPassword"
             type='password'
             value={password}
             onChange={({ target }) => setPassword(target.value)}

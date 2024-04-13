@@ -1,0 +1,2 @@
+MONGODB_URI=mongodb+srv://userName:password@adress.part.mongodb.net/dataBaseName?retryWrites=true&w=majority
+JWT_SECRET='word'
