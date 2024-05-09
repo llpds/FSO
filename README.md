@@ -27,3 +27,5 @@ branch redux and query for part7 ex. 7.10 - 7.13
 ### Part 8 - [GraphQL](https://fullstackopen.com/en/part8)
 
 ### Part 9 - [TypeScript](https://fullstackopen.com/en/part9)
+
+### Part 11 - [CI/CD](https://fullstackopen.com/en/part11)

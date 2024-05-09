@@ -1,0 +1,464 @@
+Script started on Thu May  9 13:20:20 2024
+[1m[7m%[27m[1m[0m                                                                                                                                                                                          
+ 
+
+[0m[27m[24m[Jpavel@Mac-mini-Domasnij Part12 % [K[?2004h[7mdocker run -it ubuntu bash[27m[26D[27md[27mo[27mc[27mk[27me[27mr[27m [27mr[27mu[27mn[27m [27m-[27mi[27mt[27m [27mu[27mb[27mu[27mn[27mt[27mu[27m [27mb[27ma[27ms[27mh[1C[?2004l
+
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+
+[1A[2K
+9502885e1cbc: Pulling fs layer 
+[1B[1A[2K
+9502885e1cbc: Downloading [>                                                  ]  281.8kB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [==>                                                ]  1.161MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [===>                                               ]  2.038MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [====>                                              ]  2.628MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=====>                                             ]  2.923MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [======>                                            ]  3.504MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=======>                                           ]  4.094MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [========>                                          ]  4.979MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [==========>                                        ]   5.86MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [============>                                      ]   6.74MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=============>                                     ]  7.625MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [===============>                                   ]   8.51MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [================>                                  ]    9.1MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=================>                                 ]  9.984MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [===================>                               ]  10.87MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [====================>                              ]  11.74MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=====================>                             ]  12.03MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=======================>                           ]  12.92MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [========================>                          ]  13.51MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=========================>                         ]  14.39MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [===========================>                       ]  15.26MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [============================>                      ]  16.14MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=============================>                     ]  16.44MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [==============================>                    ]  17.32MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [===============================>                   ]   17.6MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=================================>                 ]  18.78MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [===================================>               ]  19.67MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [====================================>              ]  20.54MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=====================================>             ]  21.13MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [======================================>            ]  21.43MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=======================================>           ]  22.31MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [========================================>          ]   22.9MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [==========================================>        ]  23.78MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [===========================================>       ]  24.37MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=============================================>     ]  25.25MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [==============================================>    ]  25.84MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [===============================================>   ]  26.72MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Downloading [=================================================> ]  27.61MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Verifying Checksum 
+[1B[1A[2K
+9502885e1cbc: Download complete 
+[1B[1A[2K
+9502885e1cbc: Extracting [>                                                  ]  294.9kB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Extracting [===========>                                       ]  6.193MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Extracting [=================>                                 ]  10.03MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Extracting [=================================>                 ]  18.87MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Extracting [=========================================>         ]   23.3MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Extracting [==============================================>    ]  25.95MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Extracting [=================================================> ]  27.72MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Extracting [==================================================>]  28.02MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Extracting [==================================================>]  28.02MB/28.02MB
+[1B[1A[2K
+9502885e1cbc: Pull complete 
+[1BDigest: sha256:3f85b7caad41a95462cf5b787d8a04604c8262cdcdf9a472b8c52ef83375fe15
+Status: Downloaded newer image for ubuntu:latest
+[?2004h]0;root@6b869ebb6afa: /root@6b869ebb6afa:/# mkdir [7m/usr/src/app[27m/usr/src/app
+[?2004l
+[?2004h]0;root@6b869ebb6afa: /root@6b869ebb6afa:/# mkdir /usr/src/app[1P[1P[1P[1P[1P[1@c[1@d /usr/src/app
+[?2004l
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# nano ondex.js[1P[1@index.js
+[?2004l
+bash: nano: command not found
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# sudo apt-get install nano
+[?2004l
+bash: sudo: command not found
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# sudo apt-get install nano[1P[1P[1P[1P[1P
+[?2004l
+
+Reading package lists... 0%
+
+Reading package lists... 0%
+
+Reading package lists... Done
+
+
+Building dependency tree... 0%
+
+Building dependency tree... 0%
+
+Building dependency tree... 3%
+
+Building dependency tree... 50%
+
+Building dependency tree... 50%
+
+Building dependency tree... Done
+
+
+Reading state information... 0% 
+
+Reading state information... 0%
+
+Reading state information... Done
+
+E: Unable to locate package nano
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# nano index.js
+[?2004l
+bash: nano: command not found
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# nano
+[?2004l
+bash: nano: command not found
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# nano index.js             :\263\320\267\320\265/\320\277\321\203\320\265[K[K[K[K[K[K [K[K[K[K[K[K
+(arg: 1) [K0) 
+]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# :\262[K[K:\260\320\260[K[K[K[K^C[?2004l
+[?2004h[?2004l
+
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# :\262[K[Kffd   apt-get update
+[?2004l
+
+0% [Working]
+            
+Get:1 http://ports.ubuntu.com/ubuntu-ports noble InRelease [256 kB]
+
+0% [1 InRelease 1079 B/256 kB 0%]
+                                 
+0% [Working]
+0% [Waiting for headers]
+                        
+Get:2 http://ports.ubuntu.com/ubuntu-ports noble-updates InRelease [89.7 kB]
+
+0% [2 InRelease 5877 B/89.7 kB 7%]
+                                  
+0% [Working]
+0% [Waiting for headers]
+                        
+Get:3 http://ports.ubuntu.com/ubuntu-ports noble-backports InRelease [89.7 kB]
+
+0% [3 InRelease 1080 B/89.7 kB 1%]
+                                  
+0% [Working]
+0% [Waiting for headers]
+                        
+Get:4 http://ports.ubuntu.com/ubuntu-ports noble-security InRelease [89.7 kB]
+
+0% [4 InRelease 1080 B/89.7 kB 1%]
+                                  
+0% [Working]
+17% [Waiting for headers]
+                         
+Get:5 http://ports.ubuntu.com/ubuntu-ports noble/restricted arm64 Packages [113 kB]
+
+17% [5 Packages 1079 B/113 kB 1%]
+                                 
+17% [Waiting for headers]
+                         
+Get:6 http://ports.ubuntu.com/ubuntu-ports noble/universe arm64 Packages [19.0 MB]
+
+17% [6 Packages 24.6 kB/19.0 MB 0%]
+17% [5 Packages store 0 B] [6 Packages 24.6 kB/19.0 MB 0%]
+                                                          
+18% [6 Packages 52.9 kB/19.0 MB 0%]
+26% [6 Packages 2188 kB/19.0 MB 12%]
+34% [6 Packages 4372 kB/19.0 MB 23%]
+42% [6 Packages 6466 kB/19.0 MB 34%]
+49% [6 Packages 8503 kB/19.0 MB 45%]
+57% [6 Packages 10.6 MB/19.0 MB 56%]
+66% [6 Packages 13.0 MB/19.0 MB 68%]
+74% [6 Packages 15.2 MB/19.0 MB 80%]
+82% [6 Packages 17.4 MB/19.0 MB 91%]
+                                    
+88% [Waiting for headers]
+                         
+Get:7 http://ports.ubuntu.com/ubuntu-ports noble/multiverse arm64 Packages [274 kB]
+
+88% [7 Packages 16.4 kB/274 kB 6%]
+88% [6 Packages store 0 B] [7 Packages 16.4 kB/274 kB 6%]
+                                                         
+89% [6 Packages store 0 B] [Waiting for headers]
+                                                
+Get:8 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 Packages [1776 kB]
+
+89% [6 Packages store 0 B] [8 Packages 18.0 kB/1776 kB 1%]
+                                                          
+95% [6 Packages store 0 B] [Waiting for headers]
+                                                
+Get:9 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe arm64 Packages [19.1 kB]
+
+95% [6 Packages store 0 B] [9 Packages 0 B/19.1 kB 0%]
+                                                      
+95% [6 Packages store 0 B] [Waiting for headers]
+                                                
+Get:10 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 Packages [30.4 kB]
+
+95% [6 Packages store 0 B] [10 Packages 5197 B/30.4 kB 17%]
+                                                           
+95% [6 Packages store 0 B] [Waiting for headers]
+                                                
+Get:11 http://ports.ubuntu.com/ubuntu-ports noble-backports/universe arm64 Packages [4221 B]
+
+95% [6 Packages store 0 B] [11 Packages 4221 B/4221 B 100%]
+95% [6 Packages store 0 B] [Connecting to ports.ubuntu.com]
+                                                           
+Get:12 http://ports.ubuntu.com/ubuntu-ports noble-security/main arm64 Packages [24.9 kB]
+
+95% [6 Packages store 0 B] [12 Packages 2369 B/24.9 kB 10%]
+                                                           
+96% [12 Packages 12.7 kB/24.9 kB 51%]
+96% [7 Packages store 0 B] [12 Packages 12.7 kB/24.9 kB 51%]
+                                                            
+97% [12 Packages 15.2 kB/24.9 kB 61%]
+97% [8 Packages store 0 B] [12 Packages 15.2 kB/24.9 kB 61%]
+                                                            
+97% [8 Packages store 0 B]
+97% [Waiting for headers]                                                                                                                                                     3620 kB/s 0s
+97% [9 Packages store 0 B] [Waiting for headers]                                                                                                                              3620 kB/s 0s
+98% [Waiting for headers]                                                                                                                                                     3620 kB/s 0s
+98% [10 Packages store 0 B] [Waiting for headers]                                                                                                                             3620 kB/s 0s
+98% [Waiting for headers]                                                                                                                                                     3620 kB/s 0s
+98% [11 Packages store 0 B] [Waiting for headers]                                                                                                                             3620 kB/s 0s
+99% [Waiting for headers]                                                                                                                                                     3620 kB/s 0s
+99% [12 Packages store 0 B] [Waiting for headers]                                                                                                                             3620 kB/s 0s
+99% [Waiting for headers]                                                                                                                                                     3620 kB/s 0s
+                                                                                                                                                                                          
+Get:13 http://ports.ubuntu.com/ubuntu-ports noble-security/universe arm64 Packages [10.0 kB]
+
+99% [13 Packages 6233 B/10.0 kB 62%]                                                                                                                                          3620 kB/s 0s
+99% [Working]                                                                                                                                                                 3620 kB/s 0s
+99% [13 Packages store 0 B]                                                                                                                                                   3620 kB/s 0s
+100% [Working]                                                                                                                                                                3620 kB/s 0s
+                                                                                                                                                                                          
+Fetched 21.8 MB in 6s (3571 kB/s)
+
+Reading package lists... 0%
+
+Reading package lists... 0%
+
+Reading package lists... 0%
+
+Reading package lists... 8%
+
+Reading package lists... 8%
+
+Reading package lists... 97%
+
+Reading package lists... 97%
+
+Reading package lists... 98%
+
+Reading package lists... 98%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... Done
+
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# apk   t-get install nano
+[?2004l
+
+Reading package lists... 0%
+
+Reading package lists... 0%
+
+Reading package lists... 0%
+
+Reading package lists... 8%
+
+Reading package lists... 8%
+
+Reading package lists... 97%
+
+Reading package lists... 97%
+
+Reading package lists... 98%
+
+Reading package lists... 98%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... 99%
+
+Reading package lists... Done
+
+
+Building dependency tree... 0%
+
+Building dependency tree... 0%
+
+Building dependency tree... 50%
+
+Building dependency tree... 50%
+
+Building dependency tree... Done
+
+
+Reading state information... 0% 
+
+Reading state information... 0%
+
+Reading state information... Done
+
+Suggested packages:
+  hunspell
+The following NEW packages will be installed:
+  nano
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 281 kB of archives.
+After this operation, 909 kB of additional disk space will be used.
+
+0% [Working]
+            
+Get:1 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 nano arm64 7.2-2build1 [281 kB]
+
+0% [1 nano 1135 B/281 kB 0%]
+                            
+100% [Working]
+              
+Fetched 281 kB in 0s (590 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package nano.
+(Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 4363 files and directories currently installed.)
+Preparing to unpack .../nano_7.2-2build1_arm64.deb ...
+Unpacking nano (7.2-2build1) ...
+Setting up nano (7.2-2build1) ...
+update-alternatives: using /bin/nano to provide /usr/bin/editor (editor) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/editor.1.gz because associated file /usr/share/man/man1/nano.1.gz (of link group editor) doesn't exist
+update-alternatives: using /bin/nano to provide /usr/bin/pico (pico) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/pico.1.gz because associated file /usr/share/man/man1/nano.1.gz (of link group pico) doesn't exist
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# nano
+[?2004l
+[?2004h[?1049h[22;0;0t[1;25r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J(B[0;7m  GNU nano 7.2 [76bNew Buffer [84b [1;186H(B[m[23;69H(B[0;7m[ Welcome to nano.  For basic help, type Ctrl+G. ](B[m
+[24d(B[0;7m^G(B[m Help[24;18H(B[0;7m^O(B[m Write Out     (B[0;7m^W(B[m Where Is[52G(B[0;7m^K(B[m Cut[24;69H(B[0;7m^T(B[m Execute[86G(B[0;7m^C(B[m Location[103G(B[0;7mM-U(B[m Undo[24;120H(B[0;7mM-A(B[m Set Mark     (B[0;7mM-](B[m To Bracket   (B[0;7mM-Q(B[m Previous     (B[0;7m^B(B[m Back
+[25d(B[0;7m^X(B[m Exit[25;18H(B[0;7m^R(B[m Read File     (B[0;7m^\(B[m Replace[52G(B[0;7m^U(B[m Paste[25;69H(B[0;7m^J(B[m Justify[86G(B[0;7m^/(B[m Go To Line    (B[0;7mM-E(B[m Redo[25;120H(B[0;7mM-6(B[m Copy[25;137H(B[0;7m^Q(B[m Where Was     (B[0;7mM-W(B[m Next[25;171H(B[0;7m^F(B[m Forward
+[2d[?12l[?25h[?25l[23d[J[25d[?12l[?25h[25;1H[?1049l[23;0;0t
+[?1l>[?2004l[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# nano index. js  .js
+[?2004l
+[?2004h[?1049h[22;0;0t[1;25r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[23;88H(B[0;7m[ New File ](B[m[H(B[0;7m  GNU nano 7.2 [77bindex.js [85b [1;186H(B[m
+[24d(B[0;7m^G(B[m Help[24;18H(B[0;7m^O(B[m Write Out     (B[0;7m^W(B[m Where Is[52G(B[0;7m^K(B[m Cut[24;69H(B[0;7m^T(B[m Execute[86G(B[0;7m^C(B[m Location[103G(B[0;7mM-U(B[m Undo[24;120H(B[0;7mM-A(B[m Set Mark     (B[0;7mM-](B[m To Bracket   (B[0;7mM-Q(B[m Previous     (B[0;7m^B(B[m Back
+[25d(B[0;7m^X(B[m Exit[25;18H(B[0;7m^R(B[m Read File     (B[0;7m^\(B[m Replace[52G(B[0;7m^U(B[m Paste[25;69H(B[0;7m^J(B[m Justify[86G(B[0;7m^/(B[m Go To Line    (B[0;7mM-E(B[m Redo[25;120H(B[0;7mM-6(B[m Copy[25;137H(B[0;7m^Q(B[m Where Was     (B[0;7mM-W(B[m Next[25;171H(B[0;7m^F(B[m Forward
+[2d[?12l[?25h[?25l[24;18H[29X[24;47H(B[0;7mM-D(B[m DOS Format[24;69H [9b[86G [6b(B[0;7mM-A(B[m Append [7b[24;120H[19X[24;139H(B[0;7mM-B(B[m Backup File[K[25;2H(B[0;7mC(B[m Cancel[25;18H[29X[25;47H(B[0;7mM-M(B[m Mac Format[25;69H [9b[86G [6b(B[0;7mM-P(B[m Prepend [6b[25;120H [7b[25;137H  (B[0;7m^T(B[m Browse[K
+[23d(B[0;7mFile Name to Write: index.js [157b [23;29H(B[m[?12l[?25h[?25l[23;86H[1K (B[0;7m[ Writing... ](B[m[K[1;186H[23;86H(B[0;7m[ Wrote 0 lines ](B[m[24;18H(B[0;7m^O(B[m Write Out     (B[0;7m^W(B[m Where Is      (B[0;7m^K(B[m Cut   [24;69H(B[0;7m^T(B[m Execute[86G(B[0;7m^C(B[m Location      (B[0;7mM-U(B[m Undo[24;120H(B[0;7mM-A(B[m Set Mark     (B[0;7mM-](B[m To Bracket   (B[0;7mM-Q(B[m Previous     (B[0;7m^B(B[m Back[25;2H(B[0;7mX(B[m Exit  [25;18H(B[0;7m^R(B[m Read File     (B[0;7m^\(B[m Replace [6b(B[0;7m^U(B[m Paste [25;69H(B[0;7m^J(B[m Justify[86G(B[0;7m^/(B[m Go To Line    (B[0;7mM-E(B[m Redo[25;120H(B[0;7mM-6(B[m Copy[25;137H(B[0;7m^Q(B[m Where Was     (B[0;7mM-W(B[m Next[25;171H(B[0;7m^F(B[m Forward[?12l[?25h
+[2d[?25l[23d[J[25d[?12l[?25h[25;1H[?1049l[23;0;0t
+[?1l>[?2004l[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# ls
+[?2004l
+index.js
+[?2004h]0;root@6b869ebb6afa: /usr/src/approot@6b869ebb6afa:/usr/src/app# exit
+[?2004l
+exit
+[1m[7m%[27m[1m[0m                                                                                                                                                                                          
+ 
+
+[0m[27m[24m[Jpavel@Mac-mini-Domasnij Part12 % [K[?2004heeie exit[?2004l
+
+
+Script done on Thu May  9 13:30:59 2024
