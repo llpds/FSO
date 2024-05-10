@@ -1,4 +1,4 @@
-# [FSO part 9] (https://fullstackopen.com/en/part9)
+# [FSO part 9 - TypeScript](https://fullstackopen.com/en/part9)
 
   -  9.1 - 9.7 ts: BMI & daily exercises calculators CLI & WEB.
   -  9.8 - 9.13 patientor: application for processing patient data.

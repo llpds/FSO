@@ -1,4 +1,4 @@
-# FSO part 7 (https://fullstackopen.com/en/part7)
+# [FSO part 7 - Router, hooks, styling, webpack](https://fullstackopen.com/en/part7)
 
   projects for assignments for the seventh part. 
 

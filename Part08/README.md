@@ -1,4 +1,4 @@
-# [FSO part 8 GraphQL](https://fullstackopen.com/en/part8)
+# [FSO part 8 - GraphQL](https://fullstackopen.com/en/part8)
 
   Library is an application to storing information about books and authors.
 
