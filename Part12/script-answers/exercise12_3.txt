@@ -1,0 +1,47 @@
+Synopsis:
+
+  - docker ps -a
+  - docker start -i sad_mahavira
+  - nano /usr/src/app/index.js
+  - input: console.log('Hello World')
+  - exit and save: ^X, y (yes), Enter
+  - exit (container)
+  - exit (script)
+
+
+Script started on Fri May 10 13:29:07 2024
+[1m[7m%[27m[1m[0m                                                                                                                                                                               
+ 
+
+[0m[27m[24m[Jpavel@Mac-mini-Domasnij Part12 % [K[?2004hddocker ps -a[?2004l
+
+CONTAINER ID   IMAGE                COMMAND    CREATED        STATUS                      PORTS     NAMES
+6b869ebb6afa   ubuntu               "bash"     24 hours ago   Exited (0) 13 seconds ago             sad_mahavira
+6b4e204da99f   hello-world:latest   "/hello"   25 hours ago   Exited (0) 25 hours ago               friendly_raman
+[1m[7m%[27m[1m[0m                                                                                                                                                                               
+ 
+
+[0m[27m[24m[Jpavel@Mac-mini-Domasnij Part12 % [K[?2004hddocker start - i i sad_mahavira[?2004l
+
+[?2004h]0;root@6b869ebb6afa: /root@6b869ebb6afa:/# 
+[K
+]0;root@6b869ebb6afa: /root@6b869ebb6afa:/# nano /usr/src/app/index.js
+[?2004l
+[?2004h[?1049h[22;0;0t[1;36r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[34;82H(B[0;7m[ Reading... ](B[m[34;81H(B[0;7m[ Read 1 line ](B[m[H(B[0;7m  GNU nano 7.2 [65b/usr/src/app/index.js [73b [1;175H(B[m
+[35d(B[0;7m^G(B[m Help[35;18H(B[0;7m^O(B[m Write Out     (B[0;7m^W(B[m Where Is[52G(B[0;7m^K(B[m Cut[35;69H(B[0;7m^T(B[m Execute[86G(B[0;7m^C(B[m Location[103G(B[0;7mM-U(B[m Undo[35;120H(B[0;7mM-A(B[m Set Mark     (B[0;7mM-](B[m To Bracket   (B[0;7mM-Q(B[m Previous
+[36d(B[0;7m^X(B[m Exit[36;18H(B[0;7m^R(B[m Read File     (B[0;7m^\(B[m Replace[52G(B[0;7m^U(B[m Paste[36;69H(B[0;7m^J(B[m Justify[86G(B[0;7m^/(B[m Go To Line    (B[0;7mM-E(B[m Redo[36;120H(B[0;7mM-6(B[m Copy[36;137H(B[0;7m^Q(B[m Where Was     (B[0;7mM-W(B[m Next
+[2d[?12l[?25h[?25l[1;103H(B[0;7m*[175G(B[m[?12l[?25h
+[2dc[?25l[?12l[?25ho[?25l[?12l[?25hn[?25l[?12l[?25hs[?25l[?12l[?25ho[?25l[?12l[?25hl[?25l[?12l[?25he[?25l[?12l[?25h.[?25l[?12l[?25hl[?25l[?12l[?25ho[?25l[?12l[?25hg[?25l[?12l[?25h([?25l[?12l[?25h'[?25l[?12l[?25hH[?25l[?12l[?25he[?25l[?12l[?25hl[?25l[?12l[?25hl[?25l[?12l[?25ho[?25l[?12l[?25h[42m [49m(B[m[?25l
+[34d[K[?12l[?25h[2;19H W[?25l[?12l[?25ho[?25l[?12l[?25hr[?25l[?12l[?25hl[?25l[?12l[?25hd[?25l[?12l[?25h[2;13H(B[0;1m[35m'Hello World'[39m(B[m[?25l[?12l[?25h)[?25l[35;18H[27X[35;45H(B[0;7mM-D(B[m DOS Format[35;69H [9b[86G   (B[0;7mM-A(B[m Append [11b[35;120H [12b(B[0;7mM-B(B[m Backup File[K[36;2H(B[0;7mC(B[m Cancel[36;18H[27X[36;45H(B[0;7mM-M(B[m Mac Format [36;69H [9b[86G   (B[0;7mM-P(B[m Prepend [10b[36;120H [12b(B[0;7m^T(B[m Browse[K
+[34d(B[0;7mFile Name to Write: /usr/src/app/index.js [133b [34;42H(B[m[?12l[?25h[?25l[34;81H[1K (B[0;7m[ Writing... ](B[m[K[1;103H(B[0;7m [175G(B[m[34;81H(B[0;7m[ Wrote 1 line ](B[m[35;18H(B[0;7m^O(B[m Write Out     (B[0;7m^W(B[m Where Is      (B[0;7m^K(B[m Cut [35;69H(B[0;7m^T(B[m Execute[86G(B[0;7m^C(B[m Location      (B[0;7mM-U(B[m Undo[35;120H(B[0;7mM-A(B[m Set Mark     (B[0;7mM-](B[m To Bracket   (B[0;7mM-Q(B[m Previous[36;2H(B[0;7mX(B[m Exit  [36;18H(B[0;7m^R(B[m Read File     (B[0;7m^\(B[m Replace [6b(B[0;7m^U(B[m Paste[36;69H(B[0;7m^J(B[m Justify[86G(B[0;7m^/(B[m Go To Line    (B[0;7mM-E(B[m Redo[36;120H(B[0;7mM-6(B[m Copy [8b(B[0;7m^Q(B[m Where Was     (B[0;7mM-W(B[m Next[?12l[?25h[2;27H[?25l
+[34d[J[36d[?12l[?25h[36;1H[?1049l[23;0;0t
+[?1l>[?2004l[?2004h]0;root@6b869ebb6afa: /root@6b869ebb6afa:/# [Kexit
+[?2004l
+exit
+[1m[7m%[27m[1m[0m                                                                                                                                                                               
+ 
+
+[0m[27m[24m[Jpavel@Mac-mini-Domasnij Part12 % [K[?2004heexit[?2004l
+
+
+Script done on Fri May 10 13:30:02 2024

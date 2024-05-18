@@ -1,3 +1,18 @@
+Synopsis:
+
+  - docker run -it ubuntu bash
+  - mkdir /usr/src/app
+  - cd /usr/src/app
+  - apt-get update
+  - apt-get install nano
+  - nano index.js
+  - save empty file: ^O, Enter, ^X
+  - ls
+  - exit (container)
+  - exit (script)
+
+  p.s. later could use 'touch index.js' or 'nano /usr/src/app/index.js'
+
 Script started on Thu May  9 13:20:20 2024
 [1m[7m%[27m[1m[0m                                                                                                                                                                                          
  

@@ -17,6 +17,32 @@ router.post('/', async (req, res) => {
   res.send(todo);
 });
 
+/* GET todo by id. */
+router.get('/:id', async (req,res) => {
+  const todo = await Todo.findById(req.params.id)
+  if(todo){
+    res.json(todo)
+  } else {
+    res.status(404).end()
+  }
+})
+
+/* PUT todo to listing. */
+router.put('/:id', async (req,res) => {
+  const body = req.body
+  if(!body.text || typeof body.text !== 'string' || body.text.length === 0) {
+    res.status(401).json({ error: 'todos text must be filled and string' })
+    return
+  }
+  const todoNew = {
+    "text": body.text,
+    "done": body.done || false
+  }
+  const todoUpdated = await Todo.findByIdAndUpdate(req.params.id, todoNew, { new:true })
+
+  res.json(todoUpdated)
+})
+
 const singleRouter = express.Router();
 
 const findByIdMiddleware = async (req, res, next) => {
