@@ -1,0 +1,158 @@
+Synopsis:
+
+  - docker ps
+  - docker exec -it todo-backend-mongo-1 bash
+    - mongosh -u root -p example
+      - show dbs
+      - use the_database
+      - show collections
+      - db.todos.find({})
+      - db.todos.insertOne({text: 'Increase the number of tools in my toolbelt', done: false})
+      - db.todos.find({})
+      - exit
+    -exit
+
+http://localhost:3000/todos shows new entry
+
+
+Script started on Sun May 19 10:21:58 2024
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[Jpavel@Mac-mini-Domasnij todo-backend % [K[?2004hddocker ps[?2004l
+
+CONTAINER ID   IMAGE     COMMAND                  CREATED        STATUS          PORTS                     NAMES
+db2ec3c41999   mongo     "docker-entrypoint.s…"   23 hours ago   Up 48 minutes   0.0.0.0:3456->27017/tcp   todo-backend-mongo-1
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[Jpavel@Mac-mini-Domasnij todo-backend % [K[?2004hddocker exec -it todo-backend-mongo-1 bash[?2004l
+
+[?2004hroot@db2ec3c41999:/# mongosh -u root -p example
+[?2004l
+]0;mongosh mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000Current Mongosh Log ID:	6649a8c66d48752a9699ea71
+Connecting to:		[1m[32mmongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5[0m
+Using MongoDB:		7.0.9
+[1m[33mUsing Mongosh[0m:		2.2.5
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+[1G[0J [1G[1m[33m------[0m
+   [1m[33mThe server generated these startup warnings when booting[0m
+   2024-05-19T06:33:51.973+00:00: /sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never' in this binary version
+   2024-05-19T06:33:51.973+00:00: vm.max_map_count is too low
+[1m[33m------[0m
+
+[1G[0Jtest> [7Gshow dbs
+
+[1madmin[0m         100.00 KiB
+[1mconfig[0m         72.00 KiB
+[1mlocal[0m          72.00 KiB
+[1mthe_database[0m   72.00 KiB
+[1G[0Jtest> [7Guse the_database
+
+switched to db the_database
+[1G[0Jthe_database> [15Gshow collections
+
+[1mtodos[0m
+[1G[0Jthe_database> [15Gdb.todos.find({})
+
+[
+  {
+    _id: ObjectId([32m'66486aba8503590aa199ea72'[39m),
+    text: [32m'Write code2'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId([32m'66486aba8503590aa199ea73'[39m),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId([32m'66486fbdc2a26909b27fdb19'[39m),
+    text: [32m'todo 01'[39m,
+    done: [33mfalse[39m,
+    __v: [33m0[39m
+  },
+  {
+    _id: ObjectId([32m'66486fdcc2a26909b27fdb1c'[39m),
+    text: [32m'todo 02'[39m,
+    done: [33mfalse[39m,
+    __v: [33m0[39m
+  },
+  {
+    _id: ObjectId([32m'66486fe1c2a26909b27fdb1e'[39m),
+    text: [32m'todo 03'[39m,
+    done: [33mfalse[39m,
+    __v: [33m0[39m
+  },
+  {
+    _id: ObjectId([32m'6649a463df2e0a1e7299ea72'[39m),
+    text: [32m'todo 04'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15Gdb.todos.insertOne({text[33mtext[39m: [32m'[39m[32mI[39m[32mn[39m[32mc[39m[32mr[39m[32me[39m[32ma[39m[32ms[39m[32me[39m [32mt[39m[32mh[39m[32me[39m [32mn[39m[32mu[39m[32mm[39m[32mb[39m[32me[39m[32mr[39m [32mo[39m[32mf[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32ms[39m [32mi[39m[32mn[39m [32mm[39m[32my[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32mb[39m[32me[39m[32ml[39m[32mt[39m[32m'[39m, d[36mdo[39mdone: fals[33mfalse[39m})
+
+{
+  acknowledged: [33mtrue[39m,
+  insertedId: ObjectId([32m'6649a9166d48752a9699ea72'[39m)
+}
+[1G[0Jthe_database> [15G[1G[0Jthe_database> db.todos.insertOne({[33mtext[39m: [32m'Increase the number of tools in my toolbelt'[39m, [33mdone[39m: [33mfalse[39m})[101G[1G[0Jthe_database> db.todos.find({})[32G
+
+[
+  {
+    _id: ObjectId([32m'66486aba8503590aa199ea72'[39m),
+    text: [32m'Write code2'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId([32m'66486aba8503590aa199ea73'[39m),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId([32m'66486fbdc2a26909b27fdb19'[39m),
+    text: [32m'todo 01'[39m,
+    done: [33mfalse[39m,
+    __v: [33m0[39m
+  },
+  {
+    _id: ObjectId([32m'66486fdcc2a26909b27fdb1c'[39m),
+    text: [32m'todo 02'[39m,
+    done: [33mfalse[39m,
+    __v: [33m0[39m
+  },
+  {
+    _id: ObjectId([32m'66486fe1c2a26909b27fdb1e'[39m),
+    text: [32m'todo 03'[39m,
+    done: [33mfalse[39m,
+    __v: [33m0[39m
+  },
+  {
+    _id: ObjectId([32m'6649a463df2e0a1e7299ea72'[39m),
+    text: [32m'todo 04'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId([32m'6649a9166d48752a9699ea72'[39m),
+    text: [32m'Increase the number of tools in my toolbelt'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15Gexit
+
+[?2004hroot@db2ec3c41999:/# exit
+[?2004l
+exit
+[1m
+What's next?
+[0m  Try Docker Debug for seamless, persistent debugging tools in any container or image → [36mdocker debug todo-backend-mongo-1[0m
+  Learn more at https://docs.docker.com/go/debug-cli/
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[Jpavel@Mac-mini-Domasnij todo-backend % [K[?2004heexit[?2004l
+
+
+Script done on Sun May 19 10:24:26 2024
