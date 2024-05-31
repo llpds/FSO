@@ -1,0 +1,36 @@
+services:
+
+  app:
+    image: pb-front-dev
+    build:
+      context: ./phonebook_frontend # The context will pick this directory as the "build context"
+      dockerfile: ./dev.Dockerfile
+    volumes:
+      - ./phonebook_frontend/:/usr/src/app
+    ports:
+      - 3003:3000
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8080/api
+  
+  server:
+    image: pb-backend-dev
+    build:
+      context: ./phonebook_backend
+      dockerfile: ./dev.Dockerfile
+    volumes:
+      - ./phonebook_backend/:/usr/src/app
+    ports: 
+      - 3004:3001
+    # to define environment i use .env as it was in origignal project(part 3)
+
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - app
+      - server

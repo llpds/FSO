@@ -1,0 +1,28 @@
+services:
+
+  app:
+    image: pb-front
+    build:
+      context: ./phonebook_frontend # The context will pick this directory as the "build context"
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./phonebook_frontend/:/usr/src/app
+  
+  server:
+    image: pb-backend
+    build:
+      context: ./phonebook_backend
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./phonebook_backend/:/usr/src/app
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - app
+      - server
