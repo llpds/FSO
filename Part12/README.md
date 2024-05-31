@@ -46,5 +46,12 @@
   - ex 12.16
       todo-backend in a development container
 
-  - ex 12.17 -12.19
+  - ex 12.17 - 12.19
       app works via proxy w/o front and back exposed ports
+
+  - ex 12.20
+      app via production nginx.conf and docker-compose.yml
+
+  - ex 12.21 - 12.22
+      phonebook (front + back + docker, based on the repository for part 3)
+      dev + prod

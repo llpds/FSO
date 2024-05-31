@@ -2,7 +2,7 @@
 
 FROM node:20 AS build-stage
 
-ENV VITE_BACKEND_URL http://localhost:3000
+ENV VITE_BACKEND_URL http://localhost:8080/api
 
 WORKDIR /usr/src/app
 
