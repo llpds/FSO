@@ -1,13 +1,5 @@
 # [FSO part 12 - Containers](https://fullstackopen.com/en/part12)
 
-  app-lp
-      Express app created via npx express-generator
-      port:3000
-      container: zen_cartwright
-      img: express-server
-
-  Synopsis - short overview with tips
-  
   - ex 12.1 - 12.4: script-answers
   - ex 12.5 - 12.6: todo-app/todo-backend
       container: determined_lalande
