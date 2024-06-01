@@ -14,13 +14,11 @@
 
             flyctl postgres connect -a <app_name-db>
 
-
   - Docker
 
             docker run -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres
 
             docker exec -it peaceful_lamport psql -U postgres postgres
-
 
   - create
         postgres=#
