@@ -18,7 +18,7 @@
 
             docker run -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres
 
-            docker exec -it peaceful_lamport psql -U postgres postgres
+            docker exec -it CONTAINER_NAME psql -U postgres postgres
 
   - create
         postgres=#
@@ -131,4 +131,87 @@
 
   - Model
 
+      define model
+
+              const { Sequelize, Model, DataTypes } = require('sequelize')
+
+              class Note extends Model {}
+              Note.init({
+                id: {
+                  type: DataTypes.INTEGER,
+                  primaryKey: true,
+                  autoIncrement: true
+                },
+                content: {
+                  type: DataTypes.TEXT,
+                  allowNull: false
+                },
+                important: {
+                    type: DataTypes.BOOLEAN
+                },
+                date: {
+                  type: DataTypes.DATE
+                }
+              }, {
+                sequelize,
+                underscored: true,
+                timestamps: false,
+                modelName: 'note'
+              })
   
+        then could be used
+            await Note.findAll()
+            await Note.create(data)           create and save
+          or  
+            const note = Note.build(data)     create
+            note.important = true             change (if need)
+            await note.save()                 save
+
+
+- create table if not exist (automatically)
+
+        Note.sync()  put after defining a model (Note - just example)
+
+- Operations
+
+          app.get('/api/notes/:id', async(req, res)=> {
+            const note = await Note.findByPk(req.params.id)
+            if(note) {
+              console.log('note', note.toJSON())
+              res.json(note)
+            } else {
+              res.status(404).end()
+            } 
+          })
+
+          app.post('/api/notes', async (req, res) => {
+            console.log('req.body', req.body)
+
+            try {
+              const note = await Note.create(req.body)
+              res.json(note)  
+            } catch (e){
+              return res.status(400).json({e})
+            }
+          })
+
+          app.put('/api/notes/:id', async (req, res) =>{
+            const note = await Note.findByPk(req.params.id)
+            if(note){
+              note.important = req.body.important
+              await note.save()
+              res.json(note)
+            }else{
+              req.status(404).end()
+            }
+          })
+
+
+- Printing object returned by sequelize to the console
+
+          console.log('note', note)    output with unnecessary info
+          console.log('note', note.toJSON())    it's ok
+        but in case of collection mehod toJSON doesn't work, need use map...
+          console.log('notes', notes.map(n => n.toJSON()))
+        or
+          console.log(JSON.stringify(notes))
