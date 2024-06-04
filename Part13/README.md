@@ -13,7 +13,12 @@
     - print blogs data on the commandline (cli.js)
 
   - ex 13.4
-    endpoint: api/blogs
+    endpoint: api/blogs (index.js)
       - GET (blogs list)
       - POST (add blog)
       - DELETE (delete blog dy id)
+
+  - ex 13.5-13.6
+    change app structures according with convention
+    PUT method changes likes
+

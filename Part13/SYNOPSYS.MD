@@ -168,11 +168,11 @@
             await note.save()                 save
 
 
-- create table if not exist (automatically)
+  - create table if not exist (automatically)
 
         Note.sync()  put after defining a model (Note - just example)
 
-- Operations
+  - Operations
 
           app.get('/api/notes/:id', async(req, res)=> {
             const note = await Note.findByPk(req.params.id)
@@ -207,7 +207,7 @@
           })
 
 
-- Printing object returned by sequelize to the console
+  - Printing object returned by sequelize to the console
 
           console.log('note', note)    output with unnecessary info
           console.log('note', note.toJSON())    it's ok
@@ -215,3 +215,176 @@
           console.log('notes', notes.map(n => n.toJSON()))
         or
           console.log(JSON.stringify(notes))
+
+## 13b - Join tables and queries
+  
+  - App structure
+
+      index.js
+      util
+        config.js
+        db.js
+      models
+        index.js
+        note.js
+      controllers
+        notes.js
+
+
+    util/config.js
+
+          require('dotenv').config()
+
+          module.exports = {
+            DATABASE_URL: process.env.DATABASE_URL,
+            PORT: process.env.PORT || 3001,
+          }
+
+    index.js
+
+          const express = require('express')
+          const app = express()
+
+          const { PORT } = require('./util/config')
+          const { connectToDatabase } = require('./util/db')
+
+          const notesRouter = require('./controllers/notes')
+
+          app.use(express.json())
+
+          app.use('/api/notes', notesRouter)
+
+          const start = async () => {
+            await connectToDatabase()
+            app.listen(PORT, () => {
+              console.log(`Server running on port ${PORT}`)
+            })
+          }
+
+          start()
+
+    util/db.js
+
+          const Sequelize = require('sequelize')
+          const { DATABASE_URL } = require('./config')
+
+          const sequelize = new Sequelize(DATABASE_URL)
+
+          const connectToDatabase = async () => {
+            try {
+              await sequelize.authenticate()
+              console.log('connected to the database')
+            } catch (err) {
+              console.log('failed to connect to the database')
+              return process.exit(1)
+            }
+
+            return null
+          }
+
+          module.exports = { connectToDatabase, sequelize }
+
+    models/note.js
+
+          const { Model, DataTypes } = require('sequelize')
+
+          const { sequelize } = require('../util/db')
+
+          class Note extends Model {}
+
+          Note.init({
+            id: {
+              type: DataTypes.INTEGER,
+              primaryKey: true,
+              autoIncrement: true
+            },
+            content: {
+              type: DataTypes.TEXT,
+              allowNull: false
+            },
+            important: {
+              type: DataTypes.BOOLEAN
+            },
+            date: {
+              type: DataTypes.DATE
+            }
+          }, {
+            sequelize,
+            underscored: true,
+            timestamps: false,
+            modelName: 'note'
+          })
+
+          module.exports = Note
+
+    models/index.js
+
+          const Note = require('./note')
+
+          Note.sync()
+
+          module.exports = {
+            Note
+          }
+
+    controllers/notes.js
+
+          const router = require('express').Router()
+
+          const { Note } = require('../models')
+
+          router.get('/', async (req, res) => {
+            const notes = await Note.findAll()
+            res.json(notes)
+          })
+
+          router.post('/', async (req, res) => {
+            try {
+              const note = await Note.create(req.body)
+              res.json(note)
+            } catch(error) {
+              return res.status(400).json({ error })
+            }
+          })
+
+          router.get('/:id', async (req, res) => {
+            const note = await Note.findByPk(req.params.id)
+            if (note) {
+              res.json(note)
+            } else {
+              res.status(404).end()
+            }
+          })
+
+          router.delete('/:id', async (req, res) => {
+            const note = await Note.findByPk(req.params.id)
+            if (note) {
+              await note.destroy()
+            }
+            res.status(204).end()
+          })
+
+          router.put('/:id', async (req, res) => {
+            const note = await Note.findByPk(req.params.id)
+            if (note) {
+              note.important = req.body.important
+              await note.save()
+              res.json(note)
+            } else {
+              res.status(404).end()
+            }
+          })
+
+          module.exports = router
+
+
+    refactor repetitive code into middleware (controllers/notes.js)
+
+          const noteFinder = async (req, res, next) => {
+            req.note = await Note.findByPk(req.params.id)
+            next()
+          }
+
+        in GET, DELETE, PUT where is Note.findByPk... use instead 
+          
+          router.get (delete or put)('/:id', noteFinder, async (req, res) => ...)
