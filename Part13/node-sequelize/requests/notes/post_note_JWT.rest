@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpEIiwiaWQiOjEsImlhdCI6MTcxNzU3MjM5MH0.hiIr-el0daMZtoZc2FmB8yJN8tMVIo6G3dyLwK3ltS4
+
+{
+  "content":"usr note 2",
+  "important":false
+}

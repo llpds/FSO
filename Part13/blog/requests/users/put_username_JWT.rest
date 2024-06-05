@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/users/JD@mail.net
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpEIiwiaWQiOjEsImlhdCI6MTcxNzU3OTgyNywiZXhwIjoxNzE3NTgzNDI3fQ.wx7ZJ5j8DbrPW2dGKhAr62yDPBjDEv7Fc3f23pcoK34
+
+{
+  "username":"JDupd@mail.net"
+}

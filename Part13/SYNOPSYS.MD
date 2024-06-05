@@ -388,3 +388,243 @@
         in GET, DELETE, PUT where is Note.findByPk... use instead 
           
           router.get (delete or put)('/:id', noteFinder, async (req, res) => ...)
+
+  - User managment
+
+      models/user.js
+
+              const { Model, DataTypes } = require('sequelize')
+
+              const { sequelize } = require('../util/db')
+
+              class User extends Model {}
+
+              User.init({
+                id: {
+                  type: DataTypes.INTEGER,
+                  primaryKey: true,
+                  autoIncrement: true
+                },
+                username: {
+                  type: DataTypes.STRING,
+                  unique: true,
+                  allowNull: false
+                },
+                name: {
+                  type: DataTypes.STRING,
+                  allowNull: false
+                },
+              }, {
+                sequelize,
+                underscored: true,
+                timestamps: false,
+                modelName: 'user'
+              })
+
+              module.exports = User
+
+    models/index.js
+
+              const Note = require('./note')
+              const User = require('./user')
+
+              Note.sync()
+              User.sync()
+
+              module.exports = { Note, User }
+
+    controllers/users.js 
+
+              const router = require('express').Router()
+
+              const { User } = require('../models')
+
+              router.get('/', async (req, res) => {
+                const users = await User.findAll()
+                res.json(users)
+              })
+
+              router.post('/', async (req, res) => {
+                try {
+                  const user = await User.create(req.body)
+                  res.json(user)
+                } catch(error) {
+                  return res.status(400).json({ error })
+                }
+              })
+
+              router.get('/:id', async (req, res) => {
+                const user = await User.findByPk(req.params.id)
+                if (user) {
+                  res.json(user)
+                } else {
+                  res.status(404).end()
+                }
+              })
+
+              module.exports = router
+
+    controllers/login.js
+
+              const jwt = require('jsonwebtoken')
+              const router = require('express').Router()
+
+              const { SECRET } = require('../util/config')
+              const User = require('../models/user')
+
+              router.post('/', async (request, response) => {
+                const body = request.body
+
+                const user = await User.findOne({
+                  where: {
+                    username: body.username
+                  }
+                })
+
+                const passwordCorrect = body.password === 'secret'
+
+                if (!(user && passwordCorrect)) {
+                  return response.status(401).json({
+                    error: 'invalid username or password'
+                  })
+                }
+
+                const userForToken = {
+                  username: user.username,
+                  id: user.id,
+                }
+
+                const token = jwt.sign(userForToken, SECRET)
+
+                response
+                  .status(200)
+                  .send({ token, username: user.username, name: user.name })
+              })
+
+              module.exports = router
+
+    npm install jsonwebtoken
+
+    index.js expands slightly
+
+              const notesRouter = require('./controllers/notes')
+              const usersRouter = require('./controllers/users')
+              const loginRouter = require('./controllers/login')
+
+              app.use(express.json())
+
+              app.use('/api/notes', notesRouter)
+              app.use('/api/users', usersRouter)
+              app.use('/api/login', loginRouter)
+
+  - Connection between the tables
+
+    models/index.js
+
+              const Note = require('./note')
+              const User = require('./user')
+
+              User.hasMany(Note)
+              Note.belongsTo(User)
+              Note.sync({ alter: true })
+              User.sync({ alter: true })
+
+              module.exports = {
+                Note, User
+              }
+
+    controllers/notes.js
+
+              router.post('/', async (req, res) => {
+                try {
+                  const user = await User.findOne()
+                  const note = await Note.create({...req.body, userId: user.id})
+                  res.json(note)
+                } catch(error) {
+                  return res.status(400).json({ error })
+                }
+              })
+
+        userId in the source code due to Sequelize naming convention has wroten as user_id at database level
+
+    controllers/users.js
+
+              router.get('/', async (req, res) => {
+                const users = await User.findAll({
+                  include: {
+                    model: Note
+                  }
+                })
+                res.json(users)
+              })
+
+  - Proper insertion of notes
+
+      controllers/notes.js
+
+              const tokenExtractor = (req, res, next) => {
+                const authorization = req.get('authorization')
+                if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+                  try {
+                    req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
+                  } catch{
+                    return res.status(401).json({ error: 'token invalid' })
+                  }
+                }  else {
+                  return res.status(401).json({ error: 'token missing' })
+                }
+                next()
+              }
+
+              router.post('/', tokenExtractor, async (req, res) => {
+                try {
+                
+                  const user = await User.findByPk(req.decodedToken.id)
+                  const note = await Note.create({...req.body, userId: user.id, date: new Date()})
+                  res.json(note)
+                } catch(error) {
+                  return res.status(400).json({ error })
+                }
+              })
+
+  - Fine-tuning
+
+      controllers/notes.js (show user name instead of userId)
+
+              router.get('/', async (req, res) => {
+                const notes = await Note.findAll({
+                  attributes: { exclude: ['userId'] },
+                  include: {
+                    model: User,
+                    attributes: ['name']
+                  }
+                })
+                res.json(notes)
+              })
+
+      controllers/users.js (remove userId from notes when showing user and his notes)
+
+              router.get('/', async (req, res) => {
+                const users = await User.findAll({
+                  include: {
+                    model: Note,
+                    attributes: { exclude: ['userId'] }
+                  }
+                })
+                res.json(users)
+              })
+
+  - Attention to the definition of the models
+
+      model/index.js
+
+              User.hasMany(Note)
+              Note.belongsTo(User)
+
+      same as in model/note,js
+
+        userId: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          references: { model: 'users', key: 'id' },
+        }
