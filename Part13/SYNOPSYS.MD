@@ -128,7 +128,6 @@
                   console.log(`Server running on port ${PORT}`)
                 })
 
-
   - Model
 
       define model
@@ -628,3 +627,78 @@
           allowNull: false,
           references: { model: 'users', key: 'id' },
         }
+
+  - More queries
+
+    - defined markers (true, false for example)
+      to retrieve all notes with important true or false use 'where' in findAll or other:
+        controllers/notes.js
+                where: {
+                  important: req.query.important === "true"
+                }
+
+      both return false (in this case)
+          http://localhost:3001/api/notes?important=false
+          http://localhost:3001/api/notes  (we assume that here must be all notes, not only with false important)
+
+
+      this will provide combination of true, false, true & false
+                const { Op } = require('sequelize')
+                ...
+                  let important = {
+                    [Op.in]: [true, false]
+                  }
+                  if ( req.query.important ) {
+                    important = req.query.important === "true"
+                  }
+                ...
+                    where: {
+                      important
+                    }
+
+      but need to prevent null value in field important, models/note.js
+
+                important:{
+                  ...
+                  allowNull: false,
+                }
+    
+    - search by keyword
+        controllers/notes.js
+
+                where: {
+                  important,
+                  content: {
+                    [Op.substring]: req.query.search ? req.query.search : ''
+                  }
+                }
+
+          GET http://localhost:3001/api/notes?important=true&search=Mongo
+          GET http://localhost:3001/api/notes?search=Mongo
+
+    - optimization
+        controllers/notes.js
+
+                  const where = {}
+
+                  if (req.query.important) {
+                    where.important = req.query.important === "true"
+                  }
+                
+                  if (req.query.search) {
+                    where.content = {
+                      [Op.substring]: req.query.search
+                    }
+                  }
+
+                  ...findAll({
+                    attributes: ... ,
+                    includes: ... ,
+                    where   (just where enough)
+                  })
+
+      useful link
+        Querying - Basics: https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+        Operators in "where" : https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#operators
+
+

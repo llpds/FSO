@@ -33,3 +33,12 @@
     - logged user is linked to added blog via token
     - blog deletion only by creator
     - show related info(users blogs og blogs creator) when shows users or blogs
+
+
+  - ex 13.13 - 13.16
+    - filtering blogs by title using keyword 
+      - GET /api/blogs?search=react return all blogs with "react"
+      - GET /api/blogs  returns all blogs
+    - filtering blog by title or author
+    - blogs based on likes in descending order
+    - GET /api/authors  returns author, number of blogs, total number of likes
