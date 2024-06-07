@@ -42,3 +42,6 @@
     - filtering blog by title or author
     - blogs based on likes in descending order
     - GET /api/authors  returns author, number of blogs, total number of likes
+
+  - ex 13.17
+    - migration initialize the database (same fields as in models tables + created_at, updated_at manually)

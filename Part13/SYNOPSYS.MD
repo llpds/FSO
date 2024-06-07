@@ -702,3 +702,164 @@
         Operators in "where" : https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#operators
 
 
+# 13c - Migrations, many-to-many relationships
+
+  - Migrations - file that describes modifications to a database
+
+      cli: drop table NAMEs;
+
+      migrations/20240606_00_initialize_notes_and_users.js
+
+                const { DataTypes } = require('sequelize')
+
+                module.exports = {
+                  up: async ({ context: queryInterface }) => {
+                    await queryInterface.createTable('notes', {
+                      id: {
+                        type: DataTypes.INTEGER,
+                        primaryKey: true,
+                        autoIncrement: true
+                      },
+                      content: {
+                        type: DataTypes.TEXT,
+                        allowNull: false
+                      },
+                      important: {
+                        type: DataTypes.BOOLEAN,
+                        allowNull: false
+                      },
+                      date: {
+                        type: DataTypes.DATE
+                      },
+                    })
+                    await queryInterface.createTable('users', {
+                      id: {
+                        type: DataTypes.INTEGER,
+                        primaryKey: true,
+                        autoIncrement: true
+                      },
+                      username: {
+                        type: DataTypes.STRING,
+                        unique: true,
+                        allowNull: false
+                      },
+                      name: {
+                        type: DataTypes.STRING,
+                        allowNull: false
+                      },
+                    })
+                    await queryInterface.addColumn('notes', 'user_id', {
+                      type: DataTypes.INTEGER,
+                      allowNull: false,
+                      references: { model: 'users', key: 'id' },
+                    })
+                  },
+                  down: async ({ context: queryInterface }) => {
+                    await queryInterface.dropTable('notes')
+                    await queryInterface.dropTable('users')
+                  },
+                }
+
+      
+      npm install umzug
+
+      util/db.js
+
+                const { Umzug, SequelizeStorage } = require('umzug')
+                ...
+                const runMigrations = async () => {
+                  const migrator = new Umzug({
+                    migrations: {
+                      glob: 'migrations/*.js',
+                    },
+                    storage: new SequelizeStorage({ sequelize, tableName: 'migrations' }),
+                    context: sequelize.getQueryInterface(),
+                    logger: console,
+                  })
+                  
+                  const migrations = await migrator.up()
+                  console.log('Migrations up to date', {
+                    files: migrations.map((mig) => mig.name),
+                  })
+                }
+                ...
+                  try {
+                    ...
+                    await runMigrations()
+                    ...
+                  } catch (err) {
+                    ...
+                    console.log(err)
+                    ...
+                  }
+
+  - Admin user and user disabling
+
+      migrations/20240607_00_admin_and_disables_to_users.js
+
+              const { DataTypes } = require('sequelize')
+
+              module.exports = {
+                up: async ({ context: queryInterface }) => {
+                  await queryInterface.addColumn('users', 'admin', {
+                    type: DataTypes.BOOLEAN,
+                    defaultValue: false
+                  })
+                  await queryInterface.addColumn('users', 'disabled', {
+                    type: DataTypes.BOOLEAN,
+                    defaultValue: false
+                  })
+                },
+                down: async ({ context: queryInterface }) => {
+                  await queryInterface.removeColumn('users', 'admin')
+                  await queryInterface.removeColumn('users', 'disabled')
+                },
+              }
+
+      models/users.js
+
+                ...
+                admin:{
+                  type: DataTypes.BOOLEAN,
+                  defaultValue: false
+                },
+                disabled:{
+                  type: DataTypes.BOOLEAN,
+                  defaultValue: false
+                },
+                ...
+
+      controllers/users.js (only admin can change users disabled)
+
+                const { tokenExtractor } = require('../util/middleware')
+
+                const isAdmin = async (req, res, next) => {
+                  const user = await User.findByPk(req.decodedToken.id)
+                  if (!user.admin) {
+                    return res.status(401).json({ error: 'operation not allowed' })
+                  }
+                  next()
+                }
+
+                router.put('/:username', tokenExtractor, isAdmin, async (req, res) => {
+                  const user = await User.findOne({
+                    where: {
+                      username: req.params.username
+                    }
+                  })
+
+                  if (user) {
+                    user.disabled = req.body.disabled
+                    await user.save()
+                    res.json(user)
+                  } else {
+                    res.status(404).end()
+                  }
+                })
+
+      now users status is checked only in login, when user has token it works w/o any verificaions
+
+
+    - Rollback
+        runMigration changes to migrationConf, runMigration, rollbackMigration
+        util/db.js
