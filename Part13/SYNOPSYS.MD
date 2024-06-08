@@ -863,3 +863,225 @@
     - Rollback
         runMigration changes to migrationConf, runMigration, rollbackMigration
         util/db.js
+
+                  const migrationConf = {
+                    migrations: {
+                      glob: 'migrations/*.js',
+                    },
+                    storage: new SequelizeStorage({ sequelize, tableName: 'migrations' }),
+                    context: sequelize.getQueryInterface(),
+                    logger: console,
+                  }
+                    
+                  const runMigrations = async () => {
+                    const migrator = new Umzug(migrationConf)
+                    const migrations = await migrator.up()
+                    console.log('Migrations up to date', {
+                      files: migrations.map((mig) => mig.name),
+                    })
+                  }
+                  const rollbackMigration = async () => {
+                    await sequelize.authenticate()
+                    const migrator = new Umzug(migrationConf)
+                    await migrator.down()
+                  }
+
+        util/rollback.js
+
+                  const { rollbackMigration } = require('./db')
+
+                  rollbackMigration()
+
+
+        package.json
+
+                  "migration:down": "node util/rollback.js"
+
+  - Many-to-many relationships
+
+      migrations/20240608_02_add_teams_and_memberships.js
+
+                const { DataTypes } = require('sequelize')
+
+                module.exports = {
+                  up: async ({ context: queryInterface }) => {
+                    await queryInterface.createTable('teams', {
+                      id: {
+                        type: DataTypes.INTEGER,
+                        primaryKey: true,
+                        autoIncrement: true
+                      },
+                      name: {
+                        type: DataTypes.TEXT,
+                        allowNull: false,
+                        unique: true
+                      },
+                    })
+                    await queryInterface.createTable('memberships', {
+                      id: {
+                        type: DataTypes.INTEGER,
+                        primaryKey: true,
+                        autoIncrement: true
+                      },
+                      user_id: {
+                        type: DataTypes.INTEGER,
+                        allowNull: false,
+                        references: { model: 'users', key: 'id' },
+                      },
+                      team_id: {
+                        type: DataTypes.INTEGER,
+                        allowNull: false,
+                        references: { model: 'teams', key: 'id' },
+                      },
+                    })
+                  },
+                  down: async ({ context: queryInterface }) => {
+                    await queryInterface.dropTable('teams')
+                    await queryInterface.dropTable('memberships')
+                  },
+                }
+
+      models/team.js
+
+                const { Model, DataTypes } = require('sequelize')
+
+                const { sequelize } = require('../util/db')
+
+                class Team extends Model {}
+
+                Team.init({
+                  id: {
+                    type: DataTypes.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true
+                  },
+                  name: {
+                    type: DataTypes.TEXT,
+                    allowNull: false,
+                    unique: true
+                  },
+                }, {
+                  sequelize,
+                  underscored: true,
+                  timestamps: false,
+                  modelName: 'team'
+                })
+
+                module.exports = Team
+
+      models/membership.js (pivot)
+
+                const { Model, DataTypes } = require('sequelize')
+
+                const { sequelize } = require('../util/db')
+
+                class Membership extends Model {}
+
+                Membership.init({
+                  id: {
+                    type: DataTypes.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true
+                  },
+                  userId: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: { model: 'users', key: 'id' },
+                  },
+                  teamId: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: { model: 'teams', key: 'id' },
+                  },
+                }, {
+                  sequelize,
+                  underscored: true,
+                  timestamps: false,
+                  modelName: 'membership'
+                })
+
+                module.exports = Membership
+
+      models/index.js
+
+                ...
+                const Team = require('./team')
+                const Membership = require('./membership')
+
+                ...
+
+                User.belongsToMany(Team, { through: Membership })
+                Team.belongsToMany(User, { through: Membership })
+
+                module.exports = {
+                  ... Team, Membership
+                }
+
+
+      CLI commands to insert:
+
+            insert into teams (name) values ('toska');
+            insert into teams (name) values ('mosa climbers');
+            insert into memberships (user_id, team_id) values (1, 1);
+            insert into memberships (user_id, team_id) values (1, 2);
+            insert into memberships (user_id, team_id) values (2, 1);
+            insert into memberships (user_id, team_id) values (3, 2);
+
+      controllers/users.js
+
+            router.get('/', ...
+            ...
+                include: [
+                  {
+                    model: Note,
+                    attributes: { exclude: ['userId'] }
+                  },
+                  {
+                    model: Team,
+                    attributes: ['name', 'id'],
+                    through: {
+                      attributes: []
+                    }
+                  }
+                ]
+            )
+
+  - Note on the properties of Sequelize model objects
+
+      usually abstract layer return unnormal objects, sequqlize is not exception.
+      this code wouldn't work:
+
+                router.get('/:id', async (req, res) => {
+                  const user = await User.findByPk(req.params.id, {
+                    include: {
+                        model: Note
+                      }
+                    }
+                  )
+
+                  if (user) {
+                  
+                    user.note_count = user.notes.length
+                    delete user.notes
+                    res.json(user)
+
+                  } else {
+                    res.status(404).end()
+                  }
+                })
+
+      a better way to create new object:
+
+                {
+                  username: user.username,
+                  name: user.name,
+                  note_count: user.notes.length
+                }
+
+  - Revisiting many-to-many relationships
+
+
+
+commands:
+    
+    drop table if exists migrations, blogs, users;

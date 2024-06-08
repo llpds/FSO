@@ -12,7 +12,6 @@ User.init({
   },
   username: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
     validate: {
       isEmail: true,
@@ -30,7 +29,7 @@ User.init({
   sequelize,
   underscored: true,
   timestamps: true,
-  modelName: 'user'
+  modelName: 'User'
 })
 
 module.exports = User

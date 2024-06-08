@@ -19,6 +19,10 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false
       },
+      likes: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
       date: {
         type: DataTypes.DATE
       },
@@ -43,7 +47,7 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false
       },
-      passwordHash: {
+      password_hash: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -53,7 +57,7 @@ module.exports = {
     await queryInterface.addColumn('blogs', 'user_id', {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: { model: 'blogs', key: 'id' },
+      references: { model: 'users', key: 'id' },
     })
   },
   down: async ({ context: queryInterface }) => {

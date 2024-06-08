@@ -22,16 +22,31 @@ Blog.init({
     allowNull: false
   },
   likes: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    defaultValue: 0
   },
   date: {
     type: DataTypes.DATE
+  },
+  year: {
+    type: DataTypes.INTEGER,
+    validate : {
+      isInt: true,
+      max: {
+        args: new Date().getFullYear(),
+        msg: `Year cannot be greater than the current year ${new Date().getFullYear()}`,
+      },
+      min: {
+        args: 1991,
+        msg: 'Year must be at least 1991',
+      }
+    }
   }
 }, {
   sequelize,
-  underscores: true,
+  underscored: true,
   timestamps: true,
-  modelName: 'blog'
+  modelName: 'Blog'
 })
 
 module.exports = Blog

@@ -45,3 +45,6 @@
 
   - ex 13.17
     - migration initialize the database (same fields as in models tables + created_at, updated_at manually)
+
+  - ex 13.18
+    - year field into blog table migration, year validation in model
