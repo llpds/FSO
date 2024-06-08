@@ -28,6 +28,10 @@ Blog.init({
   date: {
     type: DataTypes.DATE
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   year: {
     type: DataTypes.INTEGER,
     validate : {

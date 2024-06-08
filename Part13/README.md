@@ -48,3 +48,6 @@
 
   - ex 13.18
     - year field into blog table migration, year validation in model
+
+  - ex 13.19
+    - users reading list with blog status (unread by default, later could be marked as read) (user blog migrations 02)
