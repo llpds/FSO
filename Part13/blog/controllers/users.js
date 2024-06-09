@@ -2,7 +2,7 @@ const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-const { User, Blog } = require('../models')
+const { User, Blog, Readinglists} = require('../models')
 const { SECRET } = require('../util/config')
 
 const tokenExtractor = (req, res, next) => {
@@ -42,8 +42,8 @@ router.get('/:id', async (req, res) => {
         as: 'readings',
         attributes: ['id', 'url', 'title', 'author', 'likes', 'year'],
         through: {
-          attributes: []
-        }
+          attributes: ['id','isRead']
+        },
       }
     ]
   })

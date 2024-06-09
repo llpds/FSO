@@ -1,15 +1,15 @@
 const router = require('express').Router()
 
-const { UserBlogs } = require('../models')
+const { Readinglists } = require('../models')
 
 
 router.get('/', async (req, res) => {
-  const lists = await UserBlogs.findAll()
+  const lists = await Readinglists.findAll()
   res.json(lists)
 })
 
 router.get('/:id', async (req, res) => {
-  const list = await UserBlogs.findByPk(req.params.id)
+  const list = await Readinglists.findByPk(req.params.id)
   if (list) {
     res.json(list)
   } else {
@@ -20,7 +20,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const { blogId, userId } = req.body
 
-  const savedList = await UserBlogs.create({
+  const savedList = await Readinglists.create({
     blogId,
     userId
   })
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-  const list = await UserBlogs.findByPk(req.params.id)
+  const list = await Readinglists.findByPk(req.params.id)
 
   if(!list) return res.status(401).send({ error: 'Only logged user can change his/her OWN username' })
   

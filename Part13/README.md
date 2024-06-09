@@ -63,3 +63,5 @@
     - GET /api/users/:id returns reading list with field:
       - id, url, title, author, likes, year
 
+  - ex 13.21
+    - add to reading list in 13.20 info is readed and id from pivot table
