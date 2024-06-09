@@ -51,3 +51,15 @@
 
   - ex 13.19
     - users reading list with blog status (unread by default, later could be marked as read) (user blog migrations 02)
+
+  - ex 13.20
+    - reading list POST /api/readinglists  isRead: false by default
+                
+                {
+                  "blogId": 10,
+                  "userId": 3
+                }
+  
+    - GET /api/users/:id returns reading list with field:
+      - id, url, title, author, likes, year
+
