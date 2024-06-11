@@ -22,7 +22,6 @@ router.get('/:id', async (req, res) => {
 
   if (req.query.read) {
     where.isRead = req.query.read === "true"
-    console.log('where', where)
   }
 
   const user = await User.findByPk(req.params.id, {
@@ -71,15 +70,14 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:username', tokenExtractor, async (req, res) => {
-  const user = await User.findOne({
+  const userToUpdate = await User.findOne({
     where: { username: req.params.username}
   })
-  const tokenUser = await User.findByPk(req.decodedToken.id)
-  if(!tokenUser || !user || tokenUser.id !== user.id) return res.status(401).send({ error: 'Only logged user can change his/her OWN username' })
+  if(!userToUpdate || req.tokenUser.id !== userToUpdate.id) return res.status(401).send({ error: 'Only logged user can change his/her OWN username' })
   
-  user.username = req.body.username
+  userToUpdate.username = req.body.username
 
-  const updatedUser = await user.save()
+  const updatedUser = await userToUpdate.save()
   updatedUser.passwordHash = '***'
   res.json(updatedUser)
 })

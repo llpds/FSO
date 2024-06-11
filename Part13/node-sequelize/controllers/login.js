@@ -31,7 +31,6 @@ router.post('/', async (request, response) => {
     username: user.username,
     id: user.id,
   }
-  console.log('SECRET', SECRET)
   const token = jwt.sign(userForToken, SECRET)
 
   response

@@ -12,7 +12,7 @@ const isAdmin = async (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
-  const users = await User.findAll({
+  const users = await User.scope({ method: ['name', '%D%'] }).findAll({
     include: [
       {
         model: Note,
@@ -49,21 +49,21 @@ router.get('/:id', async (req, res) => {
           attributes:['name']
         }
       },
-      {
-        model: Team,
-        attributes: ['name', 'id'],
-        through: {
-          attributes: []
-        }
-      },
     ]
   })
 
-  if (user) {
-    res.json(user)
-  } else {
-    res.status(404).end()
+  if (!user) return res.status(404).end()
+  
+  let teams = undefined
+
+  if (req.query.teams) {
+    teams = await user.getTeams({
+      attributes: ['name'],
+      joinTableAttributes: []
+    })
   }
+  
+  res.json({ ...user.toJSON(), teams })
 })
 
 router.post('/', async (req, res) => {

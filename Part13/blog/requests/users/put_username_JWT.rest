@@ -1,7 +1,7 @@
-PUT http://localhost:3001/api/users/johndaw6@mail.net
+PUT http://localhost:3001/api/users/johndaw3UPD@mail.net
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kYXc2QG1haWwubmV0IiwiaWQiOjQsImlhdCI6MTcxNzkyNTkwMSwiZXhwIjoxNzE3OTI5NTAxfQ.v8aYFKoVY7ElljeoA4l6NkV-x4a9eloHlIu3THapRTk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kYXczQG1haWwubmV0IiwiaWQiOjEsImlhdCI6MTcxODEwNDA2OSwiZXhwIjoxNzE4MTA3NjY5fQ.bd1vxFnDbQr8_ylToZ_lzh_4FFmr35ViDjzf7VrS6ZA
 
 {
-  "username":"johndaw6UPD@mail.net"
+  "username":"johndaw3@mail.net"
 }

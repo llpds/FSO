@@ -34,7 +34,6 @@
     - blog deletion only by creator
     - show related info(users blogs og blogs creator) when shows users or blogs
 
-
   - ex 13.13 - 13.16
     - filtering blogs by title using keyword 
       - GET /api/blogs?search=react return all blogs with "react"
@@ -66,11 +65,16 @@
   - ex 13.21
     - add to reading list in 13.20 info is readed and id from pivot table
 
-  
   - ex 13.22 - 13.23
     - tokenExtractor, blogFinder moved into util/middleware.js
     - PUT /api/readinglists/:id { "read": true } mark blog in reading list as read
     - GET /api/users/:id ?read=true or false
       - returns all/read/not read blogs in reading list using query
 
-  
+  - ex 13.24
+    - access to the system functionality through login and disabled fields:
+      - boolean field 'disabled' in users table
+      - active session table
+        - POST /api/login to store session
+      - route to remove current active session  DELETE /api/logout
+      - check user 'disabled' and session 'active' in every operation for logged in users (updated tokenExtractor functional)

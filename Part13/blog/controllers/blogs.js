@@ -31,9 +31,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', tokenExtractor, async (req, res) => {
-  const user = await User.findByPk(req.decodedToken.id)
-  const data = {...req.body, userId: user.id, date: new Date()}
-  console.log('data', data)
+  const data = {...req.body, userId: req.tokenUser.id, date: new Date()}
   const blog = await Blog.create(data)
   res.json(blog)
 })
@@ -48,8 +46,7 @@ router.get('/:id', blogFinder, async (req, res) => {
 })
 
 router.delete('/:id', tokenExtractor, blogFinder, async (req, res) => {
-  const tokenUser = await User.findByPk(req.decodedToken.id)
-  if (req.blog && tokenUser && tokenUser.id === req.blog.userId) {
+  if (req.blog && req.tokenUser.id === req.blog.userId) {
     await req.blog.destroy()
     return res.status(204).end()
   }

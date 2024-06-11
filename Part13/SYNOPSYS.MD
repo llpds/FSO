@@ -1081,6 +1081,80 @@
   - Revisiting many-to-many relationships
 
 
+  - Eager vs Lazy fetch
+
+    eeager - the user receives all related data
+    lazy  -  related data is loaded as needed
+
+    controllers/users.js remove include:{model: Team etc...} from User.findByPK...
+
+              ...
+                let teams = undefined
+
+                if (req.query.teams) {
+                  teams = await user.getTeams({
+                    attributes: ['name'],
+                    joinTableAttributes: []
+                  })
+                }
+
+                res.json({ ...user.toJSON(), teams })
+
+  - Features of models
+
+        models/user.js
+                ...
+                  modelName: 'user',
+                  defaultScope: {
+                    where: {
+                      disabled: false
+                    }
+                  },
+                  scopes: {
+                    admin: {
+                      where: {
+                        admin: true
+                      }
+                    },
+                    disabled: {
+                      where: {
+                        disabled: true
+                      }
+                    }
+                  }
+                ...
+
+      get users: returns only enabled users (disabled: false)
+
+        controllers/users.js
+
+                const adminUsers = await User.scope('admin').findAll()
+            or
+                const disabledUsers = await User.scope('disabled').findAll()
+
+         models/user.js
+
+                        ...
+                            disabled: {
+                              where: {
+                                disabled: true
+                              }
+                            },
+                            name(value) {
+                              return {
+                                where: {
+                                  name: {
+                                    [Op.iLike]: value
+                                  }
+                                }
+                              }
+                            }
+
+        controllers/users.js
+
+                const jamiUsers = await User.scope({ method: ['name', '%jami%'] }).findAll()
+            or
+                const jamiUsers = await User.scope('admin', { method: ['name', '%jami%'] }).findAll()
 
 commands:
     
