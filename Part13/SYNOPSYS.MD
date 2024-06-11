@@ -702,7 +702,7 @@
         Operators in "where" : https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#operators
 
 
-# 13c - Migrations, many-to-many relationships
+## 13c - Migrations, many-to-many relationships
 
   - Migrations - file that describes modifications to a database
 
@@ -1158,4 +1158,12 @@
 
 commands:
     
-    drop table if exists migrations, blogs, users;
+drop table if exists migrations, blogs, users;
+
+UPDATE sessions
+SET active = false
+WHERE id = 17;
+
+UPDATE users
+SET disabled = true
+where id = 1;

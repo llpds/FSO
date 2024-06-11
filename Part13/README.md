@@ -1,11 +1,14 @@
 # [FSO part 13 - Relational databases ](https://fullstackopen.com/en/part13)
 
-  app for fly postgres
+  - blog - exercises for this chapter via Fly
+    - cli.js ex. 13.1 - 13.3
+    - connect.js  ex13.1 - 13.3
+    - index-old.js ex13.5-13.6
+    - index.js ex13.24
 
-  node-sequelize -  practice via Docker
-  blog - exercises for this chapter via Fly
-  
-  Synopsis - short overview with tips
+  - app for fly postgres
+  - node-sequelize -  practice via Docker
+  - Synopsis - short overview with tips
   
   - ex 13.1 - 13.3
     - connection to db (connect.js)
