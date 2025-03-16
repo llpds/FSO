@@ -29,3 +29,7 @@ branch redux and query for part7 ex. 7.10 - 7.13
 ### Part 9 - [TypeScript](https://fullstackopen.com/en/part9)
 
 ### Part 11 - [CI/CD](https://fullstackopen.com/en/part11)
+
+### Part 12 - [Containers](https://fullstackopen.com/en/part12)
+
+### Part 13 - [Relational databases](https://fullstackopen.com/en/part13)
