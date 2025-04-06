@@ -9,6 +9,7 @@ const theme = {
     mainBackground: '#e1e4e8',
     itemBackGround: 'white',
     navBackGround: '#333333',
+    error: '#d73a4a',
   },
   fontSizes: {
     body: 14,
