@@ -1,6 +1,7 @@
-import { Pressable, View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Link } from "react-router-native";
 import theme from '../theme';
+import MyText from './MyText';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,36 +12,28 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   pressable: {
-    height: 30,
-    padding: 30,
-    marginBottom: 20,
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    paddingHorizontal: 20,
+    alignItems: 'flex-start',
   },
   text: {
-    fontSize: 30,
+    fontSize: theme.fontSizes.appBar,
     fontWeight: theme.fontWeights.bold,
-    color: 'white',
+    color: theme.colors.white,
   },
   barScroll: {
-    marginTop: 40,
+    marginTop: 60,
   }
 });
 
 const AppBar = () => {
   return <View style={styles.container}>
     <ScrollView style={styles.barScroll} horizontal>
-      <Link
-        to="/"
-        style={styles.pressable}
-      >
-        <Text style={styles.text} >Repositories</Text>
+      <Link to="/" style={styles.pressable}>
+        <MyText style={styles.text} >Repositories</MyText>
       </Link>
-      <Link 
-        to="/signin"
-        style={styles.pressable}
-      >
-        <Text style={styles.text} >Sign in</Text>
+      <Link to="/signin" style={styles.pressable}>
+          <MyText style={styles.text}>Sign in</MyText>
       </Link>
     </ScrollView>
   </View>;

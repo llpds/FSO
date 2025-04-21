@@ -47,10 +47,10 @@
 ## 10b - React Native basics
 
   - Core components:
-    - Text - textual children: <strong> <h1>
-    - View - basic block: <div>
-    - TextInput - text field: <input>
-    - Pressable - capture events: <button>
+    - Text - textual children: strong, h1
+    - View - basic block: div
+    - TextInput - text field: input
+    - Pressable - capture events: button
 
     note:
       - only Text has textual children
@@ -234,3 +234,70 @@
               return <LoginForm onSubmit={onSubmit} />;
             };
             
+  - Form validation
+    formik provides: 
+      - validation function: https://formik.org/docs/guides/validation#validates
+      - vlidation schema: https://formik.org/docs/guides/validation#validationschema (yup)
+
+          npm install yup
+
+
+      import * as yup from 'yup';
+      ...
+      const validationSchema = yup.object().shape({
+        username: yup
+          .string()
+          .required('Username is required'),
+        password: yup
+          .string()
+          .required('Password is required'),
+        });
+        ...
+            const formik = useFormik({
+              initialValues,
+              validationSchema,
+              onSubmit,
+            });
+        ...
+        {formik.touched.username && formik.errors.username && (
+          <Text style = {styles.errorMessage}>{formik.errors.username}</Text>
+        )}
+
+  - Platform-specific code
+
+
+            import { React } from 'react';
+            import { Platform, Text, StyleSheet } from 'react-native';
+            
+            const styles = StyleSheet.create({
+              text: {
+                color: Platform.OS === 'android' ? 'green' : 'blue',
+              },
+            });
+            
+            const WhatIsMyPlatform = () => {
+              return <Text style={styles.text}>Your platform is: {Platform.OS}</Text>;
+            };
+
+      
+          const styles = StyleSheet.create({
+            text: {
+              color: Platform.select({
+                android: 'green',
+                ios: 'blue',
+                default: 'black',
+              or
+                ios: () => require('./MyIOSComponent'),
+                android: () => require('./MyAndroidComponent'),
+              }),
+            },
+          });
+
+
+    define files like: Button.ios.jsx and Button.android.jsx 
+
+        import Button from './Button';
+
+        const PlatformSpecificButton = () => {
+          return <Button />;
+        };

@@ -1,4 +1,4 @@
-import { Image, View, Text, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 import MyText from './MyText';
 import theme from '../theme'
 
@@ -6,98 +6,71 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: theme.colors.itemBackGround,
   },
-  text: {
-    fontSize: 30,
-    padding: 5,
-    margin: 0,
-    marginLeft:10,
-    fontWeight: theme.fontWeights.normal,
-  },
-  greyText: {
-    color: 'grey',  
-  },
-  bigText: {
-    fontWeight: theme.fontWeights.bold,
-  },
   flexContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
   },
   tinyLogo: {
-    width: 80,
-    height: 80,
-    borderRadius: 5,
+    width: 50,
+    height: 50,
+    borderRadius: theme.radius,
     margin: 10,
   },
   itemHead: {
     flexDirection: 'row',
     margin: 10,
     marginBottom: 20,
+
   },
   itemHeadText: {
+    width: '75%',
     marginTop: 10,
-  },
-  asButton: {
-    backgroundColor: theme.colors.primary,
-    width: 'max-content',
-    color: 'white',
-    borderRadius: 5,
-    padding: 7,
-    paddingLeft: 5,
-    paddingRight: 10,
-    margin: 10,
-    marginLeft: 22,
+    marginLeft: 10,
   },
   itemStat:{
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 30,
-    // alignItems: 'stretch'
+    marginHorizontal: 15,
   },
-  itemStatData:{}
+  itemStatData:{
+    marginHorizontal:5,
+  }
 });
-
-const FancyText = ({ isGrey, isBig, isAsButton, children}) => {
-  const textStyles = [
-    styles.text,
-    isGrey && styles.greyText,
-    isBig && styles.bigText,
-    isAsButton && styles.asButton
-  ]
-
-  return <Text style ={textStyles}>{children}</Text>
-}
+ const countFormat = count => count >= 1000 
+  ? `${(count/1000).toFixed(1)}k`
+  : count
 
 const RepositoryItem = ({item}) => (
   <View style={styles.item}>
     <View style={styles.itemHead}>
       <Image
         style={styles.tinyLogo}
-        source={item.ownerAvatarUrl}
+        source={{uri: item.ownerAvatarUrl}}
       />
       <View style={styles.itemHeadText}>
-        <FancyText isBig> {item.fullName}</FancyText>
-        <FancyText isGrey> {item.description}</FancyText>
-        <FancyText isAsButton> {item.language}</FancyText>
+        <MyText isBold>{item.fullName}</MyText>
+        <MyText isGrey>{item.description}</MyText>
+        <MyText isAsButton>{item.language}</MyText>
       </View>
     </View>
     <View style={styles.itemStat}>
       <View style={styles.itemStatData}>
-        <FancyText isBig> {item.stargazersCount >= 1000 ? `${(item.stargazersCount/1000).toFixed(1)}k` : item.stargazersCount}</FancyText>
-        <FancyText isGrey>Stars</FancyText>
+        <MyText isBold>{countFormat(item.stargazersCount)}</MyText>
+        <MyText isGrey>Stars</MyText>
       </View>
       <View style={styles.itemStatData}>
-        <FancyText isBig> {item.forksCount >= 1000 ? `${(item.forksCount/1000).toFixed(1)}k` : item.forksCount}</FancyText>
-        <FancyText isGrey>Forks</FancyText>
+        <MyText isBold>{countFormat(item.forksCount)}</MyText>
+        <MyText isGrey>Forks</MyText>
       </View>
       <View style={styles.itemStatData}>
-        <FancyText isBig> {item.reviewCount}</FancyText>
-        <FancyText isGrey>Reviews</FancyText>
+        <MyText isBold>{item.reviewCount}</MyText>
+        <MyText isGrey>Reviews</MyText>
       </View>
       <View style={styles.itemStatData}>
-        <FancyText isBig> {item.ratingAverage}</FancyText>
-        <FancyText isGrey>Rating</FancyText>
+        <MyText isBold>{item.ratingAverage}</MyText>
+        <MyText isGrey>Rating</MyText>
       </View>
     </View>
   </View>

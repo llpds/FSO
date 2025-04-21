@@ -12,6 +12,7 @@ Added:
 Ctrl + n: explorer.newFile
 
 Standart:
+^ + option: ~ 
 Ctrl + Shift + ´: terminal (in docs Ctrl + `) 
 Cmd + Shift + e: navigate to the explorer
 Cmd + n: workbench.action.files.newUntitledFile

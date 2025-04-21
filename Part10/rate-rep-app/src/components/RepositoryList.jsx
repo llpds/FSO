@@ -4,7 +4,7 @@ import theme from '../theme'
 
 const styles = StyleSheet.create({
   separator: {
-    height: 20,
+    height: 10,
   },
 });
 

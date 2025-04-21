@@ -1,4 +1,7 @@
+import { Platform } from 'react-native';
+
 const theme = {
+  radius: 4,
   colors: {
     textPrimary: '#24292e',
     textSecondary: '#586069',
@@ -10,18 +13,25 @@ const theme = {
     itemBackGround: 'white',
     navBackGround: '#333333',
     error: '#d73a4a',
+    grey: 'grey',
+    white: 'white',
   },
   fontSizes: {
-    body: 14,
+    appBar: 24,
+    body: 20,
     subheading: 16,
   },
   fonts: {
-    main: 'System',
+    auto: Platform.select({
+      android: 'Roboto',
+      ios: 'Arial',
+      default: 'System',
+    }),
   },
   fontWeights: {
     thin: '200',
     normal: '300',
-    bold: '600',
+    bold: '700', // bold start from, ios: 500, android: 700.
   },
 };
 
