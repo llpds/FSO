@@ -36,14 +36,14 @@ academic hour(40 min): 27
       - Platform-specific code
 
   - fixed: (4 * 40)
-      ios: invisible avatars.
-      React Router Future Flag Warning
-      ios and android: appbar button name is invisible
-      andoid: bold not works in MyText:
-        - bold start from, ios: 500, android: 700.
-      item language style like button ios and android
-      repository item, item description. Indents multiline
-      the description runs of the screen
+    - ios: invisible avatars.
+    - React Router Future Flag Warning
+    - ios and android: appbar button name is invisible
+    - andoid: bold not works in MyText:
+      - bold start from, ios: 500, android: 700.
+    - item language style like button ios and android
+    - repository item, item description. Indents multiline
+    - the description runs of the screen
 
   - updated (2 * 40)
     - MyText component instead Text or FancyText
