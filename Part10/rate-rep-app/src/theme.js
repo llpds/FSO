@@ -2,17 +2,20 @@ import { Platform } from 'react-native';
 
 const theme = {
   radius: 4,
+  roundness: 3,
   colors: {
     textPrimary: '#24292e',
     textSecondary: '#586069',
     primary: '#0366d6',
+    appBarBackground: '#24292e',
+    mainBackground: '#e1e4e8',
+    error: '#d73a4a',
+    divider: '#d1d5da',
     button: '#1e3a8b',
     componentBackGround: '#e1e4e8',
     tagsBackGround: '#0366d6',
-    mainBackground: '#e1e4e8',
     itemBackGround: 'white',
     navBackGround: '#333333',
-    error: '#d73a4a',
     grey: 'grey',
     white: 'white',
   },

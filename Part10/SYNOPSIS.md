@@ -301,3 +301,33 @@
         const PlatformSpecificButton = () => {
           return <Button />;
         };
+
+## 10c - Communicating with server
+
+  - HTTP requests
+    [FetchApi](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)  
+    [XMLHttpRequestApi](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)  (axios as one of possibles)
+
+    in part 10 is used FetchApi:
+      
+      fetch('https://my-api.com/post-end-point', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstParam: 'firstValue',
+          secondParam: 'secondValue',
+        }),
+      });
+
+    [using fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+    example:
+      
+      const fetchMovies = async () => {
+        const response = await fetch('https://reactnative.dev/movies.json');
+        const json = await response.json();
+
+        return json;
+      };

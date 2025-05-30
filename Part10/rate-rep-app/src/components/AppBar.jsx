@@ -1,40 +1,49 @@
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Link } from "react-router-native";
+import Constants from 'expo-constants';
+
 import theme from '../theme';
 import MyText from './MyText';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.navBackGround,
-    width: '100%',
-    height: 140,
-    padding: 5,
-    justifyContent: 'flex-end',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: theme.colors.appBarBackground,
   },
-  pressable: {
+  scrollView: {
+    flexDirection: 'row',
+  },
+  tabTouchable: {
+    flexGrow: 0,
+  },
+  tabContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 20,
-    alignItems: 'flex-start',
   },
-  text: {
-    fontSize: theme.fontSizes.appBar,
-    fontWeight: theme.fontWeights.bold,
-    color: theme.colors.white,
+  tabText: {
+    color: 'white',
   },
-  barScroll: {
-    marginTop: 60,
-  }
 });
+
+const AppBarTab = ({ children, ...props }) => {
+  return (
+    <Link style={styles.tabTouchable} {...props}>
+      <View style={styles.tabContainer}>
+        <MyText isBold style={styles.tabText}>{children}</MyText>
+      </View>
+    </Link>
+  );
+}
+
 
 const AppBar = () => {
   return <View style={styles.container}>
-    <ScrollView style={styles.barScroll} horizontal>
-      <Link to="/" style={styles.pressable}>
-        <MyText style={styles.text} >Repositories</MyText>
-      </Link>
-      <Link to="/signin" style={styles.pressable}>
-          <MyText style={styles.text}>Sign in</MyText>
-      </Link>
+    <ScrollView style={styles.scrollView} horizontal>
+      <AppBarTab to="/">Repositories</AppBarTab>
+      <AppBarTab to="/signin">Sign in</AppBarTab>
     </ScrollView>
   </View>;
 };

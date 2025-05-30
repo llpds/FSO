@@ -1,6 +1,10 @@
 # [FSO part 10 - React Native](https://fullstackopen.com/en/part10)
 
-academic hour(40 min): 27
+academic hour(40 min):
+  a & b: 30
+  c: 2
+
+a & b:
   - set environment: (5 * 40)
       Android studio:
         android 14 api 34
@@ -48,3 +52,11 @@ academic hour(40 min): 27
   - updated (2 * 40)
     - MyText component instead Text or FancyText
     - refactoring
+
+  - working on errors (3 * 40)
+    - Bringing app to an example solution part 2 (partly)
+    - useFormik vs <Formik> ... useField ... </Formik>
+      (useFormik + useField = context problem) 
+      according with formik tutorial app (ex. 10.1 - 10.10) was done with useFormik hook, next exercises would be done with component approach according with Example solutions part2
+
+part c: Communicating with server (3 * 40)

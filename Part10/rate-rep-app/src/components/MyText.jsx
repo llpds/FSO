@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
   asButtonContainer: {
     backgroundColor: theme.colors.primary,
     borderRadius: theme.radius, 
-    // it works in asButton part on Web and Android
-    // for iOS it needs to be set in the parent component
+    // it works in asButton style (see below) on Web and Android
+    // for iOS it needs to be set in the parent component(here - asButtonContainer style)
     margin: 5,
     marginLeft: 0,
     alignSelf: 'flex-start',

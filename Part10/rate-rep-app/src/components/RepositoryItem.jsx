@@ -1,4 +1,5 @@
 import { Image, View, StyleSheet } from 'react-native';
+
 import MyText from './MyText';
 import theme from '../theme'
 
